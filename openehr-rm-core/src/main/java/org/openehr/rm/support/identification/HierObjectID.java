@@ -135,7 +135,7 @@ public class HierObjectID extends UIDBasedID {
     
     // POJO start
     @Override
-    protected void setValue(String value) {
+    public void setValue(String value) {
         loadValue(value);
         super.setValue(value);
     }

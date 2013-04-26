@@ -142,7 +142,7 @@ public class ObjectVersionID extends UIDBasedID {
 	ObjectVersionID() {
 	}
 	
-    protected void setValue(String value) {
+    public void setValue(String value) {
         loadValue(value);
         super.setValue(value);
     }

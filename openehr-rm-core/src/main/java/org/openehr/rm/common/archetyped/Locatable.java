@@ -629,7 +629,7 @@ public abstract class Locatable extends Pathable implements Settable, Cloneable 
     protected Locatable() {    	
     }
 
-    protected void setUid(UIDBasedID uid) {
+    public void setUid(UIDBasedID uid) {
         this.uid = uid;
     }
 

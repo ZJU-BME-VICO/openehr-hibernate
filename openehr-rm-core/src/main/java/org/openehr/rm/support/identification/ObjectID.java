@@ -89,7 +89,7 @@ public abstract class ObjectID extends RMObject {
     protected ObjectID() {
     }
 
-    void setValue(String value) {
+    public void setValue(String value) {
         this.value = value;
     }
     // POJO end

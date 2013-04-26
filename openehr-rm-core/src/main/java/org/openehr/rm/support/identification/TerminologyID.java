@@ -97,7 +97,7 @@ public final class TerminologyID extends ObjectID {
     TerminologyID() {
     }
 
-    void setValue(String value) {
+    public void setValue(String value) {
         loadValue(value);
         super.setValue(value);
     }
