@@ -1,28 +1,29 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-	<groupId>openehr</groupId>
+		<groupId>openehr</groupId>
 		<artifactId>ref_impl_java</artifactId>
 		<version>1.0.3-SNAPSHOT</version>
 	</parent>
 	<artifactId>adl-parser</artifactId>
 	<packaging>jar</packaging>
 	<name>java ADL Parser</name>
-	<url>http://www.openehr.org/projects/java.html</url>   
-	 <scm>
-        <connection>scm:git:${parent.scm.url}/adl-parser</connection>
-        <developerConnection>scm:git:${parent.scm.url}/adl-parser</developerConnection>
-        <url>${parent.scm.url}/adl-parser</url>
-    </scm>
+	<url>http://www.openehr.org/projects/java.html</url>
+	<scm>
+		<connection>scm:git:${parent.scm.url}/adl-parser</connection>
+		<developerConnection>scm:git:${parent.scm.url}/adl-parser</developerConnection>
+		<url>${parent.scm.url}/adl-parser</url>
+	</scm>
 	<organization>
 		<name>openEHR</name>
 		<url>http://www.openehr.org/</url>
 	</organization>
 	<inceptionYear>2004</inceptionYear>
-	
+
 	<description>java ADL Parser</description>
-	
+
 	<build>
 		<plugins>
 			<plugin>
@@ -55,37 +56,8 @@
                 </configuration>
             </plugin>
 		</plugins>
-		<pluginManagement>
-			<plugins>
-				<!-- JCR-3136: Add m2e lifecycle mappings for Eclipse Indigo -->
-				<plugin>
-					<groupId>org.eclipse.m2e</groupId>
-					<artifactId>lifecycle-mapping</artifactId>
-					<version>1.0.0</version>
-					<configuration>
-						<lifecycleMappingMetadata>
-							<pluginExecutions>
-								<pluginExecution>
-									<pluginExecutionFilter>
-										<groupId>org.codehaus.mojo</groupId>
-										<artifactId>javacc-maven-plugin</artifactId>
-										<versionRange>[2.1,)</versionRange>
-										<goals>
-											<goal>javacc</goal>
-										</goals>
-									</pluginExecutionFilter>
-									<action>
-										<execute />
-									</action>
-								</pluginExecution>
-							</pluginExecutions>
-						</lifecycleMappingMetadata>
-					</configuration>
-				</plugin>
-			</plugins>
-		</pluginManagement>
 	</build>
-	
+
 	<dependencies>
 		<dependency>
 			<groupId>openehr</groupId>
@@ -106,7 +78,7 @@
 			<groupId>openehr</groupId>
 			<artifactId>openehr-ap</artifactId>
 			<version>${project.version}</version>
-		</dependency>	
+		</dependency>
 		<dependency>
 			<groupId>openehr</groupId>
 			<artifactId>measure-serv</artifactId>
@@ -116,12 +88,10 @@
 			<groupId>openehr</groupId>
 			<artifactId>mini-termserv</artifactId>
 			<version>${project.version}</version>
-		</dependency>		
+		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>3.8.1</version>
-			<scope>test</scope>
-		</dependency>		
+		</dependency>
 	</dependencies>
 </project>

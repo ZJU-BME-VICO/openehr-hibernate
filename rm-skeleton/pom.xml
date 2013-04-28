@@ -1,8 +1,9 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-	<groupId>openehr</groupId>
+		<groupId>openehr</groupId>
 		<artifactId>ref_impl_java</artifactId>
 		<version>1.0.3-SNAPSHOT</version>
 	</parent>
@@ -10,10 +11,10 @@
 	<packaging>jar</packaging>
 	<name>openEHR RM Skeleton Instance Generator</name>
 	<scm>
-        <connection>scm:git:${parent.scm.url}/rm-skeleton</connection>
-        <developerConnection>scm:git:${parent.scm.url}/rm-skeleton</developerConnection>
-        <url>${parent.scm.url}/rm-skeleton</url>
-    </scm>
+		<connection>scm:git:${parent.scm.url}/rm-skeleton</connection>
+		<developerConnection>scm:git:${parent.scm.url}/rm-skeleton</developerConnection>
+		<url>${parent.scm.url}/rm-skeleton</url>
+	</scm>
 	<dependencies>
 		<dependency>
 			<groupId>openehr</groupId>
@@ -36,10 +37,10 @@
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-            <groupId>openehr</groupId>
-            <artifactId>dadl-parser</artifactId>
-            <version>${project.version}</version>
-        </dependency>
+			<groupId>openehr</groupId>
+			<artifactId>dadl-parser</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>openehr</groupId>
 			<artifactId>oet-parser</artifactId>
@@ -56,15 +57,15 @@
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-            <groupId>openehr</groupId>
-            <artifactId>dadl-binding</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>openehr</groupId>
-            <artifactId>xml-binding</artifactId>
-            <version>${project.version}</version>
-        </dependency>
+			<groupId>openehr</groupId>
+			<artifactId>dadl-binding</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>openehr</groupId>
+			<artifactId>xml-binding</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -74,8 +75,6 @@
 		<dependency>
 			<groupId>com.thoughtworks.xstream</groupId>
 			<artifactId>xstream</artifactId>
-			<version>1.3.1</version>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>openehr</groupId>
@@ -86,13 +85,10 @@
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
-			<version>1.2.13</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
-			<version>1.4</version>
-			<scope>test</scope>
 		</dependency>
 	</dependencies>
 </project>
