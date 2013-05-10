@@ -40,6 +40,10 @@ import java.util.List;
  */
 public class DvQuantity extends DvAmount<DvQuantity> {
 
+	public DvQuantity() {
+		units = "";
+	}
+	
     /**
      * Constructs a Quantity by all components
      *
