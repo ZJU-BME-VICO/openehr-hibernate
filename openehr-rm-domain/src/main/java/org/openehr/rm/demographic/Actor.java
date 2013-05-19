@@ -85,22 +85,22 @@ public abstract class Actor extends Party {
                 identities, contacts, relationships, reverseRelationships,
                 details);
 
-        boolean hasLegalIdentity = false;
-        for (PartyIdentity identity : identities) {
-            if (LEGAL_IDENTITY.equals(identity.purpose().getValue())) {
-                hasLegalIdentity = true;
-                break;
-            }
-        }
-        if (!hasLegalIdentity) {
-            throw new IllegalArgumentException("no legal identity");
-        }
-        if (roles != null && roles.isEmpty()) {
-            throw new IllegalArgumentException("empty roles");
-        }
-        if (languages != null && languages.isEmpty()) {
-            throw new IllegalArgumentException("empty languages");
-        }
+//        boolean hasLegalIdentity = false;
+//        for (PartyIdentity identity : identities) {
+//            if (LEGAL_IDENTITY.equals(identity.purpose().getValue())) {
+//                hasLegalIdentity = true;
+//                break;
+//            }
+//        }
+//        if (!hasLegalIdentity) {
+//            throw new IllegalArgumentException("no legal identity");
+//        }
+//        if (roles != null && roles.isEmpty()) {
+//            throw new IllegalArgumentException("empty roles");
+//        }
+//        if (languages != null && languages.isEmpty()) {
+//            throw new IllegalArgumentException("empty languages");
+//        }
 
         this.roles = roles;
         this.languages = languages;

@@ -471,8 +471,7 @@ public class RMObjectBuilder {
 	 * @return
 	 * @throws Exception
 	 */
-	public Class retrieveRMType(String rmClassName)
-			throws RMObjectBuildingException {
+	public Class retrieveRMType(String rmClassName) {
 		int index = rmClassName.indexOf("<");
 		if (index>0){
 		    rmClassName = rmClassName.substring(0,index);
@@ -482,12 +481,28 @@ public class RMObjectBuilder {
 			rmClass = upperCaseMap.get(rmClassName.replace("_", ""));
 		}
 		if (rmClass == null) {
-			throw new RMObjectBuildingException("RM type unknown: \""
-					+ rmClassName + "\"");
+			rmClass = getPrimitiveClass(rmClassName);
 		}
 		return rmClass;
 	}
 	
+	private Class getPrimitiveClass(String rmClassName) {
+		if (rmClassName.equals(Integer.class.getSimpleName())) {
+			return Integer.class;
+		}
+		if (rmClassName.equals(String.class.getSimpleName())) {
+			return String.class;
+		}
+		if (rmClassName.equals(Double.class.getSimpleName())) {
+			return Double.class;
+		}
+		if (rmClassName.equals(Boolean.class.getSimpleName())) {
+			return Boolean.class;
+		}
+		
+		return null;				
+	}
+
 	/**
 	 * Retrieves list of attribute names of given class
 	 * 

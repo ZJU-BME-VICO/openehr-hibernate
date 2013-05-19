@@ -288,6 +288,9 @@ public class DataTypesBuildTest extends BuildTestBase {
         assertEquals("value", "guideline text", parsable.getValue());
     }
     
+    public void testRetrieveRMType() throws Exception {
+        assertEquals(Integer.class, builder.retrieveRMType("Integer"));
+    }
     
 }
 /*
