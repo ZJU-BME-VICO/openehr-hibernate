@@ -186,6 +186,19 @@ public class DADLBinding {
 		}
 	}
 	
+	public String toDADLString(Object obj) throws Exception {
+		List<String> lines = new ArrayList<String>();
+		List<String> results = toDADL(obj, 1, lines);
+		
+		StringBuilder sb = new StringBuilder();
+		for (String str : results) {
+			sb.append(str);
+			sb.append("\n");
+		}
+		
+		return sb.toString();
+	}
+	
 	public List<String> toDADL(Object obj) throws Exception {
 		List<String> lines = new ArrayList<String>();
 		return toDADL(obj, 1, lines);
