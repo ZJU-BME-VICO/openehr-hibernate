@@ -1,9 +1,9 @@
 (ELEMENT) <
-    name = <
+    name = (DV_TEXT) <
     	value = <"text">
     >
     archetype_node_id = <"at0001">
-    value = <
+    value = (DV_TEXT) <
       value = <"text value">
     >
 >

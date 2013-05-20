@@ -1,6 +1,6 @@
 <
     archetype_node_id = <"openEHR-EHR-OBSERVATION.demographics.v1">
-    name = <
+    name = (DV_TEXT) <
     	value = <"Demographics">
     >
     archetype_details = <
@@ -24,34 +24,34 @@
 	subject = (PARTY_SELF) <>
     data = <
         archetype_node_id = <"at0001">
-        name = <
+        name = (DV_TEXT) <
 	    	value = <"history">
 	    >
         origin = <2012-04-30T09:22:00>
         events = <
             [1] = <
                 archetype_node_id = <"at0006">
-                name = <
+                name = (DV_TEXT) <
                 	value = <"event">
                 >
                 time = <2010-04-30T09:22:00>
                 data = <
                     archetype_node_id = <"at0003">
-                    name = <
+                    name = (DV_TEXT) <
 				    	value = <"item tree">
 				    >
                     items = <
                         [1] = <
-                            name = <
+                            name = (DV_TEXT) <
                             	value = <"Gender">
                             >
                             archetype_node_id = <"at0004">
-                            value = <
+                            value = (DV_TEXT) <
                                 value = <"Male">
                             >
                         >
                         [2] = <
-                            name = <
+                            name = (DV_TEXT) <
                             	value = <"Age">
                             >
                             archetype_node_id = <"at0005">

@@ -1,11 +1,11 @@
 (ITEM_TREE) <
     archetype_node_id = <"openEHR-EHR-ITEM_TREE.medication_test_seven.v1">
-    name = <
+    name = (DV_TEXT) <
     	value = <"Medication description">
     >            
     items = <
         [1] = (ELEMENT) <
-            name = <
+            name = (DV_TEXT) <
             	value = <"Status">
             >
             archetype_node_id = <"at0001">

@@ -1,11 +1,11 @@
 (ITEM_TREE) <
     archetype_node_id = <"openEHR-EHR-ITEM_TREE.blood_pressure.v1">
-    name = <
+    name = (DV_TEXT) <
     	value = <"Blood pressure">
     >            
     items = <
         [1] = <
-            name = <
+            name = (DV_TEXT) <
             	value = <"Systolic">
             >
             archetype_node_id = <"at0001">
@@ -15,7 +15,7 @@
             >
         >
         [2] = <
-            name = <
+            name = (DV_TEXT) <
             	value = <"Diastolic">
             >
             archetype_node_id = <"at0002">

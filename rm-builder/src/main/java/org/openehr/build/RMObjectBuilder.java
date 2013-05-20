@@ -103,6 +103,7 @@ public class RMObjectBuilder {
 				// support classes
 				TerminologyID.class,
 				ArchetypeID.class,
+				UIDBasedID.class,
 				HierObjectID.class,
 				AccessGroupRef.class,
 				GenericID.class,

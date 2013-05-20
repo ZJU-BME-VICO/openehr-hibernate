@@ -14,7 +14,7 @@
                 >
             >
             [2] = (ELEMENT) <
-                name = <
+                name = (DV_TEXT) <
                 	value = <"diastolic">
                 >
                 archetype_node_id = <"at0005">
@@ -24,11 +24,11 @@
                 >
             >
         >
-		name = <
+		name = (DV_TEXT) <
 	    	value = <"item list">
 	    >
     >
-    name = <
+    name = (DV_TEXT) <
     	value = <"sitting">
     >
     time = <2005-12-03T09:22:00>    

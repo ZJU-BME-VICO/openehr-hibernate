@@ -1,6 +1,6 @@
 <
     archetype_node_id = <"openEHR-EHR-OBSERVATION.lab_test.v1">
-    name = <
+    name = (DV_TEXT) <
     	value = <"Lab Test">
     >
     archetype_details = <
@@ -24,31 +24,31 @@
 	subject = (PARTY_SELF) <>
     data = <
         archetype_node_id = <"at0001">
-        name = <
+        name = (DV_TEXT) <
 	    	value = <"history">
 	    >
         origin = <2007-10-30T09:22:00>
         events = <
             [1] = <
                 archetype_node_id = <"at0006">
-                name = <
+                name = (DV_TEXT) <
                 	value = <"event">
                 >
                 time = <2005-12-03T09:22:00>
                 data = <
                     archetype_node_id = <"at0003">
-                    name = <
+                    name = (DV_TEXT) <
 				    	value = <"S-Creatine">
 				    >
                     items = <
                         [1] = <
-                            name = <
+                            name = (DV_TEXT) <
                             	value = <"Result">
                             >
                             archetype_node_id = <"at0004">
                             value = <
                                 magnitude = <70.0>
-                                units = <"µmol/L">
+                                units = <"ï¿½mol/L">
                             >
                         >
                     >

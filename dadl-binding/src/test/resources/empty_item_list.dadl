@@ -1,6 +1,6 @@
 <
     archetype_node_id = <"at0003">
-    name = <
+    name = (DV_TEXT) <
         value = <"item list">
     >            
     items = (LIST) <>
