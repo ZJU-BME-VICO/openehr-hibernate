@@ -18,7 +18,7 @@ import java.io.*;
 import java.text.DateFormat;
 import java.util.*;
 
-import org.apache.commons.io.FileUtils;
+//import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 
 /**
@@ -45,10 +45,10 @@ public class PathMap {
 	 * @return
 	 * @throws IOException
 	 */	
-	public static PathMap load(String filename) throws IOException {
-		List<String> lines = FileUtils.readLines(new File(filename), UTF8);
-		return fromLines(lines);
-	}
+//	public static PathMap load(String filename) throws IOException {
+//		List<String> lines = FileUtils.readLines(new File(filename), UTF8);
+//		return fromLines(lines);
+//	}
 	
 	/**
 	 * Loads an in-memory termMap by given inputStream 
@@ -158,7 +158,7 @@ public class PathMap {
 		log.debug("max length of key: " + maxLen + ", key: " + maxLenKey);
 		
 		File pathMapFile = new File(filename);		
-		FileUtils.writeLines(pathMapFile, UTF8, paths);
+//		FileUtils.writeLines(pathMapFile, UTF8, paths);
 		
 		log.info("total " + (paths.size() - 1) + 
 				" line(s) of path written to file");
