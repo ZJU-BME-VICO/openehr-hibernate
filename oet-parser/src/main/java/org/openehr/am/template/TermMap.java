@@ -17,7 +17,7 @@ package org.openehr.am.template;
 import java.io.*;
 import java.util.*;
 
-import org.apache.commons.io.FileUtils;
+//import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.openehr.rm.datatypes.text.CodePhrase;
 
@@ -46,10 +46,10 @@ public class TermMap {
 	 * @return
 	 * @throws IOException
 	 */	
-	public static TermMap load(String filename) throws IOException {
-		List<String> lines = FileUtils.readLines(new File(filename), UTF8);
-		return fromLines(lines);
-	}
+//	public static TermMap load(String filename) throws IOException {
+//		List<String> lines = FileUtils.readLines(new File(filename), UTF8);
+//		return fromLines(lines);
+//	}
 	
 	/**
 	 * Loads an in-memory termMap by given inputStream 
@@ -305,7 +305,7 @@ public class TermMap {
 				}
 			}
 		}
-		FileUtils.writeStringToFile(new File(filename), buf.toString(), UTF8);
+//		FileUtils.writeStringToFile(new File(filename), buf.toString(), UTF8);
 	}
 
 	private static final String UTF8 = "UTF-8";
