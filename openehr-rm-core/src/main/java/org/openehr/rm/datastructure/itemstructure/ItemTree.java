@@ -21,6 +21,7 @@ import org.openehr.rm.FullConstructor;
 import org.openehr.rm.common.archetyped.Archetyped;
 import org.openehr.rm.common.archetyped.FeederAudit;
 import org.openehr.rm.common.archetyped.Link;
+import org.openehr.rm.common.archetyped.Locatable;
 import org.openehr.rm.common.archetyped.Pathable;
 import org.openehr.rm.support.identification.UIDBasedID;
 import org.openehr.rm.datastructure.itemstructure.representation.Element;
@@ -56,7 +57,7 @@ public final class ItemTree extends ItemStructure {
                 @Attribute(name = "feederAudit") FeederAudit feederAudit,
                 @Attribute(name = "links") Set<Link> links,
                 @Attribute(name = "parent") Pathable parent,
-                @Attribute(name = "items") List<Item> items) {
+                @Attribute(name = "items") List<Locatable> items) {
         super(uid, archetypeNodeId, name, archetypeDetails, feederAudit,
                 links, parent);
         this.items = items;
@@ -69,7 +70,7 @@ public final class ItemTree extends ItemStructure {
      * @param name
      * @param items null if unspecified
      */
-    public ItemTree(String archetypeNodeId, DvText name, List<Item> items) {
+    public ItemTree(String archetypeNodeId, DvText name, List<Locatable> items) {
         this(null, archetypeNodeId, name, null, null, null, null, items);
     }
     
@@ -80,7 +81,7 @@ public final class ItemTree extends ItemStructure {
      * @param name
      * @param items null if unspecified
      */
-    public ItemTree(String archetypeNodeId, String name, List<Item> items) {
+    public ItemTree(String archetypeNodeId, String name, List<Locatable> items) {
         this(archetypeNodeId, new DvText(name), items);
     }
 
@@ -118,7 +119,7 @@ public final class ItemTree extends ItemStructure {
      * 
      * @return null if unspecified
      */
-    public List<Item> getItems() {
+    public List<Locatable> getItems() {
     	return items;
     }
     
@@ -191,7 +192,7 @@ public final class ItemTree extends ItemStructure {
     }
     // POJO end
 
-	private List<Item> items;
+	private List<Locatable> items;
 }
 
 /*

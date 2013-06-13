@@ -15,6 +15,8 @@
 package org.openehr.build;
 
 import junit.framework.TestCase;
+
+import org.openehr.rm.common.archetyped.Locatable;
 import org.openehr.rm.common.generic.PartyIdentified;
 import org.openehr.rm.datastructure.itemstructure.ItemList;
 import org.openehr.rm.support.identification.*;
@@ -64,7 +66,7 @@ public class BuildTestBase extends TestCase {
 	// test cluster not exactly right for table or tree
 	protected Cluster cluster() throws Exception {
 		DvText name = new DvText("test element", lang, charset, ts);
-		List<Item> items = new ArrayList<Item>();
+		List<Locatable> items = new ArrayList<Locatable>();
 		for (int i = 0; i < 6; i++) {
 			DvText value = new DvText("test value" + i, lang, charset, ts);
 			items.add(new Element("at0001", name, value));
@@ -73,9 +75,9 @@ public class BuildTestBase extends TestCase {
 		return new Cluster("at0002", name, items);
 	}
 
-	private List<Element> elements() {
+	private List<Locatable> elements() {
 		DvText name = new DvText("test element", lang, charset, ts);
-		List<Element> items = new ArrayList<Element>();
+		List<Locatable> items = new ArrayList<Locatable>();
 		for (int i = 0; i < 6; i++) {
 			DvText value = new DvText("test value" + i, lang, charset, ts);
 			items.add(new Element("at0001", name, value));

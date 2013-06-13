@@ -21,6 +21,7 @@ import org.openehr.rm.FullConstructor;
 import org.openehr.rm.common.archetyped.Archetyped;
 import org.openehr.rm.common.archetyped.FeederAudit;
 import org.openehr.rm.common.archetyped.Link;
+import org.openehr.rm.common.archetyped.Locatable;
 import org.openehr.rm.common.archetyped.Pathable;
 import org.openehr.rm.support.identification.UIDBasedID;
 import org.openehr.rm.datastructure.itemstructure.representation.Element;
@@ -57,7 +58,7 @@ public final class ItemList extends ItemStructure {
                 @Attribute(name = "feederAudit") FeederAudit feederAudit,
                 @Attribute(name = "links") Set<Link> links,
                 @Attribute(name = "parent") Pathable parent, 
-                @Attribute(name = "items") List<Element> items) {
+                @Attribute(name = "items") List<Locatable> items) {
         super(uid, archetypeNodeId, name, archetypeDetails, feederAudit,
                 links, parent);
         this.items = items;
@@ -70,7 +71,7 @@ public final class ItemList extends ItemStructure {
      * @param name
      * @param items
      */
-    public ItemList(String archetypeNodeId, DvText name, List<Element> items) {
+    public ItemList(String archetypeNodeId, DvText name, List<Locatable> items) {
         this(null, archetypeNodeId, name, null, null, null, null, items);
     }
     
@@ -81,7 +82,7 @@ public final class ItemList extends ItemStructure {
      * @param name as string
      * @param items
      */
-    public ItemList(String archetypeNodeId, String name, List<Element> items) {
+    public ItemList(String archetypeNodeId, String name, List<Locatable> items) {
         this(archetypeNodeId, new DvText(name), items);
     }
 
@@ -99,7 +100,7 @@ public final class ItemList extends ItemStructure {
      *
      * @return List of Element
      */
-    public List<Element> getItems() {
+    public List<Locatable> getItems() {
         return items;
     }
 
@@ -110,7 +111,7 @@ public final class ItemList extends ItemStructure {
      */
     public List<DvText> names() {
         List<DvText> names = new ArrayList<DvText>();
-        for (Element element : items) {
+        for (Locatable element : items) {
             names.add(element.getName());
         }
         return names;
@@ -123,11 +124,11 @@ public final class ItemList extends ItemStructure {
      * @return null if item of given name not found
      * @throws IllegalArgumentException if name is null or empty
      */
-    public Element namedItem(String name) {
+    public Locatable namedItem(String name) {
         if (StringUtils.isEmpty(name)) {
             throw new IllegalArgumentException("empty name");
         }
-        for (Element element : items) {
+        for (Locatable element : items) {
             if (name.equals(element.getName().getValue())) {
                 return element;
             }
@@ -143,7 +144,7 @@ public final class ItemList extends ItemStructure {
      * @throws IndexOutOfBoundsException if the index is out of range
      *                                   (index < 0 || index >= size()).
      */
-    public Element ithItem(int index) {
+    public Locatable ithItem(int index) {
         return getItems().get(index);
     }
 
@@ -202,7 +203,7 @@ public final class ItemList extends ItemStructure {
 	}
 	
     /* calculated field */
-    private List<Element> items;
+    private List<Locatable> items;
 
     // POJO start
     ItemList() {

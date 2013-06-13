@@ -20,6 +20,7 @@
  */
 package org.openehr.rm.datastructure.itemstructure;
 
+import org.openehr.rm.common.archetyped.Locatable;
 import org.openehr.rm.datastructure.DataStructureTestBase;
 import org.openehr.rm.datastructure.itemstructure.representation.Cluster;
 import org.openehr.rm.datastructure.itemstructure.representation.Element;
@@ -50,7 +51,7 @@ public class ItemTableTest extends DataStructureTestBase {
     			new DvText("right"));
     	Element acuity = new Element("at0002", new DvText("visual acuity"),
     			new DvProportion(6, 6, ProportionKind.RATIO, 0));
-    	List<Item> items = new ArrayList<Item>();
+    	List<Locatable> items = new ArrayList<Locatable>();
     	items.add(eyes);
     	items.add(acuity);
     	rows.add(new Cluster("at0003", new DvText("1"), items));
@@ -60,7 +61,7 @@ public class ItemTableTest extends DataStructureTestBase {
      			new DvText("left"));
      	acuity = new Element("at0005", new DvText("visual acuity"),
      			new DvProportion(6, 18, ProportionKind.RATIO, 0));
-     	items = new ArrayList<Item>();
+     	items = new ArrayList<Locatable>();
      	items.add(eyes);
      	items.add(acuity);
      	rows.add(new Cluster("at0006", new DvText("2"), items));
@@ -70,7 +71,7 @@ public class ItemTableTest extends DataStructureTestBase {
      			new DvText("both"));
      	acuity = new Element("at0008", new DvText("visual acuity"),
      			new DvProportion(6, 6, ProportionKind.RATIO, 0));
-     	items = new ArrayList<Item>();
+     	items = new ArrayList<Locatable>();
      	items.add(eyes);
      	items.add(acuity);
      	rows.add(new Cluster("at0009", new DvText("3"), items));    	

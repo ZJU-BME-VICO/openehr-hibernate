@@ -14,7 +14,7 @@ public class PathBasedQueryTest extends TestCase {
 	public void testPathWithCommaInNamePredicate() throws Exception {
 		DvText text = new DvText("yes");
 		Element element = new Element("at0002", "Status, 2nd", text);
-		List<Element> items = new ArrayList<Element>();
+		List<Locatable> items = new ArrayList<Locatable>();
 		items.add(element);
 		ItemList list = new ItemList("at0001", "list", items);
 		
@@ -25,7 +25,7 @@ public class PathBasedQueryTest extends TestCase {
 	public void testPathWithCommaInNamePredicateSymplified() throws Exception {
 		DvText text = new DvText("yes");
 		Element element = new Element("at0002", "Status, 2nd", text);
-		List<Element> items = new ArrayList<Element>();
+		List<Locatable> items = new ArrayList<Locatable>();
 		items.add(element);
 		ItemList list = new ItemList("at0001", "list", items);
 		
@@ -36,7 +36,7 @@ public class PathBasedQueryTest extends TestCase {
 	public void testPathWithSpaceInNamePredicate() throws Exception {
 		DvText text = new DvText("yes");
 		Element element = new Element("at0002", "Status 2nd", text);
-		List<Element> items = new ArrayList<Element>();
+		List<Locatable> items = new ArrayList<Locatable>();
 		items.add(element);
 		ItemList list = new ItemList("at0001", "list", items);
 		
@@ -47,7 +47,7 @@ public class PathBasedQueryTest extends TestCase {
 	public void testPathWithSpaceInNamePredicateSymplified() throws Exception {
 		DvText text = new DvText("yes");
 		Element element = new Element("at0002", "Status 2nd", text);
-		List<Element> items = new ArrayList<Element>();
+		List<Locatable> items = new ArrayList<Locatable>();
 		items.add(element);
 		ItemList list = new ItemList("at0001", "list", items);
 		
@@ -58,7 +58,7 @@ public class PathBasedQueryTest extends TestCase {
 	public void testPathWithPhraseANDInNamePredicate() throws Exception {
 		DvText text = new DvText("yes");
 		Element element = new Element("at0002", "MEDICINSK BEHANDLING", text);
-		List<Element> items = new ArrayList<Element>();
+		List<Locatable> items = new ArrayList<Locatable>();
 		items.add(element);
 		ItemList list = new ItemList("at0001", "list", items);
 		
@@ -69,7 +69,7 @@ public class PathBasedQueryTest extends TestCase {
 	public void testPathWithPhraseANDInNamePredicateSimplified() throws Exception {
 		DvText text = new DvText("yes");
 		Element element = new Element("at0002", "MEDICINSK BEHANDLING", text);
-		List<Element> items = new ArrayList<Element>();
+		List<Locatable> items = new ArrayList<Locatable>();
 		items.add(element);
 		ItemList list = new ItemList("at0001", "list", items);
 		
@@ -80,7 +80,7 @@ public class PathBasedQueryTest extends TestCase {
 	public void testPathWithSimpleNamePredicate() throws Exception {
 		DvText text = new DvText("yes");
 		Element element = new Element("at0002", "Status", text);
-		List<Element> items = new ArrayList<Element>();
+		List<Locatable> items = new ArrayList<Locatable>();
 		items.add(element);
 		ItemList list = new ItemList("at0001", "list", items);
 		
@@ -91,7 +91,7 @@ public class PathBasedQueryTest extends TestCase {
 	public void testPathWithSimpleNamePredicateSimplified() throws Exception {
 		DvText text = new DvText("yes");
 		Element element = new Element("at0002", "Status", text);
-		List<Element> items = new ArrayList<Element>();
+		List<Locatable> items = new ArrayList<Locatable>();
 		items.add(element);
 		ItemList list = new ItemList("at0001", "list", items);
 		
@@ -102,7 +102,7 @@ public class PathBasedQueryTest extends TestCase {
 	public void testPathPredicateWithAtCode() throws Exception {
 		DvText text = new DvText("yes");
 		Element element = new Element("at0002", "Status, CABG", text);
-		List<Element> items = new ArrayList<Element>();
+		List<Locatable> items = new ArrayList<Locatable>();
 		items.add(element);
 		ItemList list = new ItemList("at0001", "list", items);
 		

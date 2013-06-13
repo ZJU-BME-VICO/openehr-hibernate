@@ -16,6 +16,7 @@ package org.openehr.build;
 import java.util.*;
 
 import org.openehr.rm.common.archetyped.Archetyped;
+import org.openehr.rm.common.archetyped.Locatable;
 import org.openehr.rm.common.generic.PartySelf;
 import org.openehr.rm.datastructure.history.Event;
 import org.openehr.rm.datastructure.history.History;
@@ -98,7 +99,7 @@ public class FindMatchingRMClassTest extends TestCase {
 		DvQuantity systolicValue = new DvQuantity("mmHg", 120.0, ms);
 		Element systolicElement = new Element("at0001", 
 				new DvText("systolic"), systolicValue);
-		List<Element> items = new ArrayList<Element>();
+		List<Locatable> items = new ArrayList<Locatable>();
 		items.add(systolicElement);
 		ItemList itemList = new ItemList("at0003", new DvText("list"), items);
 		valueMap.put("name", new DvText("point event"));
@@ -112,7 +113,7 @@ public class FindMatchingRMClassTest extends TestCase {
 		DvQuantity systolicValue = new DvQuantity("mmHg", 120.0, ms);
 		Element systolicElement = new Element("at0001", 
 				new DvText("systolic"), systolicValue);
-		List<Element> items = new ArrayList<Element>();
+		List<Locatable> items = new ArrayList<Locatable>();
 		items.add(systolicElement);
 		ItemList itemList = new ItemList("at0003", new DvText("list"), items);
 		PointEvent event = new PointEvent("at0004", new DvText("event"),
@@ -131,7 +132,7 @@ public class FindMatchingRMClassTest extends TestCase {
 		DvQuantity systolicValue = new DvQuantity("mmHg", 120.0, ms);
 		Element systolicElement = new Element("at0001", 
 				new DvText("systolic"), systolicValue);
-		List<Element> items = new ArrayList<Element>();
+		List<Locatable> items = new ArrayList<Locatable>();
 		items.add(systolicElement);
 		ItemList itemList = new ItemList("at0003", new DvText("list"), items);
 		PointEvent event = new PointEvent("at0004", new DvText("event"),

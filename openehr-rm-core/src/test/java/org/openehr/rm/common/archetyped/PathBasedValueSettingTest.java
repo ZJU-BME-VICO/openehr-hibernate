@@ -57,7 +57,7 @@ public class PathBasedValueSettingTest extends TestCase {
 	public void testSetDvQuantityOnItemList() throws Exception {
 		DvQuantity dvq = new DvQuantity("mg", 2.3, 1, ms);
 		Element element = new Element("at0002", "element", dvq);
-		List<Element> items = new ArrayList<Element>();
+		List<Locatable> items = new ArrayList<Locatable>();
 		items.add(element);
 		ItemList list = new ItemList("at0001", "list", items);
 		
@@ -65,14 +65,14 @@ public class PathBasedValueSettingTest extends TestCase {
 		dvq = new DvQuantity("mg", 6.2, 1, ms);
 		list.set("/items[at0002]/value", dvq);
 		
-		DvQuantity actual = (DvQuantity) list.getItems().get(0).getValue();
+		DvQuantity actual = (DvQuantity) ((Element) ((Element) list.getItems().get(0))).getValue();
 		assertEquals("failed to set dvQuantity on list", 6.2, actual.getMagnitude());
 	}
 	
 	public void testSetDvQuantityMagnitudeOnItemList() throws Exception {
 		DvQuantity dvq = new DvQuantity("mg", 2.3, 1, ms);
 		Element element = new Element("at0002", "element", dvq);
-		List<Element> items = new ArrayList<Element>();
+		List<Locatable> items = new ArrayList<Locatable>();
 		items.add(element);
 		ItemList list = new ItemList("at0001", "list", items);
 		
@@ -80,7 +80,7 @@ public class PathBasedValueSettingTest extends TestCase {
 		Double d = new Double(6.2);
 		list.set("/items[at0002]/value/magnitude", d);
 		
-		DvQuantity actual = (DvQuantity) list.getItems().get(0).getValue();
+		DvQuantity actual = (DvQuantity) ((Element) list.getItems().get(0)).getValue();
 		assertEquals("failed to set dvQuantity on list", 6.2, actual.getMagnitude());
 	}
 	
@@ -88,7 +88,7 @@ public class PathBasedValueSettingTest extends TestCase {
 		CodePhrase cp = new CodePhrase("SNOMED-CT", "12345678");
 		DvCodedText coded = new DvCodedText("yes", cp);
 		Element element = new Element("at0002", "element", coded);
-		List<Element> items = new ArrayList<Element>();
+		List<Locatable> items = new ArrayList<Locatable>();
 		items.add(element);
 		ItemList list = new ItemList("at0001", "list", items);
 		
@@ -97,7 +97,7 @@ public class PathBasedValueSettingTest extends TestCase {
 		coded = new DvCodedText("nope", cp);
 		list.set("/items[at0002]/value", coded);
 		
-		DvCodedText actual = (DvCodedText) list.getItems().get(0).getValue();
+		DvCodedText actual = (DvCodedText) ((Element) list.getItems().get(0)).getValue();
 		assertEquals("failed to set codedText.value on list", "nope", actual.getValue());
 		assertEquals("failed to set codedText.definingCode on list", "12340000", 
 				actual.getDefiningCode().getCodeString());
@@ -107,7 +107,7 @@ public class PathBasedValueSettingTest extends TestCase {
 		CodePhrase cp = new CodePhrase("SNOMED-CT", "12345678");
 		DvCodedText coded = new DvCodedText("yes", cp);
 		Element element = new Element("at0002", "element", coded);
-		List<Element> items = new ArrayList<Element>();
+		List<Locatable> items = new ArrayList<Locatable>();
 		items.add(element);
 		ItemList list = new ItemList("at0001", "list", items);
 		
@@ -115,7 +115,7 @@ public class PathBasedValueSettingTest extends TestCase {
 		String newCode = "12340000";
 		list.set("/items[at0002]/value/defining_code/code_string", newCode);
 		
-		DvCodedText actual = (DvCodedText) list.getItems().get(0).getValue();
+		DvCodedText actual = (DvCodedText) ((Element) list.getItems().get(0)).getValue();
 		assertEquals("failed to set codedText.definingCode on list", "12340000", 
 				actual.getDefiningCode().getCodeString());
 	}
@@ -124,7 +124,7 @@ public class PathBasedValueSettingTest extends TestCase {
 		CodePhrase cp = new CodePhrase("SNOMED-CT", "12345678");
 		DvCodedText coded = new DvCodedText("yes", cp);
 		Element element = new Element("at0002", "element", coded);
-		List<Element> items = new ArrayList<Element>();
+		List<Locatable> items = new ArrayList<Locatable>();
 		items.add(element);
 		ItemList list = new ItemList("at0001", "list", items);
 		
@@ -132,7 +132,7 @@ public class PathBasedValueSettingTest extends TestCase {
 		String text = "nope";
 		list.set("/items[at0002]/value/value", text);
 		
-		DvCodedText actual = (DvCodedText) list.getItems().get(0).getValue();
+		DvCodedText actual = (DvCodedText) ((Element) list.getItems().get(0)).getValue();
 		assertEquals("failed to set codedText.value on list", "nope", actual.getValue());
 	}
 	
@@ -141,7 +141,7 @@ public class PathBasedValueSettingTest extends TestCase {
 		DvCodedText coded = new DvCodedText("yes", cp);
 		DvOrdinal ordinal = new DvOrdinal(1, coded);
 		Element element = new Element("at0002", "element", ordinal);
-		List<Element> items = new ArrayList<Element>();
+		List<Locatable> items = new ArrayList<Locatable>();
 		items.add(element);
 		ItemList list = new ItemList("at0001", "list", items);
 		
@@ -151,7 +151,7 @@ public class PathBasedValueSettingTest extends TestCase {
 		ordinal = new DvOrdinal(2, coded);
 		list.set("/items[at0002]/value", ordinal);
 		
-		DvOrdinal actual = (DvOrdinal) list.getItems().get(0).getValue();
+		DvOrdinal actual = (DvOrdinal) ((Element) list.getItems().get(0)).getValue();
 		assertEquals("failed to set ordinal.value on list", 2, actual.getValue());
 		assertEquals("failed to set ordinal.symbol.value on list", "nope", 
 				actual.getSymbol().getValue());

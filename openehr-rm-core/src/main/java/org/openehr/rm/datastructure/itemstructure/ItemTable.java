@@ -20,6 +20,7 @@ import org.openehr.rm.FullConstructor;
 import org.openehr.rm.common.archetyped.Archetyped;
 import org.openehr.rm.common.archetyped.FeederAudit;
 import org.openehr.rm.common.archetyped.Link;
+import org.openehr.rm.common.archetyped.Locatable;
 import org.openehr.rm.common.archetyped.Pathable;
 import org.openehr.rm.support.identification.UIDBasedID;
 import org.openehr.rm.datastructure.itemstructure.representation.Cluster;
@@ -147,8 +148,8 @@ public final class ItemTable extends ItemStructure {
     }
 
     	List<DvText> names = new ArrayList<DvText>();
-    	private List<DvText> fetchNames(List<? extends Item> items) {
-        for (Item item : items) {
+    	private List<DvText> fetchNames(List<? extends Locatable> items) {
+        for (Locatable item : items) {
             names.add(item.getName());
         }
         return names;
@@ -327,7 +328,7 @@ public final class ItemTable extends ItemStructure {
         	return null;
         }
     	for(Cluster row : rows) {            
-	        for(Item col : ((Cluster)row).getItems()) {
+	        for(Locatable col : ((Cluster)row).getItems()) {
 	            if(!(col instanceof Element)) {
 	                throw new IllegalArgumentException("invalid col type for itemTable, Element expected");
 	            }

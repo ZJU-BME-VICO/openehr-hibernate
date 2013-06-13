@@ -9,6 +9,7 @@ import org.apache.commons.jxpath.JXPathContext;
 import org.openehr.am.archetype.Archetype;
 import org.openehr.rm.Attribute;
 import org.openehr.rm.common.archetyped.Archetyped;
+import org.openehr.rm.common.archetyped.Locatable;
 import org.openehr.rm.composition.Composition;
 import org.openehr.rm.datastructure.itemstructure.ItemTree;
 import org.openehr.rm.datastructure.itemstructure.representation.Cluster;
@@ -377,7 +378,7 @@ public class XPathTest extends DADLBindingTestBase {
 	 * /comment
 	 */
 	private ItemTree createTree() {
-		List<Item> items = new ArrayList<Item>();
+		List<Locatable> items = new ArrayList<Locatable>();
 		items.add(sampleElement());
 		items.add(cluster());
 		items.add(commentElement());
@@ -396,7 +397,7 @@ public class XPathTest extends DADLBindingTestBase {
 	 * /items[adl-test-CLUSTER.test_cluster.v1, 'test cluster']/items[at0004, 'element 3']
 	 */
 	private ItemTree createRootTreeWithTwoSlottedClusters() throws Exception {
-		List<Item> items = new ArrayList<Item>();
+		List<Locatable> items = new ArrayList<Locatable>();
 		items.add(sampleElement());
 		items.add(cluster());
 		items.add(commentElement());
@@ -431,7 +432,7 @@ public class XPathTest extends DADLBindingTestBase {
 		Element comment = new Element("at0006", new DvText("comment"), new DvText(
 				"high cardiac risk"));
 		
-		List<Item> items = new ArrayList<Item>();
+		List<Locatable> items = new ArrayList<Locatable>();
 		items.add(sampleElement());
 
 		// repeated sample element
@@ -472,7 +473,7 @@ public class XPathTest extends DADLBindingTestBase {
 		comment = new Element("at0006", new DvText("comment"), new DvText(
 				"high cardiac risk"));
 
-		List<Item> items = new ArrayList<Item>();
+		List<Locatable> items = new ArrayList<Locatable>();
 		items.add(sample);
 		items.add(cluster());
 		
@@ -496,7 +497,7 @@ public class XPathTest extends DADLBindingTestBase {
 				new DvQuantity("mmol/L", 0.9, measureServ));
 		hdlCholesterol = new Element("at0004", new DvText("HDL cholesterol"),
 				new DvQuantity("mmol/L", 5.2, measureServ));
-		List<Item> items = new ArrayList<Item>();
+		List<Locatable> items = new ArrayList<Locatable>();
 		items.add(totalCholesterol);
 		items.add(ldlCholesterol);
 		items.add(hdlCholesterol);
@@ -511,7 +512,7 @@ public class XPathTest extends DADLBindingTestBase {
 				new DvText("element 2"), new DvText("element 2"));
 		Element e3 = new Element("at0004", 
 				new DvText("element 3"), new DvText("element 3"));
-		List<Item> items = new ArrayList<Item>();
+		List<Locatable> items = new ArrayList<Locatable>();
 		items.add(e1);
 		items.add(e2);
 		items.add(e3);	

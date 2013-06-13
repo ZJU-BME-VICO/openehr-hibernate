@@ -19,6 +19,7 @@ import org.openehr.rm.FullConstructor;
 import org.openehr.rm.common.archetyped.Archetyped;
 import org.openehr.rm.common.archetyped.FeederAudit;
 import org.openehr.rm.common.archetyped.Link;
+import org.openehr.rm.common.archetyped.Locatable;
 import org.openehr.rm.common.archetyped.Pathable;
 import org.openehr.rm.support.identification.UIDBasedID;
 import org.openehr.rm.datastructure.itemstructure.representation.Element;
@@ -55,7 +56,7 @@ public final class ItemSingle extends ItemStructure {
                 @Attribute(name = "feederAudit") FeederAudit feederAudit,
                 @Attribute(name = "links") Set<Link> links,
                 @Attribute(name = "parent") Pathable parent, 
-                @Attribute(name = "item", required=true) Element item) {
+                @Attribute(name = "item", required=true) Locatable item) {
         super(uid, archetypeNodeId, name, archetypeDetails, feederAudit,
                 links, parent);
         if(item == null) {
@@ -72,7 +73,7 @@ public final class ItemSingle extends ItemStructure {
      * @param representation
      * @throws IllegalArgumentException if representation null
      */
-    public ItemSingle(String archetypeNodeId, DvText name, Element item) {
+    public ItemSingle(String archetypeNodeId, DvText name, Locatable item) {
         this(null, archetypeNodeId, name, null, null, null, null, item);
     }
     
@@ -84,7 +85,7 @@ public final class ItemSingle extends ItemStructure {
      * @param representation
      * @throws IllegalArgumentException if representation null
      */
-    public ItemSingle(String archetypeNodeId, String name, Element item) {
+    public ItemSingle(String archetypeNodeId, String name, Locatable item) {
         this(archetypeNodeId, new DvText(name), item);
     }
 
@@ -93,7 +94,7 @@ public final class ItemSingle extends ItemStructure {
      *
      * @return item
      */
-    public Element getItem() {
+    public Locatable getItem() {
         return item;
     }
 
@@ -137,7 +138,7 @@ public final class ItemSingle extends ItemStructure {
 		return null;
 	}
 	
-	private Element item;
+	private Locatable item;
 }
 
 /*

@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openehr.rm.common.archetyped.Archetyped;
+import org.openehr.rm.common.archetyped.Locatable;
 import org.openehr.rm.datastructure.history.Event;
 import org.openehr.rm.datastructure.history.History;
 import org.openehr.rm.datastructure.history.PointEvent;
@@ -61,7 +62,7 @@ public class ObservationTest extends CompositionTestBase {
                 new ArchetypeID("openehr-ehr_rm-observation.physical_examination.v3"),
                 "1.1");
         
-        List<Element> items = new ArrayList<Element>();
+        List<Locatable> items = new ArrayList<Locatable>();
         items.add(new Element(("at0001"), "header", new DvText("date")));
         items.add(new Element(("at0002"), "value",	new DvDate("2008-05-17")));
         itemList = new ItemList("at0003", "item list", items); 
@@ -74,7 +75,7 @@ public class ObservationTest extends CompositionTestBase {
         data = new History<ItemList>("at0005", "data",
         		new DvDateTime("2008-05-17T10:00:00"), events);
         
-        items = new ArrayList<Element>();
+        items = new ArrayList<Locatable>();
         items.add(new Element(("at0004"), "protocol 1", new DvText("date")));
         items.add(new Element(("at0005"), "protocol 2",	new DvDate("2008-05-17")));
         protocol = new ItemList("at0006", "item list", items); 
@@ -169,14 +170,14 @@ public class ObservationTest extends CompositionTestBase {
     	path = "/data/events[at0004]/data/items[at0001]/value";
     	value = observation.itemAtPath(path);
     	assertEquals("unexpected resutl for path: " + path,	
-    			itemList.getItems().get(0).getValue(), value);
+    			((Element) itemList.getItems().get(0)).getValue(), value);
     }
     
     public void testItemAtPathDataEventDataItem2Value() throws Exception {
     	path = "/data/events[at0004]/data/items[at0002]/value";
     	value = observation.itemAtPath(path);
     	assertEquals("unexpected resutl for path: " + path,	
-    			itemList.getItems().get(1).getValue(), value);
+    			((Element) itemList.getItems().get(1)).getValue(), value);
     }
     
     public void testItemAtPathDataEventDataItemHeader() throws Exception {
@@ -197,14 +198,14 @@ public class ObservationTest extends CompositionTestBase {
     	path = "/data/events['point event']/data/items['header']/value";
     	value = observation.itemAtPath(path);
     	assertEquals("unexpected resutl for path: " + path, 
-    			itemList.getItems().get(0).getValue(), value);
+    			((Element) itemList.getItems().get(0)).getValue(), value);
     }
     
     public void testItemAtPathDataEventDataItemValueValue() throws Exception {
     	path = "/data/events['point event']/data/items['value']/value";
     	value = observation.itemAtPath(path);
     	assertEquals("unexpected resutl for path: " + path, 
-    			itemList.getItems().get(1).getValue(), value);
+    			((Element) itemList.getItems().get(1)).getValue(), value);
     }
     
     public void testItemAtPathState() throws Exception {

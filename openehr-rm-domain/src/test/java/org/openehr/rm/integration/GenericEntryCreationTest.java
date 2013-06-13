@@ -16,6 +16,7 @@ package org.openehr.rm.integration;
 
 import java.util.*;
 
+import org.openehr.rm.common.archetyped.Locatable;
 import org.openehr.rm.datastructure.itemstructure.ItemTree;
 import org.openehr.rm.datastructure.itemstructure.representation.*;
 import org.openehr.rm.datatypes.quantity.DvQuantity;
@@ -28,7 +29,7 @@ public class GenericEntryCreationTest extends TestCase {
 		String archetypeNodeId = "at0001";
 		String name = "test generic entry";
 		Element element = new Element("at0002", "te",	new DvQuantity(12.0));
-		List<Item> items = new ArrayList<Item>();
+		List<Locatable> items = new ArrayList<Locatable>();
 		items.add(element);
 		ItemTree itemTree = new ItemTree("at0003", "tree", items);
 		

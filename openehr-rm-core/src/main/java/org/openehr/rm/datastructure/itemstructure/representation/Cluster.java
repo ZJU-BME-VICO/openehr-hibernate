@@ -19,6 +19,7 @@ import org.openehr.rm.FullConstructor;
 import org.openehr.rm.common.archetyped.Archetyped;
 import org.openehr.rm.common.archetyped.FeederAudit;
 import org.openehr.rm.common.archetyped.Link;
+import org.openehr.rm.common.archetyped.Locatable;
 import org.openehr.rm.common.archetyped.Pathable;
 import org.openehr.rm.support.identification.UIDBasedID;
 import org.openehr.rm.datatypes.text.DvText;
@@ -55,7 +56,7 @@ public final class Cluster extends Item {
                            @Attribute(name = "feederAudit") FeederAudit feederAudit,
                            @Attribute(name = "links") Set<Link> links,
                            @Attribute(name = "parent") Pathable parent, 
-	    @Attribute(name = "items") List<Item> items) {
+	    @Attribute(name = "items") List<Locatable> items) {
 
         super(uid, archetypeNodeId, name, archetypeDetails, feederAudit,
                 links, parent);
@@ -64,7 +65,7 @@ public final class Cluster extends Item {
             throw new IllegalArgumentException("null or empty items");
         }
 	if (items!=null){
-        this.items = new ArrayList<Item>(items);
+        this.items = new ArrayList<Locatable>(items);
     }
     }
 
@@ -77,7 +78,7 @@ public final class Cluster extends Item {
      * @throws IllegalArgumentException if archetypeNodeId or name null,
      *                                  or items null or empty
      */
-    public Cluster(String archetypeNodeId, DvText name, List<Item> items) {
+    public Cluster(String archetypeNodeId, DvText name, List<Locatable> items) {
         this(null, archetypeNodeId, name, null, null, null, null, items);
     }
     
@@ -90,7 +91,7 @@ public final class Cluster extends Item {
      * @throws IllegalArgumentException if archetypeNodeId or name null,
      *                                  or items null or empty
      */
-    public Cluster(String archetypeNodeId, String name, List<Item> items) {
+    public Cluster(String archetypeNodeId, String name, List<Locatable> items) {
         this(archetypeNodeId, new DvText(name), items);
     }
 
@@ -100,7 +101,7 @@ public final class Cluster extends Item {
      *
      * @return items of this cluster
      */
-    public List<Item> getItems() {
+    public List<Locatable> getItems() {
         return items;
     }
 
@@ -119,7 +120,7 @@ public final class Cluster extends Item {
     protected Cluster() {
     }
 
-    void setItems(List<Item> items) {
+    void setItems(List<Locatable> items) {
         this.items = items;
     }
     // POJO end
@@ -143,7 +144,7 @@ public final class Cluster extends Item {
 	}
 
 	/* fields */
-    private List<Item> items;
+    private List<Locatable> items;
 }
 
 /*

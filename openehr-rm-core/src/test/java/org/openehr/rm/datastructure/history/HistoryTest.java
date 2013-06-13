@@ -185,7 +185,7 @@ public class HistoryTest extends DataStructureTestBase {
 	private History<ItemList> initWithItemList() {
 		element = element("element name", "value");
 
-		List<Element> items = new ArrayList<Element>();
+		List<Locatable> items = new ArrayList<Locatable>();
 		items.add(new Element("at0014", new DvText("element 1"), new DvText("text 1")));
 		items.add(new Element("at0015", new DvText("element 2"), new DvText("text 2")));
 		items.add(new Element("at0016", new DvText("element 3"), new DvText("text 3")));

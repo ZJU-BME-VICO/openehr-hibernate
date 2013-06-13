@@ -18,6 +18,7 @@ package org.openehr.rm.composition.content.entry;
 import java.util.*;
 
 import org.openehr.rm.common.archetyped.Archetyped;
+import org.openehr.rm.common.archetyped.Locatable;
 import org.openehr.rm.composition.CompositionTestBase;
 import org.openehr.rm.datastructure.itemstructure.ItemList;
 import org.openehr.rm.datastructure.itemstructure.representation.Element;
@@ -35,7 +36,7 @@ public class AdminEntryTest extends CompositionTestBase {
         Archetyped archetypeDetails = new Archetyped(
                 new ArchetypeID("openehr-ehr_rm-adminEntry.date.v2"),
                 "1.0.2");        
-        List<Element> items = new ArrayList<Element>();
+        List<Locatable> items = new ArrayList<Locatable>();
         items.add(new Element(("at0001"), "header", new DvText("date")));
         items.add(new Element(("at0002"), "value",	new DvDate("2008-05-17")));
         itemList = new ItemList("at0003", "item list", items);        
@@ -99,14 +100,14 @@ public class AdminEntryTest extends CompositionTestBase {
     	path = "/data/items[at0001]/value";
     	value = adminEntry.itemAtPath(path);
         assertEquals("unexpected result for path: " + path, 
-        		itemList.getItems().get(0).getValue(), value); 
+        		((Element) itemList.getItems().get(0)).getValue(), value); 
     }
     
     public void testItemAtPathDataItemTwoValue() throws Exception {
     	path = "/data/items[at0002]/value";
     	value = adminEntry.itemAtPath(path);
         assertEquals("unexpected result for path: " + path, 
-        		itemList.getItems().get(1).getValue(), value); 
+        		((Element) itemList.getItems().get(1)).getValue(), value); 
     }
     
     public void testItemAtPathDataItemHeader() throws Exception {
@@ -127,14 +128,14 @@ public class AdminEntryTest extends CompositionTestBase {
     	path = "/data/items['header']/value";
     	value = adminEntry.itemAtPath(path);
         assertEquals("unexpected result for path: " + path, 
-        		itemList.getItems().get(0).getValue(), value); 
+        		((Element) itemList.getItems().get(0)).getValue(), value); 
     }
     
     public void testItemAtPathDataItemValueValue() throws Exception {
     	path = "/data/items['value']/value";
     	value = adminEntry.itemAtPath(path);
         assertEquals("unexpected result for path: " + path, 
-        		itemList.getItems().get(1).getValue(), value); 
+        		((Element) itemList.getItems().get(1)).getValue(), value); 
     }
     
     private ItemList itemList;

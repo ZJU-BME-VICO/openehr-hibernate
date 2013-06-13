@@ -13,11 +13,6 @@
  */
 package org.openehr.rm.binding;
 
-import java.io.InputStream;
-import java.util.TimeZone;
-
-import org.joda.time.DateTime;
-import org.openehr.am.parser.*;
 import org.openehr.rm.common.archetyped.Archetyped;
 import org.openehr.rm.common.generic.PartySelf;
 import org.openehr.rm.composition.content.entry.Observation;
@@ -34,8 +29,6 @@ import org.openehr.rm.datatypes.text.CodePhrase;
 import org.openehr.rm.datatypes.text.DvCodedText;
 import org.openehr.rm.datatypes.text.DvText;
 import org.openehr.rm.support.identification.*;
-
-import junit.framework.TestCase;
 
 public class DADLBindingTest extends DADLBindingTestBase {
 	
@@ -134,9 +127,9 @@ public class DADLBindingTest extends DADLBindingTestBase {
 				itemList.getName().getValue());
 		assertEquals("ItemList.items size wrong", 2, itemList.getItems().size());
 		assertEquals("itemList.items[0].value.magnitude wrong", 120.0,
-				((DvQuantity) itemList.ithItem(0).getValue()).getMagnitude(), 0);
+				((DvQuantity) ((Element) itemList.ithItem(0)).getValue()).getMagnitude(), 0);
 		assertEquals("itemList.items[1].value.magnitude wrong", 80.0,
-				((DvQuantity) itemList.ithItem(1).getValue()).getMagnitude(), 0);
+				((DvQuantity) ((Element) itemList.ithItem(1)).getValue()).getMagnitude(), 0);
 	}
 	
 	public void testBindEmptyItemList() throws Exception {
@@ -260,10 +253,10 @@ public class DADLBindingTest extends DADLBindingTestBase {
 		ItemList list = (ItemList) event.getData();
 		assertEquals("observatoin.events[0].data.items.size wrong", 2,
 				list.getItems().size());
-		DvQuantity dq = (DvQuantity) list.getItems().get(0).getValue();
+		DvQuantity dq = (DvQuantity) ((Element) list.getItems().get(0)).getValue();
 		assertEquals("items[0].value.magnitude wrong", 120.0, 
 				dq.getMagnitude(), 0);
-		dq = (DvQuantity) list.getItems().get(1).getValue();
+		dq = (DvQuantity) ((Element) list.getItems().get(1)).getValue();
 		assertEquals("items[0].value.magnitude wrong", 80.0, 
 				dq.getMagnitude(), 0);
 		
@@ -281,26 +274,23 @@ public class DADLBindingTest extends DADLBindingTestBase {
 		ItemList list = (ItemList) event.getData();
 		assertEquals("observatoin.data.events[0].data.items.size wrong", 2,
 				list.getItems().size());
-		DvQuantity dq = (DvQuantity) list.getItems().get(0).getValue();
+		DvQuantity dq = (DvQuantity) ((Element) list.getItems().get(0)).getValue();
 		assertEquals("items[0].value.magnitude wrong", 120.0, 
 				dq.getMagnitude(), 0);
-		dq = (DvQuantity) list.getItems().get(1).getValue();
+		dq = (DvQuantity) ((Element) list.getItems().get(1)).getValue();
 		assertEquals("items[0].value.magnitude wrong", 80.0, 
 				dq.getMagnitude(), 0);
 		
 		assertNotNull("data.events[0].state null", event.getState());
 		list = (ItemList) event.getState();
 		assertEquals("event.state.size wrong", 1, list.getItems().size());
-		DvCodedText codedText = (DvCodedText) list.getItems().get(0).getValue();
+		DvCodedText codedText = (DvCodedText) ((Element) list.getItems().get(0)).getValue();
 		assertEquals("event.state.items[0].value.value wrong", "Sitting", 
 				codedText.getValue());
 		assertEquals("event.state.items[0].value.definingCode.terminologyId wrong", 
 				"local", codedText.getDefiningCode().getTerminologyId().getValue());
 		assertEquals("event.state.items[0].value.definingCode.codeString wrong", 
 				"at1001", codedText.getDefiningCode().getCodeString());
-		
-		// test with paths
-		String path = "/data/events[0]/data/items[0]/value/magnitude";		
 	}
 	
 	public void testBindSimpleTypedItemTree() throws Exception {

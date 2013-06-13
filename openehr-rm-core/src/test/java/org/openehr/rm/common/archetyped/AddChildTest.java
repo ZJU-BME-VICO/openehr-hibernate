@@ -28,7 +28,7 @@ public class AddChildTest extends TestCase {
 	}
 	
 	private ItemList itemList() {
-		List<Element> items = new ArrayList<Element>();
+		List<Locatable> items = new ArrayList<Locatable>();
 		for(int i = 1; i <= 3; i++) {
 			DvText text = new DvText("text " + i);
 			Element element = new Element("at000" + i, "element " + i, text);		

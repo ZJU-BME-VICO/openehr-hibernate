@@ -20,6 +20,7 @@
  */
 package org.openehr.rm.datastructure.itemstructure;
 
+import org.openehr.rm.common.archetyped.Locatable;
 import org.openehr.rm.datastructure.DataStructureTestBase;
 import org.openehr.rm.datastructure.itemstructure.representation.Cluster;
 import org.openehr.rm.datastructure.itemstructure.representation.Element;
@@ -70,7 +71,7 @@ public class ItemTreeTest extends DataStructureTestBase {
     	hdlCholesterol = new Element("at0004", new DvText("HDL cholesterol"),
     			new DvQuantity("mmol/L", 5.2, measureServ));
     	
-    	List<Item> items = new ArrayList<Item>();
+    	List<Locatable> items = new ArrayList<Locatable>();
     	items.add(totalCholesterol);
     	items.add(ldlCholesterol);
     	items.add(hdlCholesterol);
@@ -80,7 +81,7 @@ public class ItemTreeTest extends DataStructureTestBase {
     	comment = new Element("at0006", new DvText("comment"),
     			new DvText("high cardiac risk"));
     	
-    	items = new ArrayList<Item>();
+    	items = new ArrayList<Locatable>();
     	items.add(sample);
     	items.add(lipidStudies);
     	items.add(comment);

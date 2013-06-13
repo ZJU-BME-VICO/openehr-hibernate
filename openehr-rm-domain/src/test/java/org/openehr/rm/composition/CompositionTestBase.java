@@ -90,7 +90,7 @@ public class CompositionTestBase extends DataStructureTestBase2 {
 	protected ItemList list(String name) {
 		String[] names = { "field 1", "field 2", "field 3" };
 		String[] values = { "value 1", "value 2", "value 3" };
-		List<Element> items = new ArrayList<Element>();
+		List<Locatable> items = new ArrayList<Locatable>();
 		for (int i = 0; i < names.length; i++) {
 			items.add(element(names[i], values[i]));
 		}

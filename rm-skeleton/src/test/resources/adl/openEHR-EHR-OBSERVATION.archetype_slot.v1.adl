@@ -1,0 +1,73 @@
+archetype (adl_version=1.4)
+	openEHR-EHR-OBSERVATION.archetype_slot.v1
+
+concept
+	[at0000]	-- Archetype slot
+language
+	original_language = <[ISO_639-1::zh]>
+description
+	original_author = <
+		["name"] = <"">
+	>
+	details = <
+		["zh"] = <
+			language = <[ISO_639-1::zh]>
+			purpose = <"">
+			use = <"">
+			misuse = <"">
+			copyright = <"">
+		>
+	>
+	lifecycle_state = <"0">
+	other_contributors = <>
+	other_details = <
+		["MD5-CAM-1.0.1"] = <"D20B31A690D755BB63FB885ECAFFDEB0">
+	>
+
+definition
+	OBSERVATION[at0000] matches {	-- Archetype slot
+		data matches {
+			HISTORY[at0001] matches {	-- Event Series
+				events cardinality matches {1..*; unordered} matches {
+					EVENT[at0002] occurrences matches {0..1} matches {	-- Any event
+						data matches {
+							ITEM_TREE[at0003] matches {	-- Tree
+								items cardinality matches {0..*; unordered} matches {
+									allow_archetype CLUSTER occurrences matches {0..*} matches {
+										include
+											archetype_id/value matches {/openEHR-EHR-CLUSTER\.address(-[a-zA-Z0-9_]+)*\.v1/}
+										exclude
+											archetype_id/value matches {/.*/}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+ontology
+	term_definitions = <
+		["zh"] = <
+			items = <
+				["at0000"] = <
+					text = <"Archetype slot">
+					description = <"unknown">
+				>
+				["at0001"] = <
+					text = <"Event Series">
+					description = <"@ internal @">
+				>
+				["at0002"] = <
+					text = <"Any event">
+					description = <"*">
+				>
+				["at0003"] = <
+					text = <"Tree">
+					description = <"@ internal @">
+				>
+			>
+		>
+	>

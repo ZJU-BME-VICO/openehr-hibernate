@@ -17,6 +17,7 @@ package org.openehr.rm.integration;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.openehr.rm.common.archetyped.Locatable;
 import org.openehr.rm.datastructure.itemstructure.ItemTree;
 import org.openehr.rm.datastructure.itemstructure.representation.Element;
 import org.openehr.rm.datastructure.itemstructure.representation.Item;
@@ -30,7 +31,7 @@ public class GenericEntryPathTest extends TestCase {
 		String archetypeNodeId = "at0001";
 		String name = "test generic entry";
 		element = new Element("at0002", "element",	new DvQuantity(12.0));
-		List<Item> items = new ArrayList<Item>();
+		List<Locatable> items = new ArrayList<Locatable>();
 		items.add(element);
 		itemTree = new ItemTree("at0003", "item tree", items);		
 		entry = new GenericEntry(archetypeNodeId, name, itemTree);		

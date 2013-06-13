@@ -7,6 +7,7 @@ import javax.xml.namespace.QName;
 import org.apache.xmlbeans.XmlObject;
 import org.apache.xmlbeans.XmlOptions;
 import org.openehr.rm.common.archetyped.Archetyped;
+import org.openehr.rm.common.archetyped.Locatable;
 import org.openehr.rm.common.changecontrol.OriginalVersion;
 import org.openehr.rm.common.generic.PartyProxy;
 import org.openehr.rm.common.generic.PartySelf;
@@ -72,7 +73,7 @@ public class BindStructureToXMLTest extends XMLBindingTestBase {
 		DvQuantity dvq = new DvQuantity(10.0);
 		Element element2 = new Element("at0002", "dvq element", dvq);
 		
-		List<Item> items = new ArrayList<Item>();
+		List<Locatable> items = new ArrayList<Locatable>();
 		items.add(element1);
 		items.add(element2);
 		
@@ -107,7 +108,7 @@ public class BindStructureToXMLTest extends XMLBindingTestBase {
 		DvQuantity dvq = new DvQuantity(10.0);
 		Element element2 = new Element("at0002", "dvq element", dvq);
 		
-		List<Item> items = new ArrayList<Item>();
+		List<Locatable> items = new ArrayList<Locatable>();
 		items.add(element1);
 		items.add(element2);
 		

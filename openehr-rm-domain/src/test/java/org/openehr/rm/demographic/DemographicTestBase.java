@@ -25,6 +25,7 @@ import junit.framework.TestCase;
 import org.openehr.rm.common.archetyped.Archetyped;
 import org.openehr.rm.common.archetyped.FeederAudit;
 import org.openehr.rm.common.archetyped.Link;
+import org.openehr.rm.common.archetyped.Locatable;
 import org.openehr.rm.common.generic.Participation;
 import org.openehr.rm.common.generic.PartyIdentified;
 import org.openehr.rm.common.generic.PartySelf;
@@ -83,7 +84,7 @@ public class DemographicTestBase extends TestCase {
 	}
 
 	protected Cluster testCluster() {
-		List<Item> items = new ArrayList<Item>();
+		List<Locatable> items = new ArrayList<Locatable>();
 		for (int i = 0; i < 5; i++) {
 			items.add(element("element no." + i, text("value " + i)));
 		}

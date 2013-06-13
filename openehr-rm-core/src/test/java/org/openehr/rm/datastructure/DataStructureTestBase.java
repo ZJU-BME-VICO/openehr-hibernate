@@ -22,6 +22,7 @@ package org.openehr.rm.datastructure;
 
 import junit.framework.TestCase;
 import org.openehr.rm.support.identification.TestTerminologyID;
+import org.openehr.rm.common.archetyped.Locatable;
 import org.openehr.rm.datastructure.itemstructure.ItemStructure;
 import org.openehr.rm.datastructure.itemstructure.representation.Cluster;
 import org.openehr.rm.datastructure.itemstructure.representation.Element;
@@ -57,7 +58,7 @@ public class DataStructureTestBase extends TestCase {
     }
 
     // create a cluster
-    protected Cluster cluster(String archetypeNodeId, String name, List<Item> items) {
+    protected Cluster cluster(String archetypeNodeId, String name, List<Locatable> items) {
         return new Cluster(archetypeNodeId, text(name), items);
     }
 

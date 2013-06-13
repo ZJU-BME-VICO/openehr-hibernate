@@ -20,6 +20,7 @@
  */
 package org.openehr.rm.datastructure.itemstructure;
 
+import org.openehr.rm.common.archetyped.Locatable;
 import org.openehr.rm.datastructure.DataStructureTestBase;
 import org.openehr.rm.datastructure.itemstructure.representation.Element;
 import org.openehr.rm.datatypes.text.DvText;
@@ -80,7 +81,7 @@ public class ItemListTest extends DataStructureTestBase {
     private ItemList init() {
 
         // save element in the array for comparison
-        elements = new ArrayList<Element>();
+        elements = new ArrayList<Locatable>();
 
         // elements
         for (int i = 0; i < NAMES.length; i++) {
@@ -101,7 +102,7 @@ public class ItemListTest extends DataStructureTestBase {
 
     /* field */
     private ItemList itemList;
-    private List<Element> elements;
+    private List<Locatable> elements;
 }
 /*
  *  ***** BEGIN LICENSE BLOCK *****
