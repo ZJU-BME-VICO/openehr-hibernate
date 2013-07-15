@@ -654,6 +654,10 @@ public abstract class Locatable extends Pathable implements Settable, Cloneable 
     }    
     // POJO end
 
+	public Map<String, Object> getAssociatedObjects() {
+		return associatedObjects;
+	}
+    
     /**
      * Separator used to delimit segments in the path
      */
@@ -668,6 +672,7 @@ public abstract class Locatable extends Pathable implements Settable, Cloneable 
     private Archetyped archetypeDetails;
     private FeederAudit feederAudit;
     private Set<Link> links;
+    private Map<String, Object> associatedObjects = new HashMap<String, Object>();
    
 }
 
