@@ -115,13 +115,21 @@ public final class Cluster extends Item {
     public String pathOfItem(Pathable item) {
         return null;  // todo: implement this method
     }
+    
+    public Set getOnetomany() {
+		return onetomany;
+	}
 
     // POJO start
     protected Cluster() {
     }
 
-    void setItems(List<Locatable> items) {
+    public void setItems(List<Locatable> items) {
         this.items = items;
+    }
+    
+    public void setOnetomany(Set onetomany) {
+    	this.onetomany = onetomany;
     }
     // POJO end
 
@@ -145,6 +153,7 @@ public final class Cluster extends Item {
 
 	/* fields */
     private List<Locatable> items;
+    private Set onetomany;
 }
 
 /*
