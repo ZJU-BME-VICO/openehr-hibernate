@@ -101,10 +101,10 @@
 			<groupId>org.apache.xmlbeans</groupId>
 			<artifactId>xmlbeans-xpath</artifactId>
 		</dependency>
-        <dependency>
-            <groupId>openehr</groupId>
-            <artifactId>oet-parser</artifactId>
-            <version>${project.version}</version>
-        </dependency>
+		<dependency>
+			<groupId>openehr</groupId>
+			<artifactId>oet-parser</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 	</dependencies>
 </project>

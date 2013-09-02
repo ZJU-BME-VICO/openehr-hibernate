@@ -1,23 +1,24 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-	<groupId>openehr</groupId>
+		<groupId>openehr</groupId>
 		<artifactId>ref_impl_java</artifactId>
 		<version>1.0.5-SNAPSHOT</version>
 	</parent>
 	<artifactId>xml-serializer</artifactId>
 	<packaging>jar</packaging>
 	<name>XML Serializer</name>
-	<url>http://www.openehr.org/projects/java.html</url>   
+	<url>http://www.openehr.org/projects/java.html</url>
 
 	<organization>
 		<name>openEHR</name>
 		<url>http://www.openehr.org/</url>
 	</organization>
 	<inceptionYear>2004</inceptionYear>
-	
+
 	<description>Java XML Serializer of the Archetype Object Model</description>
-	
+
 	<dependencies>
 		<dependency>
 			<groupId>openehr</groupId>
