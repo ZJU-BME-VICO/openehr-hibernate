@@ -286,7 +286,7 @@ public class RMObjectBuilder {
 			throws RMObjectBuildingException {
 
 		Class rmClass = retrieveRMType(rmClassName);
-		
+      
 		// replace underscore separated names with camel case
 		Map<String, Object> filteredMap = new HashMap<String, Object>();
 		for (String name : valueMap.keySet()) {
@@ -412,6 +412,7 @@ public class RMObjectBuilder {
 		}
 
 		Object ret = null;
+      
 		try {
 			// OG added hack
 			if (rmClassName.equalsIgnoreCase("DVCOUNT")) {
@@ -426,7 +427,7 @@ public class RMObjectBuilder {
 			}	
 			ret = constructor.newInstance(valueArray);
 		} catch (Exception e) {
-			
+      
 			if (log.isDebugEnabled()) {
 				e.printStackTrace();
 			}
@@ -688,13 +689,13 @@ public class RMObjectBuilder {
 	// loaded rm type map
 	private Map<String, Class> typeMap;
 	private Map<String, Class> upperCaseMap;
-	private static final Set<String> stringParsingTypes;
+	private static final Set<String> stringParsingTypes; // These should be rm_type_names not Java class names.
 
 	static {
 		// so far only types from quantity.datetime
 		stringParsingTypes = new HashSet<String>();
-		String[] types = { "DvDate", "DvDateTime", "DvTime", "DvDuration",
-				"DvPartialDate", "DvPartialTime" };
+		//String[] types = { "DvDate", "DvDateTime", "DvTime", "DvDuration", "DvPartialDate", "DvPartialTime" };
+      String[] types = { "DV_DATE", "DV_DATE_TIME", "DV_TIME", "DV_DURATION", "DV_PARTIAL_DATE", "DV_PARTIAL_TIME" };
 		stringParsingTypes.addAll(Arrays.asList(types));
 	}
 }
