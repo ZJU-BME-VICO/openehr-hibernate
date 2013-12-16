@@ -27,8 +27,8 @@
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>jdom</groupId>
-			<artifactId>jdom</artifactId>
+			<groupId>dom4j</groupId>
+			<artifactId>dom4j</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>log4j</groupId>

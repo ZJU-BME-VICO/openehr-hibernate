@@ -16,9 +16,9 @@ package org.openehr.terminology;
 import java.io.*;
 import java.util.*;
 
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.input.SAXBuilder;
+import org.dom4j.Document;
+import org.dom4j.Element;
+import org.dom4j.io.SAXReader;
 
 /**
  * This class provides access to terminology content in XML format 
@@ -53,12 +53,12 @@ public class XMLTerminologySource implements TerminologySource {
 	}
 	
 	private void loadTerminologyFromXML(String filename) throws Exception {		
-		SAXBuilder builder = new SAXBuilder();
+		SAXReader builder = new SAXReader();
 		InputStream input = this.getClass().getResourceAsStream(filename);
 		try {
-			Document doc = builder.build(input);
+			Document doc = builder.read(input);
 			Element root = doc.getRootElement();
-			List codesets = root.getChildren("codeset");
+			List codesets = root.elements("codeset");
 			codeSetList.clear();
 			groupList.clear();
 			
@@ -67,7 +67,7 @@ public class XMLTerminologySource implements TerminologySource {
 				codeSetList.add(loadCodeSet(element));
 			}
 			
-			List groups = root.getChildren("group");
+			List groups = root.elements("group");
 			for(Iterator it = groups.iterator(); it.hasNext();) {
 				Element element = (Element) it.next();
 				groupList.add(loadGroup(element));
@@ -84,13 +84,13 @@ public class XMLTerminologySource implements TerminologySource {
 	 */
 	private CodeSet loadCodeSet(Element element) {
 		CodeSet codeset = new CodeSet();
-		codeset.openehrId = element.getAttributeValue("openehr_id");
-		codeset.issuer = element.getAttributeValue("issuer");
-		codeset.externalId = element.getAttributeValue("external_id");
-		List children = element.getChildren("code");
+		codeset.openehrId = element.attributeValue("openehr_id");
+		codeset.issuer = element.attributeValue("issuer");
+		codeset.externalId = element.attributeValue("external_id");
+		List children = element.elements("code");
 		for(Iterator it = children.iterator(); it.hasNext();) {
 			Element code = (Element) it.next();
-			codeset.addCode(code.getAttributeValue("value"));
+			codeset.addCode(code.attributeValue("value"));
 		}
 		return codeset;
 	}
@@ -100,14 +100,14 @@ public class XMLTerminologySource implements TerminologySource {
 	 */
 	private Group loadGroup(Element element) {
 		Group group = new Group();
-		group.name = element.getAttributeValue("name");
+		group.name = element.attributeValue("name");
 		
-		List children = element.getChildren("concept");
+		List children = element.elements("concept");
 		for(Iterator it = children.iterator(); it.hasNext();) {
 			Concept concept = new Concept();
 			Element e = (Element) it.next();
-			concept.id = (e.getAttributeValue("id"));
-			concept.rubric = (e.getAttributeValue("rubric"));
+			concept.id = (e.attributeValue("id"));
+			concept.rubric = (e.attributeValue("rubric"));
 			group.addConcept(concept);
 		}
 		return group;
