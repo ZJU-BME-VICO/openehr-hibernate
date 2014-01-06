@@ -22,6 +22,15 @@ package org.openehr.rm;
  */
 public abstract class RMObject implements java.io.Serializable {
     private static final long serialVersionUID = 1L;    
+    private int hibernarmId;
+    
+    public int getHibernarmId() {
+		return hibernarmId;
+	}
+
+	public void setHibernarmId(int hibernarmId) {
+		this.hibernarmId = hibernarmId;
+	}
 }
 
 /*

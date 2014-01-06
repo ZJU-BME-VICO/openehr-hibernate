@@ -78,10 +78,6 @@ public abstract class Locatable extends Pathable implements Settable, Cloneable 
     protected Locatable(String archetypeNodeId, DvText name) {
         this(null, archetypeNodeId, name, null, null, null, null);
     }
-    
-    public int getHibernarmId() {
-		return hibernarmId;
-	}
 
     /**
      * Optional globally unique object identifier for root object of
@@ -633,10 +629,6 @@ public abstract class Locatable extends Pathable implements Settable, Cloneable 
     protected Locatable() {    	
     }
 
-	public void setHibernarmId(int hibernarmId) {
-		this.hibernarmId = hibernarmId;
-	}
-
     public void setUid(UIDBasedID uid) {
         this.uid = uid;
     }
@@ -673,7 +665,6 @@ public abstract class Locatable extends Pathable implements Settable, Cloneable 
     public static final String ROOT = PATH_SEPARATOR;
     
     /* fields */
-    private int hibernarmId;
     private UIDBasedID uid;
     private String archetypeNodeId;
     private String originalArchetypeNodeId;
