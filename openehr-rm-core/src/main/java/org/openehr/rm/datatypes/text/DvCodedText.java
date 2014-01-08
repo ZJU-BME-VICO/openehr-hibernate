@@ -23,6 +23,16 @@ import org.openehr.rm.datatypes.basic.ReferenceModelName;
 import org.openehr.rm.datatypes.uri.DvURI;
 import org.openehr.rm.support.terminology.TerminologyService;
 
+
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 /**
  * A text item whose value must be the rubric from a controlled
  * terminology, the key (the code ) of which is the
@@ -32,6 +42,8 @@ import org.openehr.rm.support.terminology.TerminologyService;
  * @author Rong Chen
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public final class DvCodedText extends DvText {
 
     /**
@@ -109,10 +121,12 @@ public final class DvCodedText extends DvText {
      *
      * @return defining code
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public CodePhrase getDefiningCode() {
         return definingCode;
     }
-
+    
+    @Transient
     @Override
 	public String getReferenceModelName() {
 		return ReferenceModelName.DV_CODED_TEXT.getName();
@@ -172,11 +186,13 @@ public final class DvCodedText extends DvText {
 		}
 		return new DvCodedText(tokens2[1], tokens[0], tokens2[0]);
     }
-
+    
+    @Transient
     public String getTerminologyId(){
 	return getDefiningCode().getTerminologyId().getValue();
     }
     
+    @Transient
     public String getCode(){
 	return getDefiningCode().getCodeString();
     }

@@ -16,6 +16,18 @@ package org.openehr.rm.common.generic;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.openehr.rm.FullConstructor;
@@ -28,6 +40,8 @@ import org.openehr.rm.support.identification.ObjectVersionID;
  * @author Yin Su Lim
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public final class RevisionHistoryItem extends RMObject {
 
 	/**
@@ -54,6 +68,12 @@ public final class RevisionHistoryItem extends RMObject {
 	 * 
 	 * @return audits
 	 */
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(
+		name = "RM_REVISION_HISTORY_ITEM_audits",
+		joinColumns = {@JoinColumn(name = "RM_REVISION_HISTORY_ITEM_mappingId")},
+		inverseJoinColumns = {@JoinColumn(name = "RM_AUDIT_DETAILS_mappingId")}
+		)
 	public List<AuditDetails> getAudits() {
 		return audits;
 	}
@@ -63,6 +83,7 @@ public final class RevisionHistoryItem extends RMObject {
 	 * 
 	 * @return versionId
 	 */
+	@ManyToOne(cascade = CascadeType.ALL)
 	public ObjectVersionID getVersionId() {
 		return versionId;
 	}	
@@ -112,6 +133,18 @@ public final class RevisionHistoryItem extends RMObject {
     /* fields */
     private List<AuditDetails> audits;
     private ObjectVersionID versionId;
+    
+    private int mappingId;
+
+	@Id
+	@GeneratedValue
+	public int getMappingId() {
+		return mappingId;
+	}
+
+	public void setMappingId(int mappingId) {
+		this.mappingId = mappingId;
+	}
 }
 
 /*

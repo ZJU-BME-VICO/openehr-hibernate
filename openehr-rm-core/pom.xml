@@ -3,7 +3,7 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>openehr</groupId>
+		<groupId>openehr-orm</groupId>
 		<artifactId>ref_impl_java</artifactId>
 		<version>1.0.5-SNAPSHOT</version>
 	</parent>
@@ -29,14 +29,27 @@
 			<groupId>joda-time</groupId>
 			<artifactId>joda-time</artifactId>
 		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>joda-time</groupId> -->
+<!-- 			<artifactId>joda-time-hibernate</artifactId> -->
+<!-- 		</dependency> -->
+		<dependency>
+			<groupId>org.jadira.usertype</groupId>
+			<artifactId>usertype.jodatime</artifactId>
+		</dependency>   
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>openehr</groupId>
+			<groupId>openehr-orm</groupId>
 			<artifactId>measure-serv</artifactId>
 			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>4.3.0.Final</version>
 		</dependency>
 	</dependencies>
 </project>

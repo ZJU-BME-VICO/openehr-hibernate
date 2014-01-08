@@ -26,6 +26,12 @@ import org.openehr.rm.Attribute;
 
 import java.util.Set;
 
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
+
+
 /**
  * Generic description of persons. Provides a dedicated type to which Person
  * archetypes can be targeted.
@@ -33,6 +39,8 @@ import java.util.Set;
  * @author Goran Pestana
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Person extends Actor {
 
 	public Person() {

@@ -14,6 +14,15 @@
  */
 package org.openehr.rm.datatypes.quantity;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.openehr.rm.Attribute;
@@ -29,9 +38,16 @@ import org.openehr.rm.datatypes.text.DvText;
  * @author Rong Chen
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public final class ReferenceRange <T extends DvOrdered> extends DataValue {
 
-    /**
+    protected ReferenceRange() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
      * Constructs a ReferenceRange by meaning and range
      *
      * @param meaning
@@ -71,6 +87,7 @@ public final class ReferenceRange <T extends DvOrdered> extends DataValue {
      *
      * @return meaning
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public DvText getMeaning() {
         return meaning;
     }
@@ -80,6 +97,7 @@ public final class ReferenceRange <T extends DvOrdered> extends DataValue {
      *
      * @return range
      */
+	@ManyToOne(targetEntity = DvInterval.class, cascade = CascadeType.ALL)
     public DvInterval<T> getRange() {
         return range;
     }
@@ -138,8 +156,18 @@ public final class ReferenceRange <T extends DvOrdered> extends DataValue {
     public static final String NORMAL = "normal";
 
     /* fields */
-    private final DvText meaning;
-    private final DvInterval<T> range;
+    private DvText meaning;
+    private DvInterval<T> range;
+	
+    public void setMeaning(DvText meaning) {
+		this.meaning = meaning;
+	}
+
+	public void setRange(DvInterval<T> range) {
+		this.range = range;
+	}
+
+	@Transient
 	@Override
 	public String getReferenceModelName() {
 		// TODO Auto-generated method stub

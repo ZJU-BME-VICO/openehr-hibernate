@@ -14,6 +14,14 @@
  */
 package org.openehr.rm.support.identification;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
+
 import org.apache.commons.lang.StringUtils;
 
 /**
@@ -26,7 +34,9 @@ import org.apache.commons.lang.StringUtils;
  * @author Rong Chen
  * @version 1.0
  */
-public abstract class UID {
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
+public class UID {
 
     /**
      * Create an UID by value
@@ -41,7 +51,11 @@ public abstract class UID {
         this.value = value;
     }
 
-    /**
+    protected UID() {
+		super();
+	}
+
+	/**
      * The value of this id
      *
      * @return value
@@ -85,6 +99,22 @@ public abstract class UID {
 
     /* fields */
     private String value;
+
+	public void setValue(String value) {
+		this.value = value;
+	}
+    
+    private int mappingId;
+
+	@Id
+	@GeneratedValue
+	public int getMappingId() {
+		return mappingId;
+	}
+
+	public void setMappingId(int mappingId) {
+		this.mappingId = mappingId;
+	}
 }
 
 /*

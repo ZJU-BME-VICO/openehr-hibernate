@@ -15,6 +15,15 @@ package org.openehr.rm.datatypes.quantity.datetime;
 
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 import org.joda.time.DateTime;
 import org.openehr.rm.datatypes.quantity.DvAbsoluteQuantity;
 import org.openehr.rm.datatypes.quantity.DvInterval;
@@ -28,8 +37,15 @@ import org.openehr.rm.datatypes.text.CodePhrase;
  * 
  * @author Rong Chen
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class DvTemporal<T extends DvTemporal> extends
 		DvAbsoluteQuantity<T, DvDuration> {
+
+	protected DvTemporal() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
 	 * Construct a WorldTime string value
@@ -83,6 +99,9 @@ public abstract class DvTemporal<T extends DvTemporal> extends
 
 	abstract void setBooleans(String value);
 
+	@Column
+//	@Type(type="org.joda.time.contrib.hibernate.PersistentDateTime")
+	@Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
 	public DateTime getDateTime() {
 		return dateTime;
 	}
@@ -112,6 +131,7 @@ public abstract class DvTemporal<T extends DvTemporal> extends
 	 * 
 	 * @return diff type
 	 */
+	@Transient
 	public Class<DvDuration> getDiffType() {
 		return DvDuration.class;
 	}

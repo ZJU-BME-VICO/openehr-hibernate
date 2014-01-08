@@ -17,6 +17,17 @@ package org.openehr.rm.common.changecontrol;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
 import org.openehr.rm.Attribute;
 import org.openehr.rm.FullConstructor;
 import org.openehr.rm.common.generic.Attestation;
@@ -30,6 +41,8 @@ import org.openehr.rm.support.terminology.TerminologyService;
  * @author yinsulim
  * @author Modified by Erik Sundvall 2010-03-19
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class OriginalVersion<T> extends Version<T> {
 
 	/**
@@ -74,6 +87,12 @@ public class OriginalVersion<T> extends Version<T> {
      *
      * @return attestations or null if unspecified
      */
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(
+		name = "RM_ORIGINAL_VERSION_attestations",
+		joinColumns = {@JoinColumn(name = "RM_ORIGINAL_VERSION_mappingId")},
+		inverseJoinColumns = {@JoinColumn(name = "RM_ATTESTATION_mappingId")}
+		)
     public List<Attestation> getAttestations() {
         return attestations;
     }
@@ -90,6 +109,7 @@ public class OriginalVersion<T> extends Version<T> {
      * True if this Version was created from more than 
      * just the preceding (checked out) version.
      */
+	@Transient
     public boolean isMerged() { // This should not be an attribute, just internally calculated from existence of otherInputVersionUids
 		return otherInputVersionUids != null && otherInputVersionUids.size() > 0;
     }
@@ -98,6 +118,12 @@ public class OriginalVersion<T> extends Version<T> {
      * Identifiers of other versions whose content was merged 
      * into this version, if any.
      */
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(
+		name = "RM_ORIGINAL_VERSION_other_input_version_uids",
+		joinColumns = {@JoinColumn(name = "RM_ORIGINAL_VERSION_mappingId")},
+		inverseJoinColumns = {@JoinColumn(name = "RM_OBJECT_VERSION_ID_mappingId")}
+		)
     public Set<ObjectVersionID> getOtherInputVersionUids() {
     		return otherInputVersionUids;
     }

@@ -16,6 +16,15 @@ package org.openehr.rm.composition.content.entry;
 
 import java.util.List;
 import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 import org.openehr.rm.Attribute;
 import org.openehr.rm.FullConstructor;
 
@@ -40,6 +49,8 @@ import org.openehr.rm.support.terminology.TerminologyService;
  * @author Yin Su Lim
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class AdminEntry extends Entry {
 
 	/**
@@ -88,6 +99,7 @@ public class AdminEntry extends Entry {
      * 
      * @return data
      */
+	@ManyToOne(cascade = CascadeType.ALL)
 	public ItemStructure getData() {
 		return data;
 	}

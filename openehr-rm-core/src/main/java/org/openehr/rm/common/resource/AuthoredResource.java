@@ -16,6 +16,19 @@ package org.openehr.rm.common.resource;
 
 import java.util.*;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.openehr.rm.RMObject;
@@ -30,6 +43,8 @@ import org.openehr.rm.support.terminology.TerminologyService;
  * @author Yin Su Lim
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class AuthoredResource extends RMObject {
 
 	/**
@@ -84,6 +99,7 @@ public abstract class AuthoredResource extends RMObject {
 	 * 
 	 * @return description
 	 */
+	@ManyToOne(cascade = CascadeType.ALL)
 	public ResourceDescription getDescription() {
 		return description;
 	}
@@ -103,6 +119,7 @@ public abstract class AuthoredResource extends RMObject {
 	 * 
 	 * @return originalLanguage
 	 */
+	@ManyToOne(cascade = CascadeType.ALL)
 	public CodePhrase getOriginalLanguage() {
 		return originalLanguage;
 	}
@@ -113,6 +130,7 @@ public abstract class AuthoredResource extends RMObject {
 	 * 
 	 * @return revisionHistory
 	 */
+	@ManyToOne(cascade = CascadeType.ALL)
 	public RevisionHistory getRevisionHistory() {
 		return revisionHistory;
 	}
@@ -123,6 +141,11 @@ public abstract class AuthoredResource extends RMObject {
 	 * 
 	 * @return translations
 	 */
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(
+		name = "RM_AUTHORED_RESOURCE_translations",
+		joinColumns = {@JoinColumn(name = "RM_AUTHORED_RESOURCE_mappingId")}
+		)
 	public Map<String, TranslationDetails> getTranslations() {
 		return translations;
 	}
@@ -243,6 +266,18 @@ public abstract class AuthoredResource extends RMObject {
 	private RevisionHistory revisionHistory;
 
 	private boolean isControlled;
+    
+    private int mappingId;
+
+	@Id
+	@GeneratedValue
+	public int getMappingId() {
+		return mappingId;
+	}
+
+	public void setMappingId(int mappingId) {
+		this.mappingId = mappingId;
+	}
 
 }
 

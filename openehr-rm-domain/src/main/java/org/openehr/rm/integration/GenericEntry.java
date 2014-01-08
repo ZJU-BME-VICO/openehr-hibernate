@@ -17,6 +17,14 @@ package org.openehr.rm.integration;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 import org.openehr.rm.Attribute;
 import org.openehr.rm.FullConstructor;
 import org.openehr.rm.common.archetyped.Archetyped;
@@ -34,6 +42,8 @@ import org.openehr.rm.support.identification.UIDBasedID;
  * sources not otherwise conforming to openEHR classes, such as HL7 messages, 
  * relational databases and so on.
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public final class GenericEntry extends ContentItem {
 
 	/**
@@ -89,6 +99,7 @@ public final class GenericEntry extends ContentItem {
 	 * 
 	 * @return data
 	 */
+	@ManyToOne(cascade = CascadeType.ALL)
 	public ItemTree getData() {
 		return data;
 	}
@@ -117,7 +128,11 @@ public final class GenericEntry extends ContentItem {
 		return false;
 	}
 
-	private final ItemTree data;
+	private ItemTree data;
+
+	public void setData(ItemTree data) {
+		this.data = data;
+	}
 }
 /*
  *  ***** BEGIN LICENSE BLOCK *****

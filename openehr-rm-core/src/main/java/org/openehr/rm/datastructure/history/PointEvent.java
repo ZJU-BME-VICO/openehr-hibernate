@@ -17,6 +17,11 @@ package org.openehr.rm.datastructure.history;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
+
 import org.openehr.rm.Attribute;
 import org.openehr.rm.FullConstructor;
 import org.openehr.rm.common.archetyped.Archetyped;
@@ -33,6 +38,8 @@ import org.openehr.rm.support.identification.UIDBasedID;
  * @author Yin Su Lim
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public final class PointEvent<T extends ItemStructure> extends Event<T> {
     
     /**

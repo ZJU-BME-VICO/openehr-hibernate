@@ -17,6 +17,14 @@ package org.openehr.rm.composition.content.entry;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 import org.openehr.rm.common.archetyped.Archetyped;
 import org.openehr.rm.common.archetyped.FeederAudit;
 import org.openehr.rm.common.archetyped.Link;
@@ -37,6 +45,8 @@ import org.openehr.rm.support.terminology.TerminologyService;
  * @author Yin Su Lim
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class CareEntry extends Entry {
 
     /**
@@ -75,6 +85,7 @@ public abstract class CareEntry extends Entry {
      * 
      * @return guidelineId
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public ObjectRef getGuidelineId() {
     	return guidelineId;
     }
@@ -84,6 +95,7 @@ public abstract class CareEntry extends Entry {
      * 
      * @return protocol
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public ItemStructure getProtocol() {
     	return protocol;
     }

@@ -13,6 +13,13 @@
  */
 package org.openehr.rm.support.identification;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
+
 import org.openehr.rm.Attribute;
 import org.openehr.rm.FullConstructor;
 
@@ -21,8 +28,15 @@ import org.openehr.rm.FullConstructor;
  * 
  * @author Rong Chen
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class TemplateID extends ObjectID {
 	
+	protected TemplateID() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	@FullConstructor
 	public TemplateID(
 			@Attribute(name = "value", required = true)String value) {

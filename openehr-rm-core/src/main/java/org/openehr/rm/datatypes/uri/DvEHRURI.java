@@ -14,6 +14,12 @@
  */
 package org.openehr.rm.datatypes.uri;
 
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
 import org.openehr.rm.Attribute;
 import org.openehr.rm.FullConstructor;
 
@@ -24,6 +30,8 @@ import org.openehr.rm.FullConstructor;
  * @author Rong Chen
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public final class DvEHRURI extends DvURI {
 
     /**
@@ -45,7 +53,8 @@ public final class DvEHRURI extends DvURI {
         super();
     }
     // POJO end
-
+    
+    @Transient
     @Override
 	public String getReferenceModelName() {
 		return "DV_EHR_URI";

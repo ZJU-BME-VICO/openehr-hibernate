@@ -14,6 +14,17 @@
  */
 package org.openehr.rm.datatypes.encapsulated;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
 import org.openehr.rm.datatypes.text.CodePhrase;
 import org.openehr.rm.datatypes.uri.DvURI;
 import org.openehr.rm.support.terminology.OpenEHRCodeSetIdentifiers;
@@ -31,6 +42,8 @@ import org.openehr.rm.FullConstructor;
  * @author Rong Chen
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public final class DvMultimedia extends DvEncapsulated {
 
     /**
@@ -106,8 +119,9 @@ public final class DvMultimedia extends DvEncapsulated {
         this.thumbnail = thumbnail;
         this.uri = uri;
         this.data = data;
-    }
-	
+    }	
+
+    @Transient
 	@Override
 	public int getSize() {
 		return data == null ? 0 : data.length;
@@ -132,6 +146,7 @@ public final class DvMultimedia extends DvEncapsulated {
      *
      * @return media type
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public CodePhrase getMediaType() {
         return mediaType;
     }
@@ -142,6 +157,7 @@ public final class DvMultimedia extends DvEncapsulated {
      *
      * @return null if no compression
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public CodePhrase getCompressionAlgorithm() {
         return compressionAlgorithm;
     }
@@ -161,6 +177,7 @@ public final class DvMultimedia extends DvEncapsulated {
      *
      * @return null if has no integrity check
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public CodePhrase getIntegrityCheckAlgorithm() {
         return integrityCheckAlgorithm;
     }
@@ -170,6 +187,7 @@ public final class DvMultimedia extends DvEncapsulated {
      *
      * @return thumbnail null if unspecified
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public DvMultimedia getThumbnail() {
         return thumbnail;
     }
@@ -179,6 +197,7 @@ public final class DvMultimedia extends DvEncapsulated {
      *
      * @return possibly null if data inline
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public DvURI getUri() {
         return uri;
     }
@@ -188,6 +207,7 @@ public final class DvMultimedia extends DvEncapsulated {
      *
      * @return possibly null if data external
      */
+	@Lob
     public byte[] getData() {
         return data;
     }
@@ -198,6 +218,7 @@ public final class DvMultimedia extends DvEncapsulated {
      *
      * @return true if external
      */
+    @Transient
     public boolean isExternal() {
         return uri != null;
     }
@@ -207,6 +228,7 @@ public final class DvMultimedia extends DvEncapsulated {
      *
      * @return true if data inline
      */
+    @Transient
     public boolean isInline() {
         return data != null;
     }
@@ -216,6 +238,7 @@ public final class DvMultimedia extends DvEncapsulated {
      *
      * @return true if compressed
      */
+    @Transient
     public boolean isCompressed() {
         return compressionAlgorithm != null;
     }
@@ -284,6 +307,8 @@ public final class DvMultimedia extends DvEncapsulated {
     private DvMultimedia thumbnail;
     private DvURI uri;
     private byte[] data;	
+
+    @Transient
 	@Override
 	public String getReferenceModelName() {
 		return "DV_MULTIMEDIA";

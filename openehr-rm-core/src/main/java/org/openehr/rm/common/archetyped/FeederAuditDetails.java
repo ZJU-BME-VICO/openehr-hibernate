@@ -14,6 +14,17 @@
  */
 package org.openehr.rm.common.archetyped;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
@@ -29,6 +40,8 @@ import org.openehr.rm.datatypes.quantity.datetime.DvDateTime;
  * @author Yin Su Lim
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public final class FeederAuditDetails extends RMObject {
 
     /**
@@ -71,6 +84,7 @@ public final class FeederAuditDetails extends RMObject {
      *
      * @return provider
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public PartyIdentified getProvider() {
         return provider;
     }
@@ -80,6 +94,7 @@ public final class FeederAuditDetails extends RMObject {
      *
      * @return location
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public PartyIdentified getLocation() {
         return location;
     }
@@ -89,6 +104,7 @@ public final class FeederAuditDetails extends RMObject {
      *
      * @return time
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public DvDateTime getTime() {
         return time;
     }
@@ -98,6 +114,7 @@ public final class FeederAuditDetails extends RMObject {
      *
      * @return subject
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public PartyProxy getSubject() {
         return subject;
     }
@@ -185,6 +202,17 @@ public final class FeederAuditDetails extends RMObject {
     private PartyProxy subject;
     private String versionId;
     
+    private int mappingId;
+
+	@Id
+	@GeneratedValue
+	public int getMappingId() {
+		return mappingId;
+	}
+
+	public void setMappingId(int mappingId) {
+		this.mappingId = mappingId;
+	}    
 }
 
 /*

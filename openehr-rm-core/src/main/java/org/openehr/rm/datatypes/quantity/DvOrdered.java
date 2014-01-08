@@ -24,6 +24,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
 /**
  * Abstract class defining the concept of ordered values, which
  * includes ordinals as well as true quantities.
@@ -31,6 +42,8 @@ import java.util.List;
  * @author Rong Chen
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class DvOrdered<T extends DvOrdered> extends DataValue
         implements Comparable<DvOrdered> {
 
@@ -136,6 +149,12 @@ public abstract class DvOrdered<T extends DvOrdered> extends DataValue
      * @return unmodifiable list of ReferenceRange
      *         null if not specified
      */
+	@ManyToMany(targetEntity = ReferenceRange.class, cascade = CascadeType.ALL)
+	@JoinTable(
+		name = "RM_DV_ORDERED_other_reference_ranges",
+		joinColumns = {@JoinColumn(name = "RM_DV_ORDERED_mappingId")},
+		inverseJoinColumns = {@JoinColumn(name = "RM_REFERENCE_RANGE_mappingId")}
+		)
     public List<ReferenceRange<T>> getOtherReferenceRanges() {
         return otherReferenceRanges == null ?
                 null : Collections.unmodifiableList(otherReferenceRanges);
@@ -146,6 +165,7 @@ public abstract class DvOrdered<T extends DvOrdered> extends DataValue
      *
      * @return null if not specified
      */
+	@ManyToOne(targetEntity = DvInterval.class, cascade = CascadeType.ALL)
     public DvInterval<T> getNormalRange() {
         return normalRange;
     }
@@ -155,6 +175,7 @@ public abstract class DvOrdered<T extends DvOrdered> extends DataValue
      * 
      * @return null if not specified
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public CodePhrase getNormalStatus() {
     	return normalStatus;
     }
@@ -165,6 +186,7 @@ public abstract class DvOrdered<T extends DvOrdered> extends DataValue
      * @return true if normal
      * @throws IllegalStateException if both normalRange and normalStatus null
      */
+	@Transient
     public boolean isNormal() throws IllegalStateException {
     	if(normalRange == null && normalStatus == null) {
     		throw new IllegalStateException(
@@ -182,6 +204,7 @@ public abstract class DvOrdered<T extends DvOrdered> extends DataValue
      *
      * @return true if has no reference range
      */
+	@Transient
     public boolean isSimple() {
         return otherReferenceRanges == null;
     }

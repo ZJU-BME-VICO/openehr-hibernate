@@ -16,6 +16,15 @@ package org.openehr.rm.datastructure.history;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.openehr.rm.Attribute;
@@ -41,6 +50,8 @@ import org.openehr.rm.support.identification.UIDBasedID;
  * @author Rong Chen
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Event <T extends ItemStructure> extends Locatable {
 
     /**
@@ -87,6 +98,7 @@ public abstract class Event <T extends ItemStructure> extends Locatable {
      * 
      * @return data
      */
+	@ManyToOne(targetEntity = ItemStructure.class, cascade = CascadeType.ALL)
     public T getData() {
 		return data;
 	}
@@ -96,6 +108,7 @@ public abstract class Event <T extends ItemStructure> extends Locatable {
      * 
      * @return state
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public ItemStructure getState() {
             return state;
     }
@@ -107,6 +120,7 @@ public abstract class Event <T extends ItemStructure> extends Locatable {
      * 
      * @return time
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public DvDateTime getTime() {
             return time;
     }
@@ -117,6 +131,7 @@ public abstract class Event <T extends ItemStructure> extends Locatable {
      * 
      * @return parent null if not known
      */
+	@Transient
     public History<T> getParent() {
     	return (History<T>) super.getParent();
     }

@@ -28,12 +28,22 @@ import org.openehr.rm.datatypes.text.DvText;
 
 import java.util.*;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 /**
  * Logical single value data structure. Instances of this class are immutable.
  *
  * @author Rong Chen
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public final class ItemSingle extends ItemStructure {
 
     /**
@@ -94,6 +104,7 @@ public final class ItemSingle extends ItemStructure {
      *
      * @return item
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public Locatable getItem() {
         return item;
     }
@@ -139,6 +150,10 @@ public final class ItemSingle extends ItemStructure {
 	}
 	
 	private Locatable item;
+
+	public void setItem(Locatable item) {
+		this.item = item;
+	}
 }
 
 /*

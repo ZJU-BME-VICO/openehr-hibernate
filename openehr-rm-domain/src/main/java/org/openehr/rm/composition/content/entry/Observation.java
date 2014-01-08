@@ -34,6 +34,14 @@ import org.openehr.rm.datatypes.text.DvText;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 /**
  * Purpose Entry subtype for all clinical data in the past or present,
  * ie which (by the time it is recorded) has already occurred.
@@ -45,6 +53,8 @@ import java.util.Set;
  * @author Rong Chen
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public final class Observation extends CareEntry {
 
     /**
@@ -119,6 +129,7 @@ public final class Observation extends CareEntry {
      *
      * @return data
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public History<? extends ItemStructure> getData() {
         return data;
     }
@@ -130,6 +141,7 @@ public final class Observation extends CareEntry {
      *
      * @return state null if unspecified
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public History<? extends ItemStructure> getState() {
         return state;
     }

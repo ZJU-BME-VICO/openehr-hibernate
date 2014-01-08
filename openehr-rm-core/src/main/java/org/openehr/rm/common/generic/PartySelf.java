@@ -14,10 +14,17 @@
  */
 package org.openehr.rm.common.generic;
 
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
+
 import org.openehr.rm.Attribute;
 import org.openehr.rm.FullConstructor;
 import org.openehr.rm.support.identification.PartyRef;
 
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public final class PartySelf extends PartyProxy {
 
     /**

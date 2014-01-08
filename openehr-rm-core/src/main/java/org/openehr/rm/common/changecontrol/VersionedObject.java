@@ -16,7 +16,22 @@ package org.openehr.rm.common.changecontrol;
 
 import java.util.*;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
+
+import org.hibernate.annotations.Sort;
+import org.hibernate.annotations.SortType;
 import org.openehr.rm.RMObject;
+import org.openehr.rm.common.archetyped.Locatable;
 import org.openehr.rm.common.generic.Attestation;
 import org.openehr.rm.common.generic.AuditDetails;
 import org.openehr.rm.common.generic.RevisionHistory;
@@ -37,6 +52,8 @@ import org.openehr.rm.support.terminology.TerminologyService;
  *
  * @param <T>
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class VersionedObject<T> extends RMObject {
 
     /**
@@ -187,6 +204,7 @@ public class VersionedObject<T> extends RMObject {
      *
      * @return UID
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public HierObjectID getUid() {
         return uid;
     }
@@ -197,6 +215,7 @@ public class VersionedObject<T> extends RMObject {
      *
      * @return OwnerID
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public ObjectRef getOwnerID() {
         return ownerID;
     }
@@ -206,6 +225,7 @@ public class VersionedObject<T> extends RMObject {
      *
      * @return time of creation
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public DvDateTime getTimeCreated() {
         return timeCreated;
     }
@@ -273,6 +293,7 @@ public class VersionedObject<T> extends RMObject {
      *
      * @param uid
      */
+    @Transient
     public boolean isOriginalVersion(ObjectVersionID uid) {
         if (!idVersionMap.containsKey(uid)) {
             throw new IllegalArgumentException("versionID not found");
@@ -414,6 +435,7 @@ public class VersionedObject<T> extends RMObject {
     }
     
     // required to map bidirectional one-to-many relationship
+	@Transient
     Set<Version<T>> getVersions() {
         return new HashSet<Version<T>>(timeVersionMap.values());
     }
@@ -424,9 +446,66 @@ public class VersionedObject<T> extends RMObject {
     private DvDateTime timeCreated;
     
     private SortedMap<DvDateTime, Version<T>> timeVersionMap;
-    private HashMap<ObjectVersionID, Version<T>> idVersionMap; 
+    private Map<ObjectVersionID, Version<T>> idVersionMap; 
     private int trunkCounter;
     private ObjectVersionID latestTrunkUid;
+
+	@ManyToMany(targetEntity = Locatable.class, cascade = CascadeType.ALL)
+	@JoinTable(
+		name = "RM_VERSIONED_OBJECT_timeVersionMap",
+		joinColumns = {@JoinColumn(name = "RM_VERSIONED_OBJECT_mappingId")}
+		)
+	@Sort(type = SortType.NATURAL)
+    public SortedMap<DvDateTime, Version<T>> getTimeVersionMap() {
+		return timeVersionMap;
+	}
+
+	public void setTimeVersionMap(SortedMap<DvDateTime, Version<T>> timeVersionMap) {
+		this.timeVersionMap = timeVersionMap;
+	}
+
+	@ManyToMany(targetEntity = Locatable.class, cascade = CascadeType.ALL)
+	@JoinTable(
+		name = "RM_VERSIONED_OBJECT_idVersionMap",
+		joinColumns = {@JoinColumn(name = "RM_VERSIONED_OBJECT_mappingId")}
+		)
+	public Map<ObjectVersionID, Version<T>> getIdVersionMap() {
+		return idVersionMap;
+	}
+
+	public void setIdVersionMap(Map<ObjectVersionID, Version<T>> idVersionMap) {
+		this.idVersionMap = idVersionMap;
+	}
+
+	public int getTrunkCounter() {
+		return trunkCounter;
+	}
+
+	public void setTrunkCounter(int trunkCounter) {
+		this.trunkCounter = trunkCounter;
+	}
+
+	@ManyToOne(cascade = CascadeType.ALL)
+	public ObjectVersionID getLatestTrunkUid() {
+		return latestTrunkUid;
+	}
+
+	public void setLatestTrunkUid(ObjectVersionID latestTrunkUid) {
+		this.latestTrunkUid = latestTrunkUid;
+	}
+
+	private int mappingId;
+
+	@Id
+	@GeneratedValue
+	public int getMappingId() {
+		return mappingId;
+	}
+
+	public void setMappingId(int mappingId) {
+		this.mappingId = mappingId;
+	}
+	
 }
 
 /*

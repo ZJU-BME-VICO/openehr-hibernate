@@ -14,6 +14,17 @@
  */
 package org.openehr.rm.datatypes.text;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
 import org.openehr.rm.datatypes.basic.DataValue;
 import org.openehr.rm.support.terminology.TerminologyService;
 
@@ -24,6 +35,8 @@ import org.openehr.rm.support.terminology.TerminologyService;
  * @author Rong Chen
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public final class TermMapping extends DataValue {
 
     /**
@@ -75,6 +88,7 @@ public final class TermMapping extends DataValue {
      *
      * @return target
      */
+	@ManyToOne
     public CodePhrase getTarget() {
         return target;
     }
@@ -91,6 +105,7 @@ public final class TermMapping extends DataValue {
      *
      * @return match
      */
+	@Enumerated(EnumType.STRING)
     public Match getMatch() {
         return match;
     }
@@ -101,6 +116,7 @@ public final class TermMapping extends DataValue {
      *
      * @return purpose
      */
+	@ManyToOne
     public DvCodedText getPurpose() {
         return purpose;
     }
@@ -157,6 +173,7 @@ public final class TermMapping extends DataValue {
         this.purpose = purpose;
     }
 
+    @Transient
     private String getMatchString() {
         return match.toString();
     }
@@ -171,6 +188,8 @@ public final class TermMapping extends DataValue {
     private CodePhrase target;
     private Match match;
     private DvCodedText purpose;
+    
+    @Transient
 	@Override
 	public String getReferenceModelName() {
 		// TODO Auto-generated method stub

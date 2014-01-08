@@ -31,6 +31,16 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 /**
  * Description of a means of contact of a party. Actual structure is archetyped.
  *
@@ -39,6 +49,8 @@ import java.util.Set;
  *
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Contact extends Locatable {
 
     protected Contact() {
@@ -97,6 +109,7 @@ public class Contact extends Locatable {
      *
      * @return time validity or null if not specified
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public DvInterval<DvDate> getTimeValidity() {
         return timeValidity;
     }
@@ -110,6 +123,12 @@ public class Contact extends Locatable {
      *
      * @return addresses
      */
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(
+		name = "RM_CONTACT_addresses",
+		joinColumns = {@JoinColumn(name = "RM_CONTACT_mappingId")},
+		inverseJoinColumns = {@JoinColumn(name = "RM_ADDRESS_mappingId")}
+		)
     public List<Address> getAddresses() {
         return addresses;
     }

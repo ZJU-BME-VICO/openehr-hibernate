@@ -14,6 +14,13 @@
  */
 package org.openehr.rm.datatypes.encapsulated;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
@@ -34,6 +41,8 @@ import org.openehr.rm.support.terminology.TerminologyService;
  * @author Rong Chen
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public final class DvParsable extends DvEncapsulated {
 
     /**
@@ -93,8 +102,9 @@ public final class DvParsable extends DvEncapsulated {
      */
     public String getFormalism() {
         return formalism;
-    }
-    
+    }    
+
+    @Transient
     @Override
 	public int getSize() {
 		return value.length();
@@ -148,6 +158,8 @@ public final class DvParsable extends DvEncapsulated {
     /* fields */
     private String value;
     private String formalism;	
+
+    @Transient
 	@Override
 	public String getReferenceModelName() {
 		return "DV_PARSABLE";

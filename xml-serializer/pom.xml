@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>openehr</groupId>
+		<groupId>openehr-orm</groupId>
 		<artifactId>ref_impl_java</artifactId>
 		<version>1.0.5-SNAPSHOT</version>
 	</parent>
@@ -21,22 +21,22 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>openehr</groupId>
+			<groupId>openehr-orm</groupId>
 			<artifactId>openehr-rm-core</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>openehr</groupId>
+			<groupId>openehr-orm</groupId>
 			<artifactId>openehr-rm-domain</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>openehr</groupId>
+			<groupId>openehr-orm</groupId>
 			<artifactId>openehr-aom</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>openehr</groupId>
+			<groupId>openehr-orm</groupId>
 			<artifactId>openehr-ap</artifactId>
 			<version>${project.version}</version>
 		</dependency>

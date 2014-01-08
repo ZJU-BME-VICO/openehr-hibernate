@@ -34,6 +34,16 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 /**
  * The abstract parent of all Entry subtypes. An Entry is the root of
  * a logical item of  hard  clinical information created in the
@@ -44,6 +54,8 @@ import java.util.Set;
  * @author Rong Chen
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Entry extends ContentItem {
 
     /**
@@ -126,6 +138,7 @@ public abstract class Entry extends ContentItem {
      *
      * @return subject
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public PartyProxy getSubject() {
         return subject;
     }
@@ -135,6 +148,7 @@ public abstract class Entry extends ContentItem {
      *
      * @return provider
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public PartyProxy getProvider() {
         return provider;
     }
@@ -145,6 +159,7 @@ public abstract class Entry extends ContentItem {
      * 
      * @return encoding
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public CodePhrase getEncoding() {
 		return encoding;
 	}
@@ -154,6 +169,7 @@ public abstract class Entry extends ContentItem {
      * this Entry is written. Coded from openEHR code set "languages".
      * @return
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public CodePhrase getLanguage() {
 		return language;
 	}
@@ -164,6 +180,7 @@ public abstract class Entry extends ContentItem {
      *
      * @return workflow ID or null if unspecified
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public ObjectRef getWorkflowId() {
         return workflowId;
     }
@@ -173,6 +190,12 @@ public abstract class Entry extends ContentItem {
      *
      * @return unmodifiable List of other participation or null if unspecified
      */
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(
+		name = "RM_ENTRY_other_participations ",
+		joinColumns = {@JoinColumn(name = "RM_ENTRY_mappingId")},
+		inverseJoinColumns = {@JoinColumn(name = "RM_PARTICIPATION_mappingId")}
+		)
     public List<Participation> getOtherParticipations() {
         return otherParticipations == null ? null :
                 Collections.unmodifiableList(otherParticipations);

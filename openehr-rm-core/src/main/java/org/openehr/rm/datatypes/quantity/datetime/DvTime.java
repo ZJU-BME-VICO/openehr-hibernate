@@ -17,6 +17,13 @@ package org.openehr.rm.datatypes.quantity.datetime;
 import java.util.List;
 import java.util.TimeZone;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
 import org.joda.time.DateTime;
 import org.joda.time.MutableDateTime;
 import org.openehr.rm.Attribute;
@@ -39,6 +46,8 @@ import org.apache.commons.lang.builder.EqualsBuilder;
  * does not take 24 for hour!
  *
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class DvTime extends DvTemporal<DvTime> {
 
 	/**
@@ -160,6 +169,7 @@ public class DvTime extends DvTemporal<DvTime> {
 		setBooleans(pattern);
 	}
 
+    @Transient
 	@Override
 	public String getReferenceModelName() {
 		return "DV_TIME";
@@ -170,6 +180,7 @@ public class DvTime extends DvTemporal<DvTime> {
 	 *
 	 * @return hour in day
 	 */
+	@Transient
 	public int getHour() {
 		return getDateTime().getHourOfDay();
 	}
@@ -179,6 +190,7 @@ public class DvTime extends DvTemporal<DvTime> {
 	 *
 	 * @return minute in hour, -1 if minute unknown
 	 */
+	@Transient
 	public int getMinute() {
 		return minuteKnown() ? getDateTime().getMinuteOfHour() : -1;
 	}
@@ -188,6 +200,7 @@ public class DvTime extends DvTemporal<DvTime> {
 	 *
 	 * @return second, -1 if second unknown
 	 */
+	@Transient
 	public int getSecond() {
 		return secondKnown ? getDateTime().getSecondOfMinute() : -1;
 	}
@@ -197,6 +210,7 @@ public class DvTime extends DvTemporal<DvTime> {
 	 *
 	 * @return fractional seconds, -0.1 if fractional second unknown
 	 */
+	@Transient
 	public double getFractionalSecond() {
 		return fractionalSecKnown ? getDateTime().getMillisOfSecond() / 10E2
 				: -0.1;
@@ -236,6 +250,7 @@ public class DvTime extends DvTemporal<DvTime> {
 		return dt != null;
 	}
 
+	@Transient
 	@Override
 	public Number getMagnitude() {
 		// TODO Auto-generated method stub
@@ -373,6 +388,26 @@ public class DvTime extends DvTemporal<DvTime> {
 	private boolean minuteKnown;
 	private boolean secondKnown;
 	private boolean fractionalSecKnown;	
+
+	@Column(name = "RM_minuteKnown", columnDefinition = "bit")
+	public boolean isMinuteKnown() {
+		return minuteKnown;
+	}
+
+	@Column(name = "RM_secondKnown", columnDefinition = "bit")
+	public boolean isSecondKnown() {
+		return secondKnown;
+	}
+
+	@Column(name = "RM_fractionalSecKnown", columnDefinition = "bit")
+	public boolean isFractionalSecKnown() {
+		return fractionalSecKnown;
+	}
+
+	public void setPartial(boolean isPartial) {
+		this.isPartial = isPartial;
+	}	
+	
 	@Override
 	public String serialise() {
 		return getReferenceModelName() + "," + toString(true);

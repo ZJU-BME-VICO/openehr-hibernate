@@ -14,6 +14,17 @@
  */
 package org.openehr.rm.common.generic;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
@@ -33,6 +44,8 @@ import org.openehr.rm.datatypes.text.DvText;
  * @author Rong Chen
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class AuditDetails extends RMObject {
 
     /**
@@ -96,6 +109,7 @@ public class AuditDetails extends RMObject {
      *
      * @return committer
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public PartyProxy getCommitter() {
         return committer;
     }
@@ -105,6 +119,7 @@ public class AuditDetails extends RMObject {
      *
      * @return time of committal
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public DvDateTime getTimeCommitted() {
         return timeCommitted;
     }
@@ -115,6 +130,7 @@ public class AuditDetails extends RMObject {
      *
      * @return change type
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public DvCodedText getChangeType() {
         return changeType;
     }
@@ -124,6 +140,7 @@ public class AuditDetails extends RMObject {
      *
      * @return description or null if unspecified
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public DvText getDescription() {
         return description;
     }
@@ -195,6 +212,19 @@ public class AuditDetails extends RMObject {
     private DvDateTime timeCommitted;
     private DvCodedText changeType;
     private DvText description;
+    
+    private int mappingId;
+
+	@Id
+	@GeneratedValue
+	public int getMappingId() {
+		return mappingId;
+	}
+
+	protected void setMappingId(int mappingId) {
+		this.mappingId = mappingId;
+	}
+	
 }
 
 /*

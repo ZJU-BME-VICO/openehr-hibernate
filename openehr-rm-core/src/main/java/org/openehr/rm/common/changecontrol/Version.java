@@ -14,8 +14,21 @@
  */
 package org.openehr.rm.common.changecontrol;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
 import org.apache.commons.lang.NotImplementedException;
 import org.openehr.rm.RMObject;
+import org.openehr.rm.common.archetyped.Locatable;
 import org.openehr.rm.common.generic.AuditDetails;
 import org.openehr.rm.support.identification.HierObjectID;
 import org.openehr.rm.support.identification.ObjectRef;
@@ -30,6 +43,8 @@ import org.openehr.rm.support.terminology.TerminologyService;
  * @author Rong Chen
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Version <T> extends RMObject {
 
     /**
@@ -82,6 +97,7 @@ public abstract class Version <T> extends RMObject {
     /**
      * True if this Version represents a branch
      */
+    @Transient
     public boolean isBranch() {
         return uid.versionTreeID().isBranch();
     }
@@ -105,6 +121,7 @@ public abstract class Version <T> extends RMObject {
      *
      * @return version audit
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public AuditDetails getCommitAudit() {
         return commitAudit;
     }
@@ -114,6 +131,7 @@ public abstract class Version <T> extends RMObject {
      *
      * @return versionID
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public ObjectVersionID getUid() {
         return uid;
     }
@@ -124,6 +142,7 @@ public abstract class Version <T> extends RMObject {
      *
      * @return preceding versionID
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public ObjectVersionID getPrecedingVersionUid() {
         return precedingVersionUid;
     }
@@ -132,6 +151,7 @@ public abstract class Version <T> extends RMObject {
      * Lifecycle state of this version; coded by openEHR
      * vocabulary "version lifecycle state"
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public DvCodedText getLifecycleState() {
         return lifecycleState;
     }
@@ -142,6 +162,7 @@ public abstract class Version <T> extends RMObject {
      *
      * @return contribution
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public ObjectRef getContribution() {
         return contribution;
     }
@@ -151,6 +172,7 @@ public abstract class Version <T> extends RMObject {
      * 
      *@return data
      */
+	@ManyToOne(targetEntity = Locatable.class, cascade = CascadeType.ALL)
     public T getData() {
     		return data;
     }
@@ -218,6 +240,18 @@ public abstract class Version <T> extends RMObject {
     private T data;
     private DvCodedText lifecycleState;
     private String signature;
+    
+    private int mappingId;
+
+	@Id
+	@GeneratedValue
+	public int getMappingId() {
+		return mappingId;
+	}
+
+	public void setMappingId(int mappingId) {
+		this.mappingId = mappingId;
+	}
 
 }
 

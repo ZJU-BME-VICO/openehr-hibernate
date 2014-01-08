@@ -14,6 +14,15 @@
  */
 package org.openehr.rm.support.identification;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 import org.apache.commons.lang.StringUtils;
 import org.openehr.rm.Attribute;
 import org.openehr.rm.FullConstructor;
@@ -30,6 +39,8 @@ import org.openehr.rm.FullConstructor;
  * @author Yin Su Lim
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class HierObjectID extends UIDBasedID {
 
     /**
@@ -45,6 +56,10 @@ public class HierObjectID extends UIDBasedID {
         super(value);
         loadValue(value);
     }
+
+	protected HierObjectID() {
+		super();
+	}
 
 	/**
      * Constructs a HierObjectID by root and extension
@@ -144,6 +159,23 @@ public class HierObjectID extends UIDBasedID {
     /* fields */
     private UID root;   // mandatory
     private String extension;
+
+	@ManyToOne(cascade = CascadeType.ALL)
+	public UID getRoot() {
+		return root;
+	}
+
+	public void setRoot(UID root) {
+		this.root = root;
+	}
+
+	public String getExtension() {
+		return extension;
+	}
+
+	public void setExtension(String extension) {
+		this.extension = extension;
+	}
 }
 /*
  *  ***** BEGIN LICENSE BLOCK *****

@@ -33,6 +33,14 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 /**
  * Generic description of a relationship between parties.
  *
@@ -40,6 +48,8 @@ import java.util.Set;
  * @version 1.0
  */
 
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class PartyRelationship extends Locatable {
 
     protected PartyRelationship() {
@@ -115,6 +125,7 @@ public class PartyRelationship extends Locatable {
         return getName();
     }
 
+	@ManyToOne(cascade = CascadeType.ALL)
     public ItemStructure getDetails() {
         return details;
     }
@@ -123,6 +134,7 @@ public class PartyRelationship extends Locatable {
         this.details = details;
     }
 
+	@ManyToOne(cascade = CascadeType.ALL)
     public DvInterval<DvDate> getTimeValidity() {
         return timeValidity;
     }
@@ -131,6 +143,7 @@ public class PartyRelationship extends Locatable {
         this.timeValidity = timeValidity;
     }
 
+	@ManyToOne(cascade = CascadeType.ALL)
     public ObjectRef getSource() {
         return source;
     }
@@ -139,6 +152,7 @@ public class PartyRelationship extends Locatable {
         this.source = source;
     }
 
+	@ManyToOne(cascade = CascadeType.ALL)
     public ObjectRef getTarget() {
         return target;
     }

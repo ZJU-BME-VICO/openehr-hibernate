@@ -24,12 +24,19 @@ import org.openehr.rm.datatypes.text.DvText;
 
 import java.util.Set;
 
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
+
 /**
  * Abstract parent class of all spatial data types.
  *
  * @author Rong Chen
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class ItemStructure extends DataStructure {
 
     /**

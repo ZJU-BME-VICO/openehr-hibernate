@@ -25,6 +25,18 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 /**
  * Documents a contribution of one or more versions added to a
  * change-controlled repository.
@@ -32,6 +44,8 @@ import java.util.Set;
  * @author Rong Chen
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Contribution extends RMObject {
 
     /**
@@ -68,6 +82,7 @@ public class Contribution extends RMObject {
      *
      * @return uid
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public ObjectID getUid() {
         return uid;
     }
@@ -77,6 +92,7 @@ public class Contribution extends RMObject {
      *
      * @return audit details
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public AuditDetails getAudit() {
         return audit;
     }
@@ -89,6 +105,12 @@ public class Contribution extends RMObject {
      *
      * @return <code>Set</code> of <code>ObjectRef</code>
      */
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(
+		name = "RM_CONTRIBUTION_versions",
+		joinColumns = {@JoinColumn(name = "RM_CONTRIBUTION_mappingId")},
+		inverseJoinColumns = {@JoinColumn(name = "RM_OBJECT_REF_mappingId")}
+		)
     public Set<ObjectRef> getVersions() {
         return versions;
     }
@@ -146,6 +168,18 @@ public class Contribution extends RMObject {
     private ObjectID uid;
     private Set<ObjectRef> versions;
     private AuditDetails audit;
+    
+    private int mappingId;
+
+	@Id
+	@GeneratedValue
+	public int getMappingId() {
+		return mappingId;
+	}
+
+	public void setMappingId(int mappingId) {
+		this.mappingId = mappingId;
+	}
 }
 
 /*

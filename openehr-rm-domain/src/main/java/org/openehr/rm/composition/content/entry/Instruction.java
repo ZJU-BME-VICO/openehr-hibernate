@@ -33,12 +33,24 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 /**
  * The root of an action specification.  Instances of this class are immutable.
  *
  * @author Rong Chen
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public final class Instruction extends CareEntry {
 
     /**
@@ -103,6 +115,12 @@ public final class Instruction extends CareEntry {
      * 
      * @return activities
      */
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(
+		name = "RM_INSTRUCTION_activities",
+		joinColumns = {@JoinColumn(name = "RM_INSTRUCTION_mappingId")},
+		inverseJoinColumns = {@JoinColumn(name = "RM_ACTIVITY_mappingId")}
+		)
     public List<Activity> getActivities() {
 		return activities;
 	}
@@ -114,6 +132,7 @@ public final class Instruction extends CareEntry {
      * 
      * @return expiryTime
      */
+	@ManyToOne(cascade = CascadeType.ALL)
 	public DvDateTime getExpiryTime() {
 		return expiryTime;
 	}
@@ -123,6 +142,7 @@ public final class Instruction extends CareEntry {
 	 * 
 	 * @return narrative
 	 */
+	@ManyToOne(cascade = CascadeType.ALL)
 	public DvText getNarrative() {
 		return narrative;
 	}
@@ -132,6 +152,7 @@ public final class Instruction extends CareEntry {
 	 * 
 	 * @return wfDefinition
 	 */
+	@ManyToOne(cascade = CascadeType.ALL)
 	public DvParsable getWfDefinition() {
 		return wfDefinition;
 	}

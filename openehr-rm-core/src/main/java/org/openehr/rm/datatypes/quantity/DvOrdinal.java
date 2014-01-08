@@ -24,6 +24,16 @@ import org.openehr.rm.datatypes.basic.DataValue;
 import org.openehr.rm.datatypes.basic.ReferenceModelName;
 import org.openehr.rm.datatypes.text.DvCodedText;
 
+
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 /**
  * Purpose Models rankings and scores, like pain, Apgar values, etc,
  * where there is a) implied ordering, b) no implication that the
@@ -33,6 +43,8 @@ import org.openehr.rm.datatypes.text.DvCodedText;
  * @author Rong Chen
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public final class DvOrdinal extends DvOrdered<DvOrdinal> {
 
     /**
@@ -140,6 +152,7 @@ public final class DvOrdinal extends DvOrdered<DvOrdinal> {
      *
      * @return ssymbol
      */
+	@ManyToOne
     public DvCodedText getSymbol() {
         return symbol;
     }
@@ -204,14 +217,17 @@ public final class DvOrdinal extends DvOrdered<DvOrdinal> {
         return true;
     }
 
+    @Transient
     public String getTerminologyId(){
 	return getSymbol().getTerminologyId();
     }
 
+    @Transient
     public String getCode(){
 	return getSymbol().getCode();
     }
     
+    @Transient
     public String getSymbolValue(){
 	return getSymbol().getValue();
     }
@@ -237,6 +253,13 @@ public final class DvOrdinal extends DvOrdered<DvOrdinal> {
     private int value;
     private DvCodedText symbol;
     private int limitsIndex;
+    
+    @Column(name = "RM_limitsIndex")
+	public int getLimitsIndex() {
+		return limitsIndex;
+	}
+
+    @Transient
     @Override
     public String getReferenceModelName() {
 	return "DV_ORDINAL";

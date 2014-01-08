@@ -33,12 +33,22 @@ import org.openehr.rm.datatypes.text.DvText;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 /**
  * Entry type for evaluation statements. Instances of this class are immutable.
  *
  * @author Rong Chen
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public final class Evaluation extends CareEntry {
 
     /**
@@ -90,6 +100,7 @@ public final class Evaluation extends CareEntry {
      *
      * @return data of this evaluation
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public ItemStructure getData() {
         return data;
     }

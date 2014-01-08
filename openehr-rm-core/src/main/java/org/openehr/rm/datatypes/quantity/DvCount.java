@@ -22,12 +22,21 @@ import org.openehr.rm.datatypes.text.CodePhrase;
 
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
 /**
  * This class defines countable quantities.
  *
  * @author Rong Chen
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public final class DvCount extends DvAmount<DvCount> {
 
 	/**
@@ -115,6 +124,7 @@ public final class DvCount extends DvAmount<DvCount> {
 	 *
 	 * @return diff type
 	 */
+	@Transient
 	public Class<DvCount> getDiffType() {
 		return DvCount.class;
 	}
@@ -204,6 +214,7 @@ public final class DvCount extends DvAmount<DvCount> {
 	/* fields */
 	private int magnitude;
 
+    @Transient
 	@Override
 	public String getReferenceModelName() {
 		return ReferenceModelName.DV_COUNT.getName();

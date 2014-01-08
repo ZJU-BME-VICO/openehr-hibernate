@@ -15,6 +15,14 @@
 package org.openehr.rm.datatypes.quantity.datetime;
 
 import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.joda.time.DateTime;
 import org.joda.time.MutableDateTime;
@@ -35,6 +43,8 @@ import org.openehr.rm.datatypes.text.CodePhrase;
  * @author Rong Chen
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class DvDate extends DvTemporal<DvDate> {
 
 	/**
@@ -131,6 +141,7 @@ public class DvDate extends DvTemporal<DvDate> {
 	 *
 	 * @return year
 	 */
+	@Transient
 	public int getYear() {
 		return getDateTime().getYear();
 	}
@@ -140,6 +151,7 @@ public class DvDate extends DvTemporal<DvDate> {
 	 *
 	 * @return month, 0 if month is unknown
 	 */
+	@Transient
 	public int getMonth() {
 		return monthKnown ? getDateTime().getMonthOfYear() : -1;
 	}
@@ -149,6 +161,7 @@ public class DvDate extends DvTemporal<DvDate> {
 	 *
 	 * @return day
 	 */
+	@Transient
 	public int getDay() {
 		return dayKnown ? getDateTime().getDayOfMonth() : -1;
 	}
@@ -202,6 +215,7 @@ public class DvDate extends DvTemporal<DvDate> {
 		return DvDateTimeParser.parseDate(value);
 	}
 
+	@Transient
 	@Override
 	public Double getMagnitude() {
 		// TODO
@@ -309,6 +323,20 @@ public class DvDate extends DvTemporal<DvDate> {
 	private boolean dayKnown;
 	private boolean monthKnown;
 	private boolean isPartial;
+
+	public boolean isDayKnown() {
+		return dayKnown;
+	}
+
+	public boolean isMonthKnown() {
+		return monthKnown;
+	}
+
+	public void setPartial(boolean isPartial) {
+		this.isPartial = isPartial;
+	}
+
+    @Transient
 	@Override
 	public String getReferenceModelName() {
 		return "DV_DATE";

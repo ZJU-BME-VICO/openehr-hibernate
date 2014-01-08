@@ -31,6 +31,19 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 /**
  * Documents the clinical context of the clinical session (or
  * encounter). The context information recorded here are independent
@@ -46,6 +59,8 @@ import java.util.List;
  * @author Rong Chen
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public final class EventContext extends RMObject {
 
     /**
@@ -119,6 +134,7 @@ public final class EventContext extends RMObject {
      *
      * @return healthcare facility
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public PartyIdentified getHealthCareFacility() {
         return healthCareFacility;
     }
@@ -128,6 +144,7 @@ public final class EventContext extends RMObject {
      *
      * @return startTime
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public DvDateTime getStartTime() {
         return startTime;
     }
@@ -137,6 +154,7 @@ public final class EventContext extends RMObject {
      *
      * @return endTime
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public DvDateTime getEndTime() {
         return endTime;
     }
@@ -149,6 +167,12 @@ public final class EventContext extends RMObject {
      *
      * @return unmodifiable list of participations
      */
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(
+		name = "RM_EVENT_CONTEXT_participations",
+		joinColumns = {@JoinColumn(name = "RM_EVENT_CONTEXT_mappingId")},
+		inverseJoinColumns = {@JoinColumn(name = "RM_PARTICIPATION_mappingId")}
+		)
     public List<Participation> getParticipations() {
         return participations == null ? null :
                 Collections.unmodifiableList(participations);
@@ -170,6 +194,7 @@ public final class EventContext extends RMObject {
      *
      * @return setting
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public DvCodedText getSetting() {
         return setting;
     }
@@ -179,6 +204,7 @@ public final class EventContext extends RMObject {
      *
      * @return other context
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public ItemStructure getOtherContext() {
         return otherContext;
     }
@@ -264,6 +290,18 @@ public final class EventContext extends RMObject {
     private String location;
     private DvCodedText setting;
     private ItemStructure otherContext;
+    
+    private int mappingId;
+
+	@Id
+	@GeneratedValue
+	public int getMappingId() {
+		return mappingId;
+	}
+
+	public void setMappingId(int mappingId) {
+		this.mappingId = mappingId;
+	}
 }
 
 /*

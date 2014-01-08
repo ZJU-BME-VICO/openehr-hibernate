@@ -30,6 +30,15 @@ import org.openehr.rm.datatypes.text.DvText;
 
 import java.util.*;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+
 /**
  * Logical list data structure, where each item has a value and can
  * be referred to by a name and a positional index in the list.
@@ -37,6 +46,8 @@ import java.util.*;
  * @author Rong Chen
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public final class ItemList extends ItemStructure {
 
     /**
@@ -100,6 +111,12 @@ public final class ItemList extends ItemStructure {
      *
      * @return List of Element
      */
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(
+		name = "RM_ITEM_LIST_items",
+		joinColumns = {@JoinColumn(name = "RM_ITEM_LIST_mappingId")},
+		inverseJoinColumns = {@JoinColumn(name = "RM_ELEMENT_mappingId")}
+		)
     public List<Locatable> getItems() {
         return items;
     }
@@ -205,7 +222,11 @@ public final class ItemList extends ItemStructure {
     /* calculated field */
     private List<Locatable> items;
 
-    // POJO start
+    public void setItems(List<Locatable> items) {
+		this.items = items;
+	}
+
+	// POJO start
     ItemList() {
     }
     // POJO end

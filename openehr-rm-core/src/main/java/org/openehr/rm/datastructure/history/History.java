@@ -17,6 +17,17 @@ package org.openehr.rm.datastructure.history;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.openehr.rm.Attribute;
@@ -42,6 +53,8 @@ import org.openehr.rm.support.identification.UIDBasedID;
  * @author Rong Chen
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class History <T extends ItemStructure> extends DataStructure {
 
     /**
@@ -119,6 +132,7 @@ public class History <T extends ItemStructure> extends DataStructure {
      *
      * @return origin of this event history
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public DvDateTime getOrigin() {
         return origin;
     }
@@ -128,6 +142,12 @@ public class History <T extends ItemStructure> extends DataStructure {
      * 
      * @return events
      */
+	@ManyToMany(targetEntity = Event.class, cascade = CascadeType.ALL)
+	@JoinTable(
+		name = "RM_HISTORY_events",
+		joinColumns = {@JoinColumn(name = "RM_HISTORY_mappingId")},
+		inverseJoinColumns = {@JoinColumn(name = "RM_EVENT_mappingId")}
+		)
     public List<Event<T>> getEvents() {
 		return events;
 	}
@@ -137,6 +157,7 @@ public class History <T extends ItemStructure> extends DataStructure {
      * 
      * @return period
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public DvDuration getPeriod() {
             return period;
     }
@@ -148,6 +169,7 @@ public class History <T extends ItemStructure> extends DataStructure {
 	 * 
 	 * @return duration of History
 	 */
+	@ManyToOne(cascade = CascadeType.ALL)
 	public DvDuration getDuration() {
 		return duration;
 	}
@@ -158,6 +180,7 @@ public class History <T extends ItemStructure> extends DataStructure {
 	 * 
 	 * @return summary of entire History
 	 */
+	@ManyToOne(cascade = CascadeType.ALL)
 	public ItemStructure getSummary() {
 		return summary;
 	}
@@ -167,6 +190,7 @@ public class History <T extends ItemStructure> extends DataStructure {
 	 * 
 	 * @return true if period not null
 	 */
+	@Transient
 	public boolean isPeriodic() {
 		return period != null;
 	}

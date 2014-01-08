@@ -27,12 +27,23 @@ import org.openehr.rm.datatypes.text.DvText;
 
 import java.util.*;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+
 /**
  * Represents a heading in a heading structure, or "section tree". * 
  *
  * @author Rong Chen
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public final class Section extends ContentItem {
 
     /**
@@ -94,6 +105,12 @@ public final class Section extends ContentItem {
      *
      * @return list of ContentItem or null if not present
      */
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(
+		name = "RM_SECTION_items",
+		joinColumns = {@JoinColumn(name = "RM_SECTION_mappingId")},
+		inverseJoinColumns = {@JoinColumn(name = "RM_CONTENT_ITEM_mappingId")}
+		)
     public List<ContentItem> getItems() {
         return items;
     }

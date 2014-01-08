@@ -17,6 +17,16 @@ package org.openehr.rm.demographic;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 import org.openehr.rm.datatypes.quantity.datetime.DvDate;
 import org.openehr.rm.datatypes.quantity.DvInterval;
 import org.openehr.rm.datatypes.text.DvText;
@@ -41,6 +51,8 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
  * @author Goran Pestana
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Role extends Party {
 
     protected Role() {
@@ -101,6 +113,12 @@ public class Role extends Party {
         this.performer = performer;
     }
 
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(
+		name = "RM_ROLE_capabilities",
+		joinColumns = {@JoinColumn(name = "RM_ROLE_mappingId")},
+		inverseJoinColumns = {@JoinColumn(name = "RM_CAPABILITY_mappingId")}
+		)
     public List<Capability> getCapabilities() {
         return capabilities;
     }
@@ -109,6 +127,7 @@ public class Role extends Party {
         this.capabilities = capabilities;
     }
 
+	@ManyToOne(cascade = CascadeType.ALL)
     public DvInterval<DvDate> getTimeValidity() {
         return timeValidity;
     }
@@ -117,6 +136,7 @@ public class Role extends Party {
         this.timeValidity = timeValidity;
     }
 
+	@ManyToOne(cascade = CascadeType.ALL)
     public PartyRef getPerformer() {
         return performer;
     }

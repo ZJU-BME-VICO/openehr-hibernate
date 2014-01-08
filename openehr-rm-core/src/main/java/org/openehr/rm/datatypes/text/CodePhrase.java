@@ -14,6 +14,16 @@
  */
 package org.openehr.rm.datatypes.text;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
@@ -31,6 +41,8 @@ import org.openehr.rm.datatypes.basic.ReferenceModelName;
  * @author Rong Chen
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public final class CodePhrase extends DataValue {
 
     /**
@@ -104,6 +116,7 @@ public final class CodePhrase extends DataValue {
      *
      * @return <code>TerminologyID</code>
      */
+	@ManyToOne(cascade=CascadeType.ALL)
     public TerminologyID getTerminologyId() {
         return terminologyId;
     }
@@ -167,6 +180,8 @@ public final class CodePhrase extends DataValue {
     /* fields */
     private TerminologyID terminologyId;
     private String codeString;
+    
+    @Transient
 	@Override
 	public String getReferenceModelName() {
 		return ReferenceModelName.CODE_PHRASE.getName();

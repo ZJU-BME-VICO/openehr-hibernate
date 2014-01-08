@@ -14,6 +14,14 @@
  */
 package org.openehr.rm.datatypes.basic;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,6 +45,8 @@ import org.openehr.rm.datatypes.text.DvText;
  * @author Rong Chen
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class DataValue extends RMObject {
 
     // POJO start
@@ -53,7 +63,8 @@ public abstract class DataValue extends RMObject {
         return ToStringBuilder.reflectionToString(this,
                 ToStringStyle.MULTI_LINE_STYLE);
     }
-    
+
+	@Transient
     public abstract String getReferenceModelName();
     
     /**
@@ -121,6 +132,18 @@ public abstract class DataValue extends RMObject {
     	dataValueMap.put(ReferenceModelName.DV_DATE_TIME.getName(), new DvDateTime("2001-02-11T00"));
     	dataValueMap.put(ReferenceModelName.DV_DURATION.getName(), new DvDuration("P10D"));
     }  
+    
+    private int mappingId;
+
+	@Id
+	@GeneratedValue
+	public int getMappingId() {
+		return mappingId;
+	}
+
+	protected void setMappingId(int mappingId) {
+		this.mappingId = mappingId;
+	}
     
 }
 

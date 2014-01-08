@@ -14,6 +14,16 @@
  */
 package org.openehr.rm.datatypes.basic;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.openehr.rm.Attribute;
@@ -28,6 +38,8 @@ import org.openehr.rm.datatypes.text.DvCodedText;
  * @author Rong Chen
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public final class DvState extends DataValue {
 
     /**
@@ -66,6 +78,7 @@ public final class DvState extends DataValue {
      *
      * @return state name
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public DvCodedText getValue() {
         return value;
     }
@@ -127,6 +140,8 @@ public final class DvState extends DataValue {
     /* fields */
     private DvCodedText value;
     private boolean terminal;
+
+    @Transient
 	@Override
 	public String getReferenceModelName() {
 		return "DV_STATE";

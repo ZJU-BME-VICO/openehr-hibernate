@@ -14,6 +14,21 @@
  */
 package org.openehr.rm.common.resource;
 
+import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapKeyColumn;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +43,8 @@ import org.openehr.rm.Attribute;
  * @author Yin Su Lim
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class ResourceDescription implements Serializable{
 
 	/**
@@ -70,6 +87,12 @@ public class ResourceDescription implements Serializable{
 	 * 
 	 * @return details
 	 */
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(
+		name = "RM_RESOURCE_DESCRIPTION_details",
+		joinColumns = {@JoinColumn(name = "RM_RESOURCE_DESCRIPTION_mappingId")},
+		inverseJoinColumns = {@JoinColumn(name = "RM_RESOURCE_DESCRIPTION_ITEM_mappingId")}
+		)
 	public List<ResourceDescriptionItem> getDetails() {
 		return details;
 	}
@@ -90,6 +113,11 @@ public class ResourceDescription implements Serializable{
 	 * 
 	 * @return originalAuthor
 	 */
+	@ElementCollection
+	@CollectionTable(
+			name = "RM_RESOURCE_DESCRIPTION_original_author",
+			joinColumns = {@JoinColumn(name = "RM_RESOURCE_DESCRIPTION_mappingId")}
+			)
 	public Map<String, String> getOriginalAuthor() {
 		return originalAuthor;
 	}
@@ -100,6 +128,11 @@ public class ResourceDescription implements Serializable{
 	 * 
 	 * @return otherContributors
 	 */
+	@ElementCollection
+	@CollectionTable(
+			name = "RM_RESOURCE_DESCRIPTION_other_contributors",
+			joinColumns = {@JoinColumn(name = "RM_RESOURCE_DESCRIPTION_mappingId")}
+			)
 	public List<String> getOtherContributors() {
 		return otherContributors;
 	}
@@ -110,6 +143,13 @@ public class ResourceDescription implements Serializable{
 	 * 
 	 * @return otherDetails
 	 */
+	@ElementCollection
+	@CollectionTable(
+			name = "RM_RESOURCE_DESCRIPTION_other_details",
+			joinColumns = {@JoinColumn(name = "RM_RESOURCE_DESCRIPTION_mappingId")}
+			)
+	@MapKeyColumn
+	@Column(length = 2000)
 	public Map<String, String> getOtherDetails() {
 		return otherDetails;
 	}
@@ -119,6 +159,7 @@ public class ResourceDescription implements Serializable{
 	 * 
 	 * @return parentResource
 	 */
+	@ManyToOne(cascade = CascadeType.ALL)
 	public AuthoredResource getParentResource() {
 		return parentResource;
 	}
@@ -192,6 +233,19 @@ public class ResourceDescription implements Serializable{
 	private String resourcePackageUri;
 	private Map<String, String> otherDetails;
 	private AuthoredResource parentResource;
+
+	private int mappingId;
+
+	@Id
+	@GeneratedValue
+	public int getMappingId() {
+		return mappingId;
+	}
+
+	public void setMappingId(int mappingId) {
+		this.mappingId = mappingId;
+	}
+	
 	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
 	 */

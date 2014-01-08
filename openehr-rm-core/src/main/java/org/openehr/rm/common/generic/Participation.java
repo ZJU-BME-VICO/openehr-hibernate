@@ -14,6 +14,15 @@
  */
 package org.openehr.rm.common.generic;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.openehr.rm.Attribute;
@@ -32,6 +41,8 @@ import org.openehr.rm.support.terminology.TerminologyService;
  * @author Rong Chen
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public final class Participation extends RMObject {
 
     /**
@@ -89,6 +100,7 @@ public final class Participation extends RMObject {
      *
      * @return performer
      */
+	@ManyToOne
     public PartyProxy getPerformer() {
         return performer;
     }
@@ -98,6 +110,7 @@ public final class Participation extends RMObject {
      *
      * @return function
      */
+	@ManyToOne
     public DvText getFunction() {
         return function;
     }
@@ -108,6 +121,7 @@ public final class Participation extends RMObject {
      *
      * @return mode
      */
+	@ManyToOne
     public DvCodedText getMode() {
         return mode;
     }
@@ -121,6 +135,7 @@ public final class Participation extends RMObject {
      *
      * @return DvInterval<DvDateTime>
      */
+	@ManyToOne
     public DvInterval<DvDateTime> getTime() {
         return time;
     }
@@ -185,6 +200,18 @@ public final class Participation extends RMObject {
     private DvText function;
     private DvCodedText mode;
     private DvInterval<DvDateTime> time;
+
+	private int mappingId;
+
+	@Id
+	@GeneratedValue
+	public int getMappingId() {
+		return mappingId;
+	}
+
+	public void setMappingId(int mappingId) {
+		this.mappingId = mappingId;
+	}
 }
 
 /*

@@ -14,6 +14,12 @@
  */
 package org.openehr.rm.support.identification;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
+
 import org.apache.commons.lang.StringUtils;
 import org.openehr.rm.Attribute;
 import org.openehr.rm.FullConstructor;
@@ -24,6 +30,8 @@ import org.openehr.rm.FullConstructor;
  * @author Rong Chen
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public final class TerminologyID extends ObjectID {
 
     /**
@@ -106,6 +114,22 @@ public final class TerminologyID extends ObjectID {
     /* fields */
     private String name;
     private String version;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getVersion() {
+		return version;
+	}
+
+	public void setVersion(String version) {
+		this.version = version;
+	}
 }
 
 /*

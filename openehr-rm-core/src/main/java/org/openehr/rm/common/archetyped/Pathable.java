@@ -15,6 +15,13 @@ package org.openehr.rm.common.archetyped;
 
 import java.util.*;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.ManyToOne;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.openehr.rm.RMObject;
@@ -25,6 +32,8 @@ import org.openehr.rm.RMObject;
  * 
  * @author Rong Chen
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Pathable extends RMObject {
 	
 	/**
@@ -57,6 +66,7 @@ public abstract class Pathable extends RMObject {
 	 * 
 	 * @return parent or null if not specified
 	 */
+	@ManyToOne(cascade = CascadeType.ALL)
 	public Pathable getParent() {
 		return this.parent;
 	}
@@ -131,6 +141,18 @@ public abstract class Pathable extends RMObject {
     }
     
 	private Pathable parent;
+    
+    private int mappingId;
+
+	@Id
+	@GeneratedValue
+	public int getMappingId() {
+		return mappingId;
+	}
+
+	protected void setMappingId(int mappingId) {
+		this.mappingId = mappingId;
+	}
 }
 /*
  *  ***** BEGIN LICENSE BLOCK *****

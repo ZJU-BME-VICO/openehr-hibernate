@@ -17,6 +17,15 @@ package org.openehr.rm.datastructure.history;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 import org.openehr.rm.Attribute;
 import org.openehr.rm.FullConstructor;
 import org.openehr.rm.common.archetyped.*;
@@ -34,6 +43,8 @@ import org.openehr.rm.support.terminology.TerminologyService;
  * @author Yin Su Lim
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public final class IntervalEvent<T extends ItemStructure> extends Event<T> {
 
 	/**
@@ -94,6 +105,7 @@ public final class IntervalEvent<T extends ItemStructure> extends Event<T> {
 	 * 
 	 * @return mathFunction.
 	 */
+	@ManyToOne(cascade = CascadeType.ALL)
 	public DvCodedText getMathFunction() {
 		return mathFunction;
 	}
@@ -113,6 +125,7 @@ public final class IntervalEvent<T extends ItemStructure> extends Event<T> {
 	 * 
 	 * @return width.
 	 */
+	@ManyToOne(cascade = CascadeType.ALL)
 	public DvDuration getWidth() {
 		return width;
 	}

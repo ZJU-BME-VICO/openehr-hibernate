@@ -28,6 +28,17 @@ import org.openehr.rm.support.terminology.TerminologyService;
 
 import java.util.*;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
 /**
  * A composition is considered the unit of modification of the
  * record, the unit of transmission in record extracts, and the unit
@@ -38,6 +49,8 @@ import java.util.*;
  * @author Rong Chen
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public final class Composition extends Locatable {
 
     /**
@@ -141,6 +154,7 @@ public final class Composition extends Locatable {
         return category.getDefiningCode().getCodeString().equals("persistent");
     }
 
+	@ManyToOne(cascade = CascadeType.ALL)
     public CodePhrase getLanguage() {
         return language;
     }
@@ -151,6 +165,12 @@ public final class Composition extends Locatable {
      *
      * @return list of section or null if not present
      */
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(
+		name = "RM_COMPOSITION_content",
+		joinColumns = {@JoinColumn(name = "RM_COMPOSITION_mappingId")},
+		inverseJoinColumns = {@JoinColumn(name = "RM_CONTENT_ITEM_mappingId")}
+		)
     public List<ContentItem> getContent() {
         return content;
     }
@@ -161,6 +181,7 @@ public final class Composition extends Locatable {
      *
      * @return context
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public EventContext getContext() {
         return context;
     }
@@ -171,6 +192,7 @@ public final class Composition extends Locatable {
      *
      * @return category
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public DvCodedText getCategory() {
         return category;
     }
@@ -184,6 +206,7 @@ public final class Composition extends Locatable {
      * 
      * @return composer
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public PartyProxy getComposer() {
 		return composer;
 	}
@@ -195,6 +218,7 @@ public final class Composition extends Locatable {
      *
      * @return true if persistent
      */
+	@Transient
     public boolean isPersistent() {
         return isPersistent(category);
     }
@@ -206,6 +230,7 @@ public final class Composition extends Locatable {
      *
      * @return territory
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public CodePhrase getTerritory() {
         return territory;
     }

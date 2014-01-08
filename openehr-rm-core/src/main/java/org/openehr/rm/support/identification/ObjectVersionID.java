@@ -14,6 +14,14 @@
  */
 package org.openehr.rm.support.identification;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 import org.apache.commons.lang.StringUtils;
 import org.openehr.rm.Attribute;
 import org.openehr.rm.FullConstructor;
@@ -30,6 +38,8 @@ import org.openehr.rm.FullConstructor;
  * @version 1.0
  */
 
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class ObjectVersionID extends UIDBasedID {
 
     /**
@@ -152,6 +162,33 @@ public class ObjectVersionID extends UIDBasedID {
 	private UID objectID;
 	private VersionTreeID versionTreeID;
 	private HierObjectID creatingSystemID;
+
+	@ManyToOne(cascade = CascadeType.ALL)
+	public UID getObjectID() {
+		return objectID;
+	}
+
+	public void setObjectID(UID objectID) {
+		this.objectID = objectID;
+	}
+
+	@ManyToOne(cascade = CascadeType.ALL)
+	public VersionTreeID getVersionTreeID() {
+		return versionTreeID;
+	}
+
+	public void setVersionTreeID(VersionTreeID versionTreeID) {
+		this.versionTreeID = versionTreeID;
+	}
+
+	@ManyToOne(cascade = CascadeType.ALL)
+	public HierObjectID getCreatingSystemID() {
+		return creatingSystemID;
+	}
+
+	public void setCreatingSystemID(HierObjectID creatingSystemID) {
+		this.creatingSystemID = creatingSystemID;
+	}
 }
 /*
  *  ***** BEGIN LICENSE BLOCK *****

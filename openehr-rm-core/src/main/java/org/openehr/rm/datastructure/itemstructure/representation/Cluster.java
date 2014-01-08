@@ -26,6 +26,15 @@ import org.openehr.rm.datatypes.text.DvText;
 
 import java.util.*;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 /**
  * The grouping variant of Item, which may contain further instances
  * of ITEM, in an ordered list.
@@ -33,6 +42,8 @@ import java.util.*;
  * @author Rong Chen
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public final class Cluster extends Item {
 
     /**
@@ -101,6 +112,12 @@ public final class Cluster extends Item {
      *
      * @return items of this cluster
      */
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(
+		name = "RM_CLUSTER_items",
+		joinColumns = {@JoinColumn(name = "RM_CLUSTER_mappingId")},
+		inverseJoinColumns = {@JoinColumn(name = "RM_ITEM_mappingId")}
+		)
     public List<Locatable> getItems() {
         return items;
     }
@@ -116,6 +133,7 @@ public final class Cluster extends Item {
         return null;  // todo: implement this method
     }
     
+    @Transient
     public Set getOnetomany() {
 		return onetomany;
 	}

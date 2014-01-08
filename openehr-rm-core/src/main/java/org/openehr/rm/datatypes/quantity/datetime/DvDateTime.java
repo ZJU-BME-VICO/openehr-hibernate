@@ -17,6 +17,14 @@ package org.openehr.rm.datatypes.quantity.datetime;
 
 import java.util.List;
 import java.util.TimeZone;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.joda.time.DateTime;
 import org.joda.time.MutableDateTime;
@@ -27,7 +35,6 @@ import org.openehr.rm.FullConstructor;
 import org.openehr.rm.datatypes.basic.ReferenceModelName;
 import org.openehr.rm.datatypes.quantity.DvInterval;
 import org.openehr.rm.datatypes.quantity.DvOrdered;
-
 import org.openehr.rm.datatypes.quantity.ReferenceRange;
 import org.openehr.rm.datatypes.text.CodePhrase;
 
@@ -37,6 +44,8 @@ import org.openehr.rm.datatypes.text.CodePhrase;
  * @author Yin Su Lim
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class DvDateTime extends DvTemporal<DvDateTime> {
 
 	/**
@@ -185,7 +194,8 @@ public class DvDateTime extends DvTemporal<DvDateTime> {
 		}
 		return dt != null;
 	}
-
+    
+    @Transient
 	@Override
 	public String getReferenceModelName() {
 		return ReferenceModelName.DV_DATE_TIME.getName();
@@ -196,6 +206,7 @@ public class DvDateTime extends DvTemporal<DvDateTime> {
 	 *
 	 * @return year
 	 */
+	@Transient
 	public int getYear() {
 		return getDateTime().getYear();
 	}
@@ -205,6 +216,7 @@ public class DvDateTime extends DvTemporal<DvDateTime> {
 	 *
 	 * @return month in year
 	 */
+	@Transient
 	public int getMonth() {
 		return getDateTime().getMonthOfYear();
 	}
@@ -214,6 +226,7 @@ public class DvDateTime extends DvTemporal<DvDateTime> {
 	 *
 	 * @return day in month
 	 */
+	@Transient
 	public int getDay() {
 		return getDateTime().getDayOfMonth();
 	}
@@ -223,6 +236,7 @@ public class DvDateTime extends DvTemporal<DvDateTime> {
 	 *
 	 * @return hour
 	 */
+	@Transient
 	public int getHour() {
 		return getDateTime().getHourOfDay();
 	}
@@ -232,6 +246,7 @@ public class DvDateTime extends DvTemporal<DvDateTime> {
 	 *
 	 * @return minute in hour
 	 */
+	@Transient
 	public int getMinute() {
 		return minuteKnown() ? getDateTime().getMinuteOfHour() : -1;
 	}
@@ -241,6 +256,7 @@ public class DvDateTime extends DvTemporal<DvDateTime> {
 	 *
 	 * @return second in minute
 	 */
+	@Transient
 	public int getSecond() {
 		return secondKnown ? getDateTime().getSecondOfMinute() : -1;
 	}
@@ -250,6 +266,7 @@ public class DvDateTime extends DvTemporal<DvDateTime> {
 	 *
 	 * @return fractional seconds
 	 */
+	@Transient
 	public double getFractionalSecond() {
 		return fractionalSecKnown ? getDateTime().getMillisOfSecond() / 10E2
 				: -0.1;
@@ -271,6 +288,7 @@ public class DvDateTime extends DvTemporal<DvDateTime> {
 		return isPartial;
 	}
 
+	@Transient
 	@Override
 	public Number getMagnitude() {
 		//TODO
@@ -412,7 +430,24 @@ public class DvDateTime extends DvTemporal<DvDateTime> {
 
 	@Override
 	public String serialise() {
-		return getReferenceModelName() + "," + toString(true);
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public boolean isMinuteKnown() {
+		return minuteKnown;
+	}
+
+	public boolean isSecondKnown() {
+		return secondKnown;
+	}
+
+	public boolean isFractionalSecKnown() {
+		return fractionalSecKnown;
+	}
+
+	public void setPartial(boolean isPartial) {
+		this.isPartial = isPartial;
 	}
 }
 

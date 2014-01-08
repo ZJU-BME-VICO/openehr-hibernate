@@ -16,6 +16,18 @@ package org.openehr.rm.common.archetyped;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.openehr.rm.RMObject;
@@ -29,6 +41,8 @@ import org.openehr.rm.datatypes.encapsulated.DvEncapsulated;
  * @author Yin Su Lim
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public final class FeederAudit extends RMObject {
 
    /**
@@ -69,6 +83,7 @@ public final class FeederAudit extends RMObject {
      * 
      * @return originatingSystemAudit
      */
+	@ManyToOne(cascade = CascadeType.ALL)
 	public FeederAuditDetails getOriginatingSystemAudit() {
 		return originatingSystemAudit;
 	}
@@ -78,6 +93,12 @@ public final class FeederAudit extends RMObject {
 	 * 
 	 * @return originatingSystemItemIds or null if not specified
 	 */
+	@ManyToMany
+	@JoinTable(
+		name = "RM_FEEDER_AUDIT_originating_system_item_ids",
+		joinColumns = {@JoinColumn(name = "RM_FEEDER_AUDIT_mappingId")},
+		inverseJoinColumns = {@JoinColumn(name = "RM_DV_IDENTIFIER_mappingId")}
+		)
 	public List<DvIdentifier> getOriginatingSystemItemIds() {
 		return originatingSystemItemIds;
 	}
@@ -88,6 +109,7 @@ public final class FeederAudit extends RMObject {
 	 * 
 	 * @return feederSystemAudit or null if not specified
 	 */
+	@ManyToOne(cascade = CascadeType.ALL)
     public FeederAuditDetails getFeederSystemAudit() {
 		return feederSystemAudit;
 	}
@@ -98,6 +120,12 @@ public final class FeederAudit extends RMObject {
      * 
      * @return feederSystemItemIds or null if not specified
      */
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(
+		name = "RM_FEEDER_AUDIT_feeder_system_item_ids",
+		joinColumns = {@JoinColumn(name = "RM_FEEDER_AUDIT_mappingId")},
+		inverseJoinColumns = {@JoinColumn(name = "RM_DV_IDENTIFIER_mappingId")}
+		)
 	public List<DvIdentifier> getFeederSystemItemIds() {
 		return feederSystemItemIds;
 	}
@@ -110,6 +138,7 @@ public final class FeederAudit extends RMObject {
 	 * 
 	 * @return originalContent or null if not specified
 	 */
+	@ManyToOne(cascade = CascadeType.ALL)
 	public DvEncapsulated getOriginalContent() {
 		return originalContent;
 	}
@@ -178,6 +207,22 @@ public final class FeederAudit extends RMObject {
     private FeederAuditDetails feederSystemAudit;
     private List<DvIdentifier> feederSystemItemIds;
     private DvEncapsulated originalContent;
+    
+    public void setOriginalContent(DvEncapsulated originalContent) {
+		this.originalContent = originalContent;
+	}
+
+	private int mappingId;
+
+	@Id
+	@GeneratedValue
+	public int getMappingId() {
+		return mappingId;
+	}
+
+	public void setMappingId(int mappingId) {
+		this.mappingId = mappingId;
+	}
 }
 /*
  *  ***** BEGIN LICENSE BLOCK *****

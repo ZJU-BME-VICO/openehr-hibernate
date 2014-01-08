@@ -32,6 +32,14 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 /**
  * Capability of a role, such as ehr modifier, health care provider .
  * Capability should be backed up by credentials.
@@ -39,6 +47,8 @@ import java.util.Set;
  * @author Goran Pestana
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Capability extends Locatable {
 
     protected Capability() {
@@ -95,6 +105,7 @@ public class Capability extends Locatable {
      *
      * @return time validity
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public DvInterval<DvDate> getTimeValidity() {
         return timeValidity;
     }
@@ -110,6 +121,7 @@ public class Capability extends Locatable {
      *
      * @return credentials
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public ItemStructure getCredentials() {
         return credentials;
     }

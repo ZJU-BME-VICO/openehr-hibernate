@@ -28,6 +28,18 @@ import org.openehr.rm.support.terminology.TerminologyService;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
 /**
  * The Text class represents any kind of atomic text item, coded or
  * uncoded.
@@ -36,6 +48,8 @@ import java.util.List;
  * @author Rong Chen
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class DvText extends DataValue {
 
     /**
@@ -153,6 +167,12 @@ public class DvText extends DataValue {
      *
      * @return null if unspecified
      */
+	@ManyToMany(cascade=CascadeType.ALL)
+	@JoinTable(
+		name = "RM_DV_TEXT_mappings",
+		joinColumns = {@JoinColumn(name = "RM_DV_TEXT_mappingId")},
+		inverseJoinColumns = {@JoinColumn(name = "RM_TERM_MAPPING_mappingId")}
+		)
     public List<TermMapping> getMappings() {
         return mappings;
     }
@@ -171,6 +191,7 @@ public class DvText extends DataValue {
      *
      * @return null if unspecified
      */
+	@ManyToOne(cascade=CascadeType.ALL)
     public DvURI getHyperlink() {
         return hyperlink;
     }
@@ -184,6 +205,7 @@ public class DvText extends DataValue {
      *
      * @return language or null if not specified
      */
+	@ManyToOne(cascade=CascadeType.ALL)
     public CodePhrase getLanguage() {
         return language;
     }
@@ -194,6 +216,7 @@ public class DvText extends DataValue {
      *
      * @return character set or null if not specified
      */
+	@ManyToOne(cascade=CascadeType.ALL)
     public CodePhrase getEncoding() {
         return encoding;
     }
@@ -268,6 +291,8 @@ public class DvText extends DataValue {
     private DvURI hyperlink;
     private CodePhrase language;
     private CodePhrase encoding;
+    
+    @Transient
 	@Override
 	public String getReferenceModelName() {
 		return ReferenceModelName.DV_TEXT.getName();

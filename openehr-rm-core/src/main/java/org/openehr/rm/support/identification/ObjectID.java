@@ -14,6 +14,14 @@
  */
 package org.openehr.rm.support.identification;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
+
 import org.apache.commons.lang.StringUtils;
 import org.openehr.rm.FullConstructor;
 import org.openehr.rm.RMObject;
@@ -27,6 +35,8 @@ import org.openehr.rm.RMObject;
  * @author Rong Chen
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class ObjectID extends RMObject {
 
     /**
@@ -96,6 +106,18 @@ public abstract class ObjectID extends RMObject {
 
     /* fields */
     private String value;
+    
+    private int mappingId;
+
+	@Id
+	@GeneratedValue
+	public int getMappingId() {
+		return mappingId;
+	}
+
+	protected void setMappingId(int mappingId) {
+		this.mappingId = mappingId;
+	}
 }
 
 /*

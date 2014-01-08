@@ -14,6 +14,18 @@
  */
 package org.openehr.rm.datatypes.quantity;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.openehr.rm.Attribute;
 import org.openehr.rm.FullConstructor;
 import org.openehr.rm.datatypes.basic.DataValue;
@@ -27,6 +39,8 @@ import org.openehr.rm.support.basic.Interval;
  * @author Rong Chen
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public final class DvInterval <T extends DvOrdered> extends DataValue {
 
     /**
@@ -43,7 +57,9 @@ public final class DvInterval <T extends DvOrdered> extends DataValue {
                 && upper.compareTo(lower) < 0) {
             throw new IllegalArgumentException("lower > upper");
         }
-        interval = new Interval<T>(lower, upper);
+//        interval = new Interval<T>(lower, upper);
+        this.lower = lower;
+        this.upper = upper;
     }
 
     /**
@@ -51,8 +67,10 @@ public final class DvInterval <T extends DvOrdered> extends DataValue {
      *
      * @return null if not specified
      */
+	@ManyToOne(targetEntity = DvOrdered.class, cascade = CascadeType.ALL)
     public T getLower() {
-        return interval.getLower();
+//        return interval.getLower();
+        return lower;
     }
 
     /**
@@ -60,8 +78,10 @@ public final class DvInterval <T extends DvOrdered> extends DataValue {
      *
      * @return null if not specified
      */
+	@ManyToOne(targetEntity = DvOrdered.class, cascade = CascadeType.ALL)
     public T getUpper() {
-        return interval.getUpper();
+//        return interval.getUpper();
+        return upper;
     }
 
     /**
@@ -69,8 +89,10 @@ public final class DvInterval <T extends DvOrdered> extends DataValue {
      *
      * @return true is unbounded
      */
+	@Transient
     public boolean isLowerUnbounded() {
-        return interval.getLower() == null;
+//        return interval.getLower() == null;
+        return lower == null;
     }
 
     /**
@@ -78,8 +100,10 @@ public final class DvInterval <T extends DvOrdered> extends DataValue {
      *
      * @return true is unbounded
      */
+	@Transient
     public boolean isUpperUnbounded() {
-        return interval.getUpper() == null;
+//        return interval.getUpper() == null;
+        return upper == null;
     }
     
     /**
@@ -87,8 +111,10 @@ public final class DvInterval <T extends DvOrdered> extends DataValue {
      * 
      * @return true if included
      */    
+	@Transient
     public boolean isLowerIncluded() {
-    	return interval.isLowerIncluded();
+//    	return interval.isLowerIncluded();
+    	return true;
     }
     
     /**
@@ -96,8 +122,10 @@ public final class DvInterval <T extends DvOrdered> extends DataValue {
      * 
      * @return true if included
      */
+	@Transient
     public boolean isUpperIncluded() {
-    	return interval.isUpperIncluded();
+//    	return interval.isUpperIncluded();
+    	return true;
     }
 
     /**
@@ -112,10 +140,14 @@ public final class DvInterval <T extends DvOrdered> extends DataValue {
             throw new IllegalArgumentException("null value");
         }
 
-        return ( interval.isLowerUnbounded() ||
-                value.compareTo(interval.getLower()) >= 0 )
-                && ( interval.isUpperUnbounded() ||
-                value.compareTo(interval.getUpper()) <= 0 );
+//        return ( interval.isLowerUnbounded() ||
+//                value.compareTo(interval.getLower()) >= 0 )
+//                && ( interval.isUpperUnbounded() ||
+//                value.compareTo(interval.getUpper()) <= 0 );
+        return ( isLowerUnbounded() ||
+                value.compareTo(getLower()) >= 0 )
+                && ( isUpperUnbounded() ||
+                value.compareTo(getUpper()) <= 0 );
     }
 
     /**
@@ -130,9 +162,13 @@ public final class DvInterval <T extends DvOrdered> extends DataValue {
 
         final DvInterval interval1 = (DvInterval) o;
 
-        if (!interval.equals(interval1.interval)) return false;
-
-        return true;
+//        if (!interval.equals(interval1.interval)) return false;
+//
+//        return true;
+        return new EqualsBuilder()
+                .append(lower, interval1.lower)
+                .append(upper, interval1.upper)
+                .isEquals();
     }
 
     /**
@@ -141,26 +177,43 @@ public final class DvInterval <T extends DvOrdered> extends DataValue {
      * @return hash code
      */
     public int hashCode() {
-        return interval.hashCode();
+//        return interval.hashCode();
+        return new HashCodeBuilder()
+        .append(lower)
+        .append(upper)
+        .append(true)
+        .append(true)
+        .toHashCode();
     }
 
 
     // POJO start
-    public void setInterval(Interval<T> interval) {
-        this.interval = interval;
-    }
+//    public void setInterval(Interval<T> interval) {
+//        this.interval = interval;
+//    }
 
     private DvInterval() {
     }
 
-    public Interval<T> getInterval() {
-        return interval;
-    }
+//    public Interval<T> getInterval() {
+//        return interval;
+//    }
     // POJO end
 
     /* fields */
-    private Interval<T> interval;
+//    private Interval<T> interval;
+    private T lower;
+    private T upper;
 
+	public void setLower(T lower) {
+		this.lower = lower;
+	}
+
+	public void setUpper(T upper) {
+		this.upper = upper;
+	}
+    
+    @Transient
 	@Override
 	public String getReferenceModelName() {
 		return "DV_INTERVAL";

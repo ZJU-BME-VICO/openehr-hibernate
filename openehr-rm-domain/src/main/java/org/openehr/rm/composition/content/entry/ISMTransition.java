@@ -14,6 +14,16 @@
  */
 package org.openehr.rm.composition.content.entry;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 import org.openehr.rm.Attribute;
 import org.openehr.rm.FullConstructor;
 import org.openehr.rm.RMObject;
@@ -27,6 +37,8 @@ import org.openehr.rm.support.terminology.*;
  * @author Yin Su Lim
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public final class ISMTransition extends RMObject {
 
 	/**
@@ -75,6 +87,7 @@ public final class ISMTransition extends RMObject {
 	 * 
 	 * @return careflowStep
 	 */
+	@ManyToOne(cascade = CascadeType.ALL)
 	public DvCodedText getCareflowStep() {
 		return careflowStep;
 	}
@@ -84,6 +97,7 @@ public final class ISMTransition extends RMObject {
 	 * 
 	 * @return currentState
 	 */
+	@ManyToOne(cascade = CascadeType.ALL)
 	public DvCodedText getCurrentState() {
 		return currentState;
 	}
@@ -94,6 +108,7 @@ public final class ISMTransition extends RMObject {
 	 * 
 	 * @return transition
 	 */
+	@ManyToOne(cascade = CascadeType.ALL)
 	public DvCodedText getTransition() {
 		return transition;
 	}
@@ -119,6 +134,18 @@ public final class ISMTransition extends RMObject {
 	private DvCodedText currentState;
 	private DvCodedText transition;
 	private DvCodedText careflowStep;
+
+	private int mappingId;
+
+	@Id
+	@GeneratedValue
+	public int getMappingId() {
+		return mappingId;
+	}
+
+	public void setMappingId(int mappingId) {
+		this.mappingId = mappingId;
+	}
 
 }
 

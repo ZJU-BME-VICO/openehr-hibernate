@@ -17,6 +17,19 @@ package org.openehr.rm.common.resource;
 import java.util.Map;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 import org.apache.commons.lang.StringUtils;
 import org.openehr.rm.RMObject;
 import org.openehr.rm.datatypes.text.CodePhrase;
@@ -32,6 +45,8 @@ import org.openehr.rm.support.terminology.TerminologyService;
  * @author Yin Su Lim
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class ResourceDescriptionItem extends RMObject {
 
 	/**
@@ -69,7 +84,7 @@ public class ResourceDescriptionItem extends RMObject {
 		this.language = language;
 		this.purpose = purpose;
 		this.keywords = keywords;
-		this.use = use;
+		this.usage = use;
 		this.misuse = misuse;
 		this.copyright = copyright;
 		this.originalResourceUri = originalResourceUri;
@@ -96,6 +111,11 @@ public class ResourceDescriptionItem extends RMObject {
 	 * 
 	 * @return keywords
 	 */
+	@ElementCollection
+	@CollectionTable(
+		name = "RM_RESOURCE_DESCRIPTION_ITEM_keywords",
+		joinColumns = {@JoinColumn(name = "RM_RESOURCE_DESCRIPTION_ITEM_mappingId")}
+		)
 	public List<String> getKeywords() {
 		return keywords;
 	}
@@ -106,6 +126,7 @@ public class ResourceDescriptionItem extends RMObject {
 	 * 
 	 * @return language
 	 */
+	@ManyToOne(cascade = CascadeType.ALL)
 	public CodePhrase getLanguage() {
 		return language;
 	}
@@ -116,6 +137,7 @@ public class ResourceDescriptionItem extends RMObject {
 	 * 
 	 * @return misuse
 	 */
+	@Column(length = 2000)
 	public String getMisuse() {
 		return misuse;
 	}
@@ -127,6 +149,11 @@ public class ResourceDescriptionItem extends RMObject {
 	 * 
 	 * @return originalResourceUri
 	 */
+	@ElementCollection
+	@CollectionTable(
+		name = "RM_RESOURCE_DESCRIPTION_ITEM_original_resource_uri",
+		joinColumns = {@JoinColumn(name = "RM_RESOURCE_DESCRIPTION_ITEM_mappingId")}
+		)
 	public Map<String, String> getOriginalResourceUri() {
 		return originalResourceUri;
 	}
@@ -137,6 +164,11 @@ public class ResourceDescriptionItem extends RMObject {
 	 * 
 	 * @return otherDetails
  	 */
+	@ElementCollection
+	@CollectionTable(
+		name = "RM_RESOURCE_DESCRIPTION_ITEM_other_details",
+		joinColumns = {@JoinColumn(name = "RM_RESOURCE_DESCRIPTION_ITEM_mappingId")}
+		)
 	public Map<String, String> getOtherDetails() {
 		return otherDetails;
 	}
@@ -146,6 +178,7 @@ public class ResourceDescriptionItem extends RMObject {
 	 * 
 	 * @return purpose
 	 */
+	@Column(length = 2000)
 	public String getPurpose() {
 		return purpose;
 	}
@@ -156,8 +189,9 @@ public class ResourceDescriptionItem extends RMObject {
 	 * 
 	 * @return use
 	 */ 
-	public String getUse() {
-		return use;
+	@Column(length = 4000)
+	public String getUsage() {
+		return usage;
 	}	
 
 	//POJO start
@@ -185,8 +219,8 @@ public class ResourceDescriptionItem extends RMObject {
 	void setPurpose(String purpose) {
 		this.purpose = purpose;
 	}
-	void setUse(String use) {
-		this.use = use;
+	void setUsage(String usage) {
+		this.usage = usage;
 	}
 	//POJO end
 	
@@ -194,11 +228,24 @@ public class ResourceDescriptionItem extends RMObject {
 	private CodePhrase language;
 	private String purpose;
 	private List<String> keywords;
-	private String use;
+	private String usage;
 	private String misuse;
 	private String copyright;
 	private Map<String, String> originalResourceUri;
 	private Map<String, String> otherDetails;
+    
+    private int mappingId;
+
+	@Id
+	@GeneratedValue
+	public int getMappingId() {
+		return mappingId;
+	}
+
+	public void setMappingId(int mappingId) {
+		this.mappingId = mappingId;
+	}
+	
 	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
 	 */
@@ -220,7 +267,7 @@ public class ResourceDescriptionItem extends RMObject {
 		result = prime * result
 				+ ((otherDetails == null) ? 0 : otherDetails.hashCode());
 		result = prime * result + ((purpose == null) ? 0 : purpose.hashCode());
-		result = prime * result + ((use == null) ? 0 : use.hashCode());
+		result = prime * result + ((usage == null) ? 0 : usage.hashCode());
 		return result;
 	}
 
@@ -271,10 +318,10 @@ public class ResourceDescriptionItem extends RMObject {
 				return false;
 		} else if (!purpose.equals(other.purpose))
 			return false;
-		if (use == null) {
-			if (other.use != null)
+		if (usage == null) {
+			if (other.usage != null)
 				return false;
-		} else if (!use.equals(other.use))
+		} else if (!usage.equals(other.usage))
 			return false;
 		return true;
 	}

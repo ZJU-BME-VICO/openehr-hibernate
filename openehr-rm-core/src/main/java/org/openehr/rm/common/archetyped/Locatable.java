@@ -23,6 +23,16 @@ import org.openehr.rm.datatypes.text.DvText;
 import java.lang.reflect.Method;
 import java.util.*;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
+
 /**
  * Root structural class of all information models. Instances of
  * this class are immutalbe.
@@ -30,6 +40,8 @@ import java.util.*;
  * @author Rong Chen
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Locatable extends Pathable implements Settable, Cloneable {
 
     /**
@@ -85,6 +97,7 @@ public abstract class Locatable extends Pathable implements Settable, Cloneable 
      *
      * @return uid
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public UIDBasedID getUid() {
         return uid;
     }
@@ -119,6 +132,7 @@ public abstract class Locatable extends Pathable implements Settable, Cloneable 
      *
      * @return name
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public DvText getName() {
         return name;
     }
@@ -128,6 +142,7 @@ public abstract class Locatable extends Pathable implements Settable, Cloneable 
      *
      * @return archetype details
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public Archetyped getArchetypeDetails() {
         return archetypeDetails;
     }
@@ -139,6 +154,7 @@ public abstract class Locatable extends Pathable implements Settable, Cloneable 
      *
      * @return feederAuidt
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public FeederAudit getFeederAudit() {
         return feederAudit;
     }
@@ -150,6 +166,12 @@ public abstract class Locatable extends Pathable implements Settable, Cloneable 
      *
      * @return links or null if unspecified
      */
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(
+		name = "RM_LOCATABLE_links",
+		joinColumns = {@JoinColumn(name = "RM_LOCATABLE_mappingId")},
+		inverseJoinColumns = {@JoinColumn(name = "RM_LINK_mappingId")}
+		)
     public Set<Link> getLinks() {
         return links;
     }    
@@ -159,6 +181,7 @@ public abstract class Locatable extends Pathable implements Settable, Cloneable 
      *
      * @return true if archetype root
      */
+	@Transient
     public boolean isArchetypeRoot() {
         return archetypeDetails != null;
     }
@@ -654,6 +677,7 @@ public abstract class Locatable extends Pathable implements Settable, Cloneable 
     }    
     // POJO end
 
+    @Transient
 	public Map<String, Object> getAssociatedObjects() {
 		return associatedObjects;
 	}

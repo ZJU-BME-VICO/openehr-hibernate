@@ -14,6 +14,15 @@
  */
 package org.openehr.rm.support.identification;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
 import org.apache.commons.lang.StringUtils;
 import org.openehr.rm.Attribute;
 import org.openehr.rm.FullConstructor;
@@ -27,6 +36,8 @@ import org.openehr.rm.RMObject;
  * @author Yin Su Lim
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class VersionTreeID extends RMObject {
 
     /**
@@ -145,6 +156,7 @@ public class VersionTreeID extends RMObject {
      * True if this version identifier represents a branch
      *
      */
+    @Transient
     public boolean isBranch() {
         return branchVersion != null;
     }
@@ -153,6 +165,7 @@ public class VersionTreeID extends RMObject {
      * True if this version is the first copy in a version tree
      * i.e. versionTreeId is 1.
      */
+    @Transient
     public boolean isFirst() {
         return trunkVersion.equals("1") && !isBranch();
     }
@@ -224,6 +237,47 @@ public class VersionTreeID extends RMObject {
     private String trunkVersion;
     private String branchNumber;
     private String branchVersion;
+
+    public String getTrunkVersion() {
+		return trunkVersion;
+	}
+
+
+	public void setTrunkVersion(String trunkVersion) {
+		this.trunkVersion = trunkVersion;
+	}
+
+
+	public String getBranchNumber() {
+		return branchNumber;
+	}
+
+
+	public void setBranchNumber(String branchNumber) {
+		this.branchNumber = branchNumber;
+	}
+
+
+	public String getBranchVersion() {
+		return branchVersion;
+	}
+
+
+	public void setBranchVersion(String branchVersion) {
+		this.branchVersion = branchVersion;
+	}
+
+	private int mappingId;
+
+	@Id
+	@GeneratedValue
+	public int getMappingId() {
+		return mappingId;
+	}
+
+	public void setMappingId(int mappingId) {
+		this.mappingId = mappingId;
+	}    
 }
 
 /*

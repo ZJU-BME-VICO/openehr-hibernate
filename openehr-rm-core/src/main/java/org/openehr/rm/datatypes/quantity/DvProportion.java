@@ -17,6 +17,15 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
 import org.openehr.rm.Attribute;
 import org.openehr.rm.FullConstructor;
 import org.openehr.rm.datatypes.text.CodePhrase;
@@ -27,6 +36,8 @@ import org.openehr.rm.datatypes.text.CodePhrase;
  * 
  * @author Rong Chen
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class DvProportion extends DvAmount<DvProportion> {
 
 	/**
@@ -147,6 +158,7 @@ public class DvProportion extends DvAmount<DvProportion> {
 	/**
 	 * @return Returns the type.
 	 */
+	@Enumerated(EnumType.ORDINAL)
 	public ProportionKind getType() {
 		return type;
 	}
@@ -156,6 +168,7 @@ public class DvProportion extends DvAmount<DvProportion> {
 	 * 
 	 * @return true if integral
 	 */
+	@Transient
 	public boolean isIntegral() {
 		return bothIntegral(numerator, denominator);
 	}	
@@ -175,11 +188,13 @@ public class DvProportion extends DvAmount<DvProportion> {
 		return null;
 	}
 	@Override
+	@Transient
 	public Class getDiffType() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
+	@Transient
 	public Number getMagnitude() {
 		return new Double(numerator / denominator);
 	}
@@ -279,6 +294,8 @@ public class DvProportion extends DvAmount<DvProportion> {
 	private double denominator;
 	private ProportionKind type;
 	private Integer precision;
+	
+	@Transient
     @Override
     public String getReferenceModelName() {
 	return "DV_PROPORTION";

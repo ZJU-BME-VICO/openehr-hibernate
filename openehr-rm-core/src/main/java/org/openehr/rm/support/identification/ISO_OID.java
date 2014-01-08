@@ -14,6 +14,11 @@
  */
 package org.openehr.rm.support.identification;
 
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
+
 import org.ietf.jgss.GSSException;
 import org.ietf.jgss.Oid;
 import org.openehr.rm.Attribute;
@@ -30,6 +35,8 @@ import org.openehr.rm.FullConstructor;
  * @author Rong Chen
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class ISO_OID extends UID {
 
     /**
@@ -48,7 +55,12 @@ public class ISO_OID extends UID {
             throw new IllegalArgumentException(
                     "The provided value is not a legal format for an OID as defined by the ISO/IEC 8824. " + gsse); // root can only be 0,1,2 and for 0 and 1 then only 0..39 arcs
         }
-    }
+	}
+
+	protected ISO_OID() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 }
 
 /*

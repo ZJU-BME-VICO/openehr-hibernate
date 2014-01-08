@@ -23,6 +23,19 @@ import org.openehr.rm.datatypes.quantity.datetime.DvDateTime;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 /**
  * The EHR class is the centre node of the EHR  repository  for a
  * subject of care.
@@ -30,6 +43,8 @@ import java.util.List;
  * @author Rong Chen
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class EHR extends RMObject {
 
     /**
@@ -100,6 +115,7 @@ public class EHR extends RMObject {
      * 
      * @return ehrID
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public HierObjectID getEhrID() {
 		return ehrID;
 	}
@@ -109,6 +125,7 @@ public class EHR extends RMObject {
      *  
      * @return ehrStatus
      */
+	@ManyToOne(cascade = CascadeType.ALL)
 	public ObjectRef getEhrStatus() {
 		return ehrStatus;
 	}
@@ -118,6 +135,7 @@ public class EHR extends RMObject {
 	 * 
 	 * @return systemID
 	 */
+	@ManyToOne(cascade = CascadeType.ALL)
 	public HierObjectID getSystemID() {
 		return systemID;
 	}
@@ -127,6 +145,7 @@ public class EHR extends RMObject {
      *
      * @return time of creation
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public DvDateTime getTimeCreated() {
         return timeCreated;
     }
@@ -139,6 +158,12 @@ public class EHR extends RMObject {
      *
      * @return List of ObjectRef
      */
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(
+		name = "RM_EHR_contributions",
+		joinColumns = {@JoinColumn(name = "RM_EHR_mappingId")},
+		inverseJoinColumns = {@JoinColumn(name = "RM_OBJECT_REF_mappingId")}
+		)
     public List<ObjectRef> getContributions() {
         return contributions;
     }
@@ -148,6 +173,7 @@ public class EHR extends RMObject {
      *
      * @return directory
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public ObjectRef getDirectory() {
         return directory;
     }
@@ -157,6 +183,12 @@ public class EHR extends RMObject {
      *
      * @return list of objectReference
      */
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(
+		name = "RM_EHR_compositions",
+		joinColumns = {@JoinColumn(name = "RM_EHR_mappingId")},
+		inverseJoinColumns = {@JoinColumn(name = "RM_OBJECT_REF_mappingId")}
+		)
     public List<ObjectRef> getCompositions() {
         return compositions;
     }
@@ -212,6 +244,18 @@ public class EHR extends RMObject {
     ObjectRef ehrStatus;
     ObjectRef directory;
     List<ObjectRef> compositions;
+    
+    private int mappingId;
+
+	@Id
+	@GeneratedValue
+	public int getMappingId() {
+		return mappingId;
+	}
+
+	public void setMappingId(int mappingId) {
+		this.mappingId = mappingId;
+	}
 }
 
 /*

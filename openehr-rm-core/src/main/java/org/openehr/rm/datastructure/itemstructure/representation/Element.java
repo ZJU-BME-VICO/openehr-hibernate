@@ -31,6 +31,16 @@ import org.openehr.rm.support.terminology.TerminologyService;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
 /**
  * The leaf variant of ITEM, to which a DATA_VALUE instance is
  * attached.
@@ -38,6 +48,8 @@ import java.util.Set;
  * @author Rong Chen
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public final class Element extends Item {
 
     /**
@@ -117,6 +129,7 @@ public final class Element extends Item {
      *
      * @return value of this leaf
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public DataValue getValue() {
         return value;
     }
@@ -127,6 +140,7 @@ public final class Element extends Item {
      * @return null flavor
      * @deprecated use getNullFlavour instead
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public DvCodedText getNullFlavor() {
         return nullFlavour;
     }
@@ -146,6 +160,7 @@ public final class Element extends Item {
      *
      * @return true if value null
      */
+    @Transient
     public boolean isNull() {
         return value == null;
     }

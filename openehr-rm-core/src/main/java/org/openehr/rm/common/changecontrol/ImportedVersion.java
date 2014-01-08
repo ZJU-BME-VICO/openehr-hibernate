@@ -14,6 +14,15 @@
  */
 package org.openehr.rm.common.changecontrol;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+import org.openehr.rm.common.archetyped.Locatable;
 import org.openehr.rm.common.generic.AuditDetails;
 import org.openehr.rm.support.identification.ObjectRef;
 
@@ -24,6 +33,8 @@ import org.openehr.rm.support.identification.ObjectRef;
  * @author Yin Su Lim
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public final class ImportedVersion<T> extends Version<T> {
     
     /**
@@ -55,6 +66,7 @@ public final class ImportedVersion<T> extends Version<T> {
      *
      * @return item
      */
+	@ManyToOne(targetEntity = Locatable.class, cascade = CascadeType.ALL)
     public OriginalVersion<T> getItem() {
         return item;
     }

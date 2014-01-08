@@ -29,6 +29,16 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 /**
  * Ancestor of all party types, including real world entities and their
  * roles. A party is any entity which can participate in an activity. The
@@ -39,6 +49,8 @@ import java.util.Set;
  * @author Rong Chen
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Party extends Locatable {
 
     protected Party() {
@@ -124,6 +136,12 @@ public abstract class Party extends Locatable {
         return null;
     }
 
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(
+		name = "RM_PARTY_identities",
+		joinColumns = {@JoinColumn(name = "RM_PARTY_mappingId")},
+		inverseJoinColumns = {@JoinColumn(name = "RM_PARTY_IDENTITY_mappingId")}
+		)
     public Set<PartyIdentity> getIdentities() {
         return identities;
     }
@@ -132,6 +150,12 @@ public abstract class Party extends Locatable {
         this.identities = identities;
     }
 
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(
+		name = "RM_PARTY_contacts",
+		joinColumns = {@JoinColumn(name = "RM_PARTY_mappingId")},
+		inverseJoinColumns = {@JoinColumn(name = "RM_CONTACT_mappingId")}
+		)
     public Set<Contact> getContacts() {
         return contacts;
     }
@@ -140,6 +164,12 @@ public abstract class Party extends Locatable {
         this.contacts = contacts;
     }
 
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(
+		name = "RM_PARTY_relationships",
+		joinColumns = {@JoinColumn(name = "RM_PARTY_mappingId")},
+		inverseJoinColumns = {@JoinColumn(name = "RM_PARTY_RELATIONSHIP_mappingId")}
+		)
     public Set<PartyRelationship> getRelationships() {
         return relationships;
     }
@@ -148,6 +178,12 @@ public abstract class Party extends Locatable {
         this.relationships = relationships;
     }
 
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(
+		name = "RM_PARTY_reverse_relationships",
+		joinColumns = {@JoinColumn(name = "RM_PARTY_mappingId")},
+		inverseJoinColumns = {@JoinColumn(name = "RM_LOCATABLE_REF_mappingId")}
+		)
     public Set<LocatableRef> getReverseRelationships() {
         return reverseRelationships;
     }
@@ -157,6 +193,7 @@ public abstract class Party extends Locatable {
         this.reverseRelationships = reverseRelationships;
     }
 
+	@ManyToOne(cascade = CascadeType.ALL)
     public ItemStructure getDetails() {
         return details;
     }

@@ -16,6 +16,11 @@ package org.openehr.rm.common.directory;
 
 import java.util.Set;
 
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
+
 import org.openehr.rm.common.changecontrol.OriginalVersion;
 import org.openehr.rm.common.changecontrol.VersionedObject;
 import org.openehr.rm.common.generic.AuditDetails;
@@ -26,6 +31,8 @@ import org.openehr.rm.support.identification.ObjectRef;
 import org.openehr.rm.support.identification.ObjectVersionID;
 import org.openehr.rm.support.terminology.TerminologyService;
 
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class VersionedFolder extends VersionedObject<Folder> {
 
     /**

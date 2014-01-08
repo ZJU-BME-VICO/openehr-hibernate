@@ -16,6 +16,12 @@ package org.openehr.rm.ehr;
 
 import java.util.Set;
 
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
 import org.openehr.rm.common.changecontrol.OriginalVersion;
 import org.openehr.rm.common.changecontrol.VersionedObject;
 import org.openehr.rm.common.generic.AuditDetails;
@@ -34,6 +40,8 @@ import org.openehr.rm.support.terminology.TerminologyService;
  * @author Rong Chen
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class VersionedComposition extends VersionedObject<Composition> {
     
     /**
@@ -74,6 +82,7 @@ public class VersionedComposition extends VersionedObject<Composition> {
                 terminologyService);
     }
     
+    @Transient
     public boolean isPersistent() {
         Composition firstData = (Composition) allVersions().get(0).getData();
         return firstData.isPersistent();

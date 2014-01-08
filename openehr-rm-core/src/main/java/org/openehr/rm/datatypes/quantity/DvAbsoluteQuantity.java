@@ -15,6 +15,14 @@ package org.openehr.rm.datatypes.quantity;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 import org.openehr.rm.datatypes.text.CodePhrase;
 
 /**
@@ -23,8 +31,15 @@ import org.openehr.rm.datatypes.text.CodePhrase;
  * 
  * @author Rong Chen
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class DvAbsoluteQuantity<T extends DvAbsoluteQuantity, 
 			S extends DvAmount> extends DvQuantified<T> {
+
+	protected DvAbsoluteQuantity() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
 	 * Creates a DvAbsoluteQuantity
@@ -76,13 +91,18 @@ public abstract class DvAbsoluteQuantity<T extends DvAbsoluteQuantity,
      *
      * @return accuracy
      */
+	@ManyToOne(targetEntity = DvAmount.class, cascade = CascadeType.ALL)
     public S getAccuracy() {
     	return accuracy;
     }
     
     
     /* fields */
-    private final S accuracy;    
+    private S accuracy;    
+    
+	public void setAccuracy(S accuracy) {
+		this.accuracy = accuracy;
+	}    
 }
 /*
  *  ***** BEGIN LICENSE BLOCK *****

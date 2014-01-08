@@ -14,6 +14,16 @@
  */
 package org.openehr.rm.datatypes.encapsulated;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
 import org.openehr.rm.datatypes.basic.DataValue;
 import org.openehr.rm.datatypes.text.CodePhrase;
 import org.openehr.rm.support.terminology.OpenEHRCodeSetIdentifiers;
@@ -27,6 +37,8 @@ import org.openehr.rm.support.terminology.TerminologyService;
  * @author Rong Chen
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class DvEncapsulated extends DataValue {
 
     /**
@@ -62,6 +74,7 @@ public abstract class DvEncapsulated extends DataValue {
      *
      * @return charset
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public CodePhrase getCharset() {
         return charset;
     }
@@ -71,6 +84,7 @@ public abstract class DvEncapsulated extends DataValue {
      *
      * @return language
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public CodePhrase getLanguage() {
         return language;
     }
@@ -79,7 +93,8 @@ public abstract class DvEncapsulated extends DataValue {
      * Returns size in bytes of data of this Encapsulated
      *
      * @return size
-     */
+     */    
+    @Transient
     public abstract int getSize();
 
     // POJO start

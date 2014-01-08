@@ -30,6 +30,14 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 /**
  * An identity owned by a PARTY, such as a person name or company name,
  * and which is used by the party to identify itself. Actual structure is
@@ -38,6 +46,8 @@ import java.util.Set;
  * @author Goran Pestana
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class PartyIdentity extends Locatable {
 
     protected PartyIdentity() {
@@ -103,6 +113,7 @@ public class PartyIdentity extends Locatable {
      *
      * @return details
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public ItemStructure getDetails() {
         return details;
     }

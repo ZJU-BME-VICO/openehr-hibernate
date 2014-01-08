@@ -355,7 +355,7 @@ public class ADLSerializer {
 		printNonEmptyStringList("keywords", item.getKeywords(), indent + 1,
 				out);
 		printNonEmptyString("copyright", item.getCopyright(), indent + 1, out);
-		printNonEmptyString("use", item.getUse(), indent + 1, out);
+		printNonEmptyString("use", item.getUsage(), indent + 1, out);
 		printNonEmptyString("misuse", item.getMisuse(), indent + 1, out);
 		printNonEmptyStringMap("original_resource_uri", item.getOriginalResourceUri(), indent + 1, out);
 

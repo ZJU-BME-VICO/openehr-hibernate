@@ -20,6 +20,13 @@ import org.openehr.rm.datatypes.basic.DataValue;
 
 import java.net.URISyntaxException;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
 /**
  * Purpose A reference to an object which conforms to the Universal
  * Resource Identifier (URI) standard, as defined by W3C RFC 2936.
@@ -44,6 +51,8 @@ import java.net.URISyntaxException;
  * @author Rong Chen
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class DvURI extends DataValue {
 
     /**
@@ -158,6 +167,11 @@ public class DvURI extends DataValue {
     /* fields */
     private java.net.URI value;
 
+	public void setValue(java.net.URI value) {
+		this.value = value;
+	}
+    
+    @Transient
 	@Override
 	public String getReferenceModelName() {
 		return "DV_URI";

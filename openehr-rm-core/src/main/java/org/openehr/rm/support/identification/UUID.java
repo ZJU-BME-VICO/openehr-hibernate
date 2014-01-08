@@ -14,6 +14,11 @@
  */
 package org.openehr.rm.support.identification;
 
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
+
 import org.openehr.rm.Attribute;
 import org.openehr.rm.FullConstructor;
 
@@ -26,6 +31,8 @@ import org.openehr.rm.FullConstructor;
  * @author Rong Chen
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class UUID extends UID {
 	
 	/**
@@ -43,7 +50,12 @@ public class UUID extends UID {
         super(value);
         // kind of validation
         java.util.UUID.fromString(value);
-    }    
+    }
+
+	protected UUID() {
+		super();
+		// TODO Auto-generated constructor stub
+	}    
 }
 
 /*

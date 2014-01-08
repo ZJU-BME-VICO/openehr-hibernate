@@ -16,13 +16,19 @@ package org.openehr.rm.datatypes.quantity.datetime;
 
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Transient;
+
+import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.Instant;
 import org.joda.time.MutablePeriod;
 import org.joda.time.Period;
 import org.joda.time.format.ISOPeriodFormat;
-import org.joda.time.format.PeriodFormatter;
 import org.openehr.rm.Attribute;
 import org.openehr.rm.FullConstructor;
 import org.openehr.rm.datatypes.basic.ReferenceModelName;
@@ -33,7 +39,6 @@ import org.openehr.rm.datatypes.quantity.DvQuantified;
 import org.openehr.rm.datatypes.quantity.DvQuantity;
 import org.openehr.rm.datatypes.quantity.ReferenceRange;
 import org.openehr.rm.datatypes.text.CodePhrase;
-
 /**
  * Represents a period of time with respect to a notional point in time, which
  * is not specified. A sign may be used to indicate the duration is "backwards"
@@ -42,6 +47,8 @@ import org.openehr.rm.datatypes.text.CodePhrase;
  * @author Rong Chen
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public final class DvDuration extends DvAmount<DvDuration> {
 
 	/**
@@ -165,6 +172,7 @@ public final class DvDuration extends DvAmount<DvDuration> {
 				d.toPeriodFrom(start.getDateTime()));
 	}
 
+    @Transient
 	@Override
 	public String getReferenceModelName() {
 		return ReferenceModelName.DV_DURATION.getName();
@@ -237,6 +245,7 @@ public final class DvDuration extends DvAmount<DvDuration> {
 	 * 
 	 * @return getMagnitude
 	 */
+    @Transient
 	@Override
     public Number getMagnitude() {
 		return new Double(toDouble());
@@ -310,6 +319,7 @@ public final class DvDuration extends DvAmount<DvDuration> {
 	 * 
 	 * @return diff type
 	 */
+    @Transient
 	@Override
     public Class<DvDuration> getDiffType() {
 		return DvDuration.class;
@@ -393,6 +403,7 @@ public final class DvDuration extends DvAmount<DvDuration> {
 	 * 
 	 * @return years
 	 */
+	@Transient
 	public int getYears() {
 		return period.getYears();
 	}
@@ -402,10 +413,12 @@ public final class DvDuration extends DvAmount<DvDuration> {
 	 * 
 	 * @return months
 	 */
+	@Transient
 	public int getMonths() {
 		return period.getMonths();
 	}
 
+	@Transient
 	public int getWeeks() {
 		return period.getWeeks();
 	}
@@ -415,6 +428,7 @@ public final class DvDuration extends DvAmount<DvDuration> {
 	 * 
 	 * @return days
 	 */
+	@Transient
 	public int getDays() {
 		return period.getDays();
 	}
@@ -424,6 +438,7 @@ public final class DvDuration extends DvAmount<DvDuration> {
 	 * 
 	 * @return hours
 	 */
+	@Transient
 	public int getHours() {
 		return period.getHours();
 	}
@@ -433,6 +448,7 @@ public final class DvDuration extends DvAmount<DvDuration> {
 	 * 
 	 * @return minutes
 	 */
+	@Transient
 	public int getMinutes() {
 		return period.getMinutes();
 	}
@@ -442,6 +458,7 @@ public final class DvDuration extends DvAmount<DvDuration> {
 	 * 
 	 * @return seconds
 	 */
+	@Transient
 	public int getSeconds() {
 		return period.getSeconds();
 	}
@@ -451,6 +468,7 @@ public final class DvDuration extends DvAmount<DvDuration> {
 	 * 
 	 * @return fractional seconds
 	 */
+	@Transient
 	public double getFractionalSeconds() {
 		return period.getMillis() / 10E2;
 	}
@@ -554,6 +572,9 @@ public final class DvDuration extends DvAmount<DvDuration> {
 		return result;
 	}
 
+	@Column
+//	@Type(type="org.joda.time.contrib.hibernate.PersistentPeriod")
+	@Type(type="org.jadira.usertype.dateandtime.joda.PersistentPeriodAsString")
 	Period getPeriod() {
 		return period;
 	}
@@ -577,9 +598,17 @@ public final class DvDuration extends DvAmount<DvDuration> {
 	// private int years, months, weeks, days, hours, minutes, seconds;
 	private double fractionalSeconds;
 
+	protected DvDuration() {
+		super();
+	}
+
 	private String value;
 
 	private Period period;
+
+	public void setPeriod(Period period) {
+		this.period = period;
+	}
 
 	/* static value */
 	private static final String PATTERN = "(-)?P((\\d)+(y|Y))?((\\d)+(m|M))?((\\d)+(w|W))?((\\d)+(d|D))?"

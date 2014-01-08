@@ -14,6 +14,17 @@
  */
 package org.openehr.rm.composition.content.entry;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 import org.apache.commons.lang.StringUtils;
 import org.openehr.rm.Attribute;
 import org.openehr.rm.FullConstructor;
@@ -27,6 +38,8 @@ import org.openehr.rm.support.identification.LocatableRef;
  * @author Yin Su Lim
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class InstructionDetails extends RMObject {
 
 	/**
@@ -69,6 +82,7 @@ public class InstructionDetails extends RMObject {
 	 * 
 	 * @return instructionId
 	 */
+	@ManyToOne(cascade = CascadeType.ALL)
 	public LocatableRef getInstructionId() {
 		return instructionId;
 	}
@@ -81,6 +95,7 @@ public class InstructionDetails extends RMObject {
 	 * 
 	 * @return wfDetails
 	 */
+	@ManyToOne(cascade = CascadeType.ALL)
 	public ItemStructure getWfDetails() {
 		return wfDetails;
 	}
@@ -106,6 +121,22 @@ public class InstructionDetails extends RMObject {
 	private LocatableRef instructionId;
 	private String activityId;
 	private ItemStructure wfDetails;
+    
+    public void setActivityId(String activityId) {
+		this.activityId = activityId;
+	}
+
+	private int mappingId;
+
+	@Id
+	@GeneratedValue
+	public int getMappingId() {
+		return mappingId;
+	}
+
+	public void setMappingId(int mappingId) {
+		this.mappingId = mappingId;
+	}
 
 }
 

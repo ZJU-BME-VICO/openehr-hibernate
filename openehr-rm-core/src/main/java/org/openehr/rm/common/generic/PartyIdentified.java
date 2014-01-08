@@ -16,6 +16,15 @@ package org.openehr.rm.common.generic;
 
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
@@ -30,6 +39,8 @@ import org.openehr.rm.support.identification.PartyRef;
 * @author Yin Su Lim
 * @version 1.0
 */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class PartyIdentified extends PartyProxy {
 
 	/**
@@ -83,6 +94,12 @@ public class PartyIdentified extends PartyProxy {
 	 * 
 	 * @return identifiers null if not present
 	 */
+	@ManyToMany
+	@JoinTable(
+		name = "RM_PARTY_IDENTIFIED_identifiers",
+		joinColumns = {@JoinColumn(name = "RM_PARTY_IDENTIFIED_mappingId")},
+		inverseJoinColumns = {@JoinColumn(name = "RM_DV_IDENTIFIER_mappingId")}
+		)
 	public List<DvIdentifier> getIdentifiers() {
 		return identifiers;
 	}

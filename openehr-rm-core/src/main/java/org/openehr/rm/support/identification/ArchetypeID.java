@@ -24,12 +24,23 @@ import java.util.List;
 import java.util.StringTokenizer;
 import java.util.regex.Pattern;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.Table;
+
 /**
  * Identifier for archetypes, instances of this class are immutable.
  *
  * @author Rong Chen
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public final class ArchetypeID extends ObjectID {
 
     /**
@@ -386,6 +397,75 @@ public final class ArchetypeID extends ObjectID {
     private String conceptName;
     private List<String> specialisation;
     private String versionID;
+    
+	public String getQualifiedRmEntity() {
+		return qualifiedRmEntity;
+	}
+
+	public void setQualifiedRmEntity(String qualifiedRmEntity) {
+		this.qualifiedRmEntity = qualifiedRmEntity;
+	}
+
+	public String getRmOriginator() {
+		return rmOriginator;
+	}
+
+	public void setRmOriginator(String rmOriginator) {
+		this.rmOriginator = rmOriginator;
+	}
+
+	public String getRmName() {
+		return rmName;
+	}
+
+	public void setRmName(String rmName) {
+		this.rmName = rmName;
+	}
+
+	public String getRmEntity() {
+		return rmEntity;
+	}
+
+	public void setRmEntity(String rmEntity) {
+		this.rmEntity = rmEntity;
+	}
+
+	public String getDomainConcept() {
+		return domainConcept;
+	}
+
+	public void setDomainConcept(String domainConcept) {
+		this.domainConcept = domainConcept;
+	}
+
+	public String getConceptName() {
+		return conceptName;
+	}
+
+	public void setConceptName(String conceptName) {
+		this.conceptName = conceptName;
+	}
+
+	@ElementCollection
+	@CollectionTable(
+			name = "RM_ARCHETYPE_ID_specialisation",
+			joinColumns = {@JoinColumn(name = "RM_ARCHETYPE_ID_mappingId")}
+			)
+	public List<String> getSpecialisation() {
+		return specialisation;
+	}
+
+	public void setSpecialisation(List<String> specialisation) {
+		this.specialisation = specialisation;
+	}
+
+	public String getVersionID() {
+		return versionID;
+	}
+
+	public void setVersionID(String versionID) {
+		this.versionID = versionID;
+	}
 }
 
 /*

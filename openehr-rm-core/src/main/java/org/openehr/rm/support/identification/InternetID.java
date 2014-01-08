@@ -14,6 +14,11 @@
  */
 package org.openehr.rm.support.identification;
 
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
+
 import org.openehr.rm.Attribute;
 import org.openehr.rm.FullConstructor;
 
@@ -24,6 +29,8 @@ import org.openehr.rm.FullConstructor;
  * @version 1.0
  *
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class InternetID extends UID {
 
     /**
@@ -45,6 +52,10 @@ public class InternetID extends UID {
                  */
     }
     
+    protected InternetID() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
     private static String PATTERN = "[a-zA-Z]([a-zA-Z0-9-]*[a-zA-Z0-9])?(\\.[a-zA-Z]([a-zA-Z0-9-]*[a-zA-Z0-9])?)*";
 }
 

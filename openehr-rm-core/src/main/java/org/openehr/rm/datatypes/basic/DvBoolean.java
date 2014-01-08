@@ -14,6 +14,13 @@
  */
 package org.openehr.rm.datatypes.basic;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
 import org.openehr.rm.Attribute;
 import org.openehr.rm.FullConstructor;
 
@@ -24,6 +31,8 @@ import org.openehr.rm.FullConstructor;
  * @author Rong Chen
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public final class DvBoolean extends DataValue {
 
     /**
@@ -148,6 +157,7 @@ public final class DvBoolean extends DataValue {
      */
     public static final DvBoolean FALSE = new DvBoolean(false);
 
+    @Transient
 	@Override
 	public String getReferenceModelName() {
 		return ReferenceModelName.DV_BOOLEAN.getName();

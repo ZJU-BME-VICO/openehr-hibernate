@@ -25,6 +25,17 @@ import org.openehr.rm.support.terminology.TerminologyService;
 
 import java.util.*;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 /**
  * Record of one or more Parties attesting something.
  * Instances of this class are immutable
@@ -32,6 +43,8 @@ import java.util.*;
  * @author Rong Chen
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Attestation extends AuditDetails {
 
     /**
@@ -84,6 +97,7 @@ public class Attestation extends AuditDetails {
      * Optional visual representation of content attested
      * e.g. screen image
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public DvMultimedia getAttestedView() {
         return attestedView;
     }
@@ -105,6 +119,12 @@ public class Attestation extends AuditDetails {
      *
      * @return unmodifiable set of EHR_URI
      */
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(
+		name = "RM_ATTESTATION_items",
+		joinColumns = {@JoinColumn(name = "RM_ATTESTATION_mappingId")},
+		inverseJoinColumns = {@JoinColumn(name = "RM_DV_EHR_URI_mappingId")}
+		)
     public Set<DvEHRURI> getItems() {
         return Collections.unmodifiableSet(items);
     }
@@ -115,6 +135,7 @@ public class Attestation extends AuditDetails {
      *
      * @return reason
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public DvText getReason() {
         return reason;
     }
@@ -160,6 +181,11 @@ public class Attestation extends AuditDetails {
     private Set<DvEHRURI> items;
     private DvText reason;
     private boolean isPending;
+    
+	public void setPending(boolean isPending) {
+		this.isPending = isPending;
+	}
+	
 }
 
 /*

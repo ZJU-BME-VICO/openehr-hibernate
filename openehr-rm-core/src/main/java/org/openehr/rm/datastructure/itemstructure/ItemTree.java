@@ -30,12 +30,23 @@ import org.openehr.rm.datatypes.text.DvText;
 
 import java.util.*;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+
 /**
  * Logical tree data structure.
  *
  * @author Rong Chen
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public final class ItemTree extends ItemStructure {
 
     /**
@@ -119,6 +130,12 @@ public final class ItemTree extends ItemStructure {
      * 
      * @return null if unspecified
      */
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(
+		name = "RM_ITEM_TREE_rows",
+		joinColumns = {@JoinColumn(name = "RM_ITEM_TREE_mappingId")},
+		inverseJoinColumns = {@JoinColumn(name = "RM_ITEM_mappingId")}
+		)
     public List<Locatable> getItems() {
     	return items;
     }
@@ -193,6 +210,10 @@ public final class ItemTree extends ItemStructure {
     // POJO end
 
 	private List<Locatable> items;
+
+	public void setItems(List<Locatable> items) {
+		this.items = items;
+	}
 }
 
 /*

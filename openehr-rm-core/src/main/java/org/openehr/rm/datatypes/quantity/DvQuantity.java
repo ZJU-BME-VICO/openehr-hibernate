@@ -30,6 +30,13 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
 /**
  * Quantitified type representing  scientific  quantities,
  * expressed as a single value and optional units. Instances of this class
@@ -38,6 +45,8 @@ import java.util.List;
  * @author Rong Chen
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class DvQuantity extends DvAmount<DvQuantity> {
 
 	public DvQuantity() {
@@ -156,6 +165,7 @@ public class DvQuantity extends DvAmount<DvQuantity> {
      *
      * @return ture if integral
      */
+    @Transient
     public boolean isIntegral() {
         return precision == 0;
     }
@@ -240,6 +250,7 @@ public class DvQuantity extends DvAmount<DvQuantity> {
      *
      * @return diff type
      */
+    @Transient
     public Class getDiffType() {
         return DvQuantity.class;
     }
@@ -357,11 +368,16 @@ public class DvQuantity extends DvAmount<DvQuantity> {
     /* fields */
     private double magnitude; // add final
     private int precision;    // add final
-    private final String units;
+    private String units;
     private MeasurementService measurementService; // add final
     
     public static final char DECIMAL_SEPARATOR = '.';
     
+	public void setUnits(String units) {
+		this.units = units;
+	}
+	
+	@Transient
 	@Override
 	public String getReferenceModelName() {
 		return ReferenceModelName.DV_QUANTITY.getName();

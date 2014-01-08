@@ -29,6 +29,15 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import java.util.Set;
 import java.util.HashSet;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+
 /**
  * Ancestor of all real-world types, including people and organisations.
  * An actor is any real-world entity capable of taking on a role.
@@ -37,6 +46,8 @@ import java.util.HashSet;
  * @author Rong Chen
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Actor extends Party {
 
     protected Actor() {
@@ -111,6 +122,12 @@ public abstract class Actor extends Party {
      *
      * @return null if not specified
      */
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(
+		name = "RM_ACTOR_roles",
+		joinColumns = {@JoinColumn(name = "RM_ACTOR_mappingId")},
+		inverseJoinColumns = {@JoinColumn(name = "RM_ROLE_mappingId")}
+		)
     public Set<Role> getRoles() {
         return roles;
     }
@@ -150,6 +167,12 @@ public abstract class Actor extends Party {
      *
      * @return null if not specified
      */
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(
+		name = "RM_ACTOR_languages",
+		joinColumns = {@JoinColumn(name = "RM_ACTOR_mappingId")},
+		inverseJoinColumns = {@JoinColumn(name = "RM_DV_TEXT_mappingId")}
+		)
     public Set<DvText> getLanguages() {
         return languages;
     }

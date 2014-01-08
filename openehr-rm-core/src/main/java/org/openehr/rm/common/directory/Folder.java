@@ -17,6 +17,15 @@ package org.openehr.rm.common.directory;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.openehr.rm.common.archetyped.Archetyped;
@@ -28,6 +37,8 @@ import org.openehr.rm.datatypes.text.DvText;
 import org.openehr.rm.support.identification.UIDBasedID;
 import org.openehr.rm.support.identification.ObjectRef;
 
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Folder extends Locatable {
 
     /**
@@ -59,6 +70,12 @@ public class Folder extends Locatable {
      * Sub-folders of this FOLDER
      * @return folder  	A list of folders which are the sub-folders of this FOLDER
      */
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(
+		name = "RM_FOLDER_folders",
+		joinColumns = {@JoinColumn(name = "RM_FOLDER_mappingId")},
+		inverseJoinColumns = {@JoinColumn(name = "RM_FOLDER_CHILD_mappingId")}
+		)
     public List<Folder> getFolders() {
         return folders;
     }
@@ -67,6 +84,12 @@ public class Folder extends Locatable {
      * The list of references to other versioned objects logically in this FOLDER
      * @return items 	List of versioned items in this FOLDER
      */
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(
+		name = "RM_FOLDER_items",
+		joinColumns = {@JoinColumn(name = "RM_FOLDER_mappingId")},
+		inverseJoinColumns = {@JoinColumn(name = "RM_OBJECT_REF_mappingId")}
+		)
     public List<ObjectRef> getItems() {
         return items;
     }

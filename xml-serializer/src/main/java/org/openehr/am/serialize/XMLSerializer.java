@@ -204,7 +204,7 @@ public class XMLSerializer {
 
         printString("purpose", item.getPurpose(), out); // Mandatory     
         printStringList("keywords", item.getKeywords(), out);
-        printString("use", item.getUse(), out); // Mandatory 
+        printString("use", item.getUsage(), out); // Mandatory 
         printString("misuse", item.getMisuse(), out); // Mandatory 
         printString("copyright", item.getCopyright(), out);
         printStringMap("original_resource_uri", 

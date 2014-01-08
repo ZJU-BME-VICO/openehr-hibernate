@@ -75,7 +75,7 @@ public class ArchetypeDescriptionTest extends ParserTestBase {
 				+ " past - so is used for recording past history as well as "
 				+ "current problems. Used with changed 'Subject of care' for "
 				+ "recording problems of relatives and so for family history.",
-				item.getUse());
+				item.getUsage());
 
 		assertEquals("misuse wrong", "Use specialisations for medical "
 				+ "diagnoses, 'openEHR-EHR-EVALUATION.problem-diagnosis' and "

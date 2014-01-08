@@ -16,6 +16,11 @@ package org.openehr.rm.ehr;
 
 import java.util.Set;
 
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
+
 import org.openehr.rm.common.changecontrol.OriginalVersion;
 import org.openehr.rm.common.changecontrol.VersionedObject;
 import org.openehr.rm.common.generic.AuditDetails;
@@ -32,6 +37,8 @@ import org.openehr.rm.support.terminology.TerminologyService;
  * @author Yin Su Lim
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class VersionedEHRStatus extends VersionedObject<EHRStatus> {
 	
 	/**

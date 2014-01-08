@@ -13,6 +13,11 @@
  */
 package org.openehr.rm.support.identification;
 
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
+
 import org.apache.commons.lang.StringUtils;
 import org.openehr.rm.Attribute;
 import org.openehr.rm.FullConstructor;
@@ -23,6 +28,8 @@ import org.openehr.rm.FullConstructor;
  * 
  * @author Rong Chen
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class UIDBasedID extends ObjectID {
 
 	/**

@@ -16,6 +16,13 @@ package org.openehr.rm.datatypes.quantity;
 
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
 import org.openehr.rm.Attribute;
 import org.openehr.rm.datatypes.text.CodePhrase;
 
@@ -28,9 +35,16 @@ import org.openehr.rm.datatypes.text.CodePhrase;
  * @author Rong Chen
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class DvQuantified<T extends DvQuantified> extends DvOrdered<T> {
 
-    /**
+    protected DvQuantified() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
      * Constructs a Quantified with referenceRanges and accuracy
      *
      * @param otherReferenceRanges   null if not specified
@@ -63,6 +77,7 @@ public abstract class DvQuantified<T extends DvQuantified> extends DvOrdered<T> 
      *
      * @return getMagnitude
      */
+    @Transient
     public abstract Number getMagnitude();
 
     /**
@@ -107,7 +122,11 @@ public abstract class DvQuantified<T extends DvQuantified> extends DvOrdered<T> 
     }
 
     /* fields */
-    private final String magnitudeStatus;
+    private String magnitudeStatus;
+    
+	public void setMagnitudeStatus(String magnitudeStatus) {
+		this.magnitudeStatus = magnitudeStatus;
+	}
     
     
     

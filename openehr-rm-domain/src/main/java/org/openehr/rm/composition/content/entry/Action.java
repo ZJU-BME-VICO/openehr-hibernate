@@ -17,6 +17,14 @@ package org.openehr.rm.composition.content.entry;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 import org.openehr.rm.Attribute;
 import org.openehr.rm.FullConstructor;
 import org.openehr.rm.common.archetyped.Archetyped;
@@ -43,6 +51,8 @@ import org.openehr.rm.common.archetyped.Locatable;
  * @author Yin Su Lim
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public final class Action extends CareEntry {
     
     /**
@@ -109,6 +119,7 @@ public final class Action extends CareEntry {
      *
      * @return description
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public ItemStructure getDescription() {
         return description;
     }
@@ -119,6 +130,7 @@ public final class Action extends CareEntry {
      *
      * @return instructionDetails
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public InstructionDetails getInstructionDetails() {
         return instructionDetails;
     }
@@ -129,6 +141,7 @@ public final class Action extends CareEntry {
      *
      * @return ismTransition
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public ISMTransition getIsmTransition() {
         return ismTransition;
     }
@@ -138,6 +151,7 @@ public final class Action extends CareEntry {
      *
      * @return time
      */
+	@ManyToOne(cascade = CascadeType.ALL)
     public DvDateTime getTime() {
         return time;
     }

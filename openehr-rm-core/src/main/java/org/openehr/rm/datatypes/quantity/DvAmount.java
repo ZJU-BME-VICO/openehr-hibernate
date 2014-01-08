@@ -15,6 +15,13 @@ package org.openehr.rm.datatypes.quantity;
 
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
 import org.openehr.rm.Attribute;
 import org.openehr.rm.datatypes.text.CodePhrase;
 
@@ -25,6 +32,8 @@ import org.openehr.rm.datatypes.text.CodePhrase;
  *  
  * @author Rong Chen
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class DvAmount<T extends DvAmount> extends DvQuantified<T> {
 
 	/**
@@ -118,11 +127,19 @@ public abstract class DvAmount<T extends DvAmount> extends DvQuantified<T> {
      *
      * @return diff type
      */
+    @Transient
     public abstract Class getDiffType();    
     
 	/* fields */
-	private final double accuracy;
-    private final boolean accuracyPercent;
+	private double accuracy;
+    public void setAccuracy(double accuracy) {
+		this.accuracy = accuracy;
+	}
+
+	private boolean accuracyPercent;
+	public void setAccuracyPercent(boolean accuracyPercent) {
+		this.accuracyPercent = accuracyPercent;
+	}
 }
 /*
  *  ***** BEGIN LICENSE BLOCK *****

@@ -30,6 +30,15 @@ import org.openehr.rm.datatypes.text.DvText;
 
 import java.util.*;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+
 /**
  * Purpose Logical table data structure, in which columns are named
  * and ordered. Some columns may be designated "key" columns,
@@ -42,6 +51,8 @@ import java.util.*;
  * @author Rong Chen
  * @version 1.0
  */
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public final class ItemTable extends ItemStructure {
 
     /**
@@ -96,6 +107,12 @@ public final class ItemTable extends ItemStructure {
      * 
      * @return null if unspecified
      */
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(
+		name = "RM_ITEM_TABLE_rows",
+		joinColumns = {@JoinColumn(name = "RM_ITEM_TABLE_mappingId")},
+		inverseJoinColumns = {@JoinColumn(name = "RM_CLUSTER_mappingId")}
+		)
     public List<Cluster> getRows() {
     	return rows;
     }
@@ -361,6 +378,10 @@ public final class ItemTable extends ItemStructure {
     // POJO end
     
     private List<Cluster> rows;
+
+	public void setRows(List<Cluster> rows) {
+		this.rows = rows;
+	}
 
 	@Override
 	public Item asHierarchy() {
