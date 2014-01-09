@@ -18,6 +18,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -246,6 +247,10 @@ public class DADLBinding {
 				value = getter.invoke(obj, null);
 				buf = new StringBuffer();
 				if(value != null ) {
+					if (value instanceof Collection && ((Collection) value).size() == 0) {
+						continue;
+					}
+					
 					for(int i = 0; i < indent; i++) {
 						buf.append("\t");
 					}
