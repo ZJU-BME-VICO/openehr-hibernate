@@ -22,8 +22,8 @@
 	<context:component-scan base-package="edu.zju.bme.openehr" />  
 	
 	<bean id="c3p0DataSource" destroy-method="close" class="com.mchange.v2.c3p0.ComboPooledDataSource">
-        <property name="driverClass" value="net.sourceforge.jtds.jdbc.Driver" />
-        <property name="jdbcUrl" value="jdbc:jtds:sqlserver://wl-pc:1433/openehr-hibernate-test" />
+        <property name="driverClass" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
+        <property name="jdbcUrl" value="jdbc:sqlserver://wl-pc:1433;DatabaseName=openehr-hibernate-test" />
         <property name="user" value="sa" />
         <property name="password" value="sa" />
         <property name="initialPoolSize" value="5" />
