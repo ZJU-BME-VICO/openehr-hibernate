@@ -23,9 +23,9 @@
 	
 	<bean id="c3p0DataSource" destroy-method="close" class="com.mchange.v2.c3p0.ComboPooledDataSource">
         <property name="driverClass" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
-        <property name="jdbcUrl" value="jdbc:sqlserver://wl-pc:1433;DatabaseName=openehr-hibernate-test" />
-        <property name="user" value="sa" />
-        <property name="password" value="sa" />
+        <property name="jdbcUrl" value="${database.url}-test" />
+        <property name="user" value="${database.username}" />
+        <property name="password" value="${database.password}" />
         <property name="initialPoolSize" value="5" />
         <property name="minPoolSize" value="5" />
         <property name="maxPoolSize" value="20" />
