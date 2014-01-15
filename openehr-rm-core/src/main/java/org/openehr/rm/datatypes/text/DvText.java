@@ -122,8 +122,9 @@ public class DvText extends DataValue {
     }
 
     static boolean validValue(String value) {
-        return StringUtils.isNotEmpty(value)
-                && StringUtils.containsNone(value, "\n\r");
+//        return StringUtils.isNotEmpty(value)
+//                && StringUtils.containsNone(value, "\n\r");
+        return StringUtils.containsNone(value, "\n\r");
     }
 
     public DvText parse(String value) {
