@@ -332,10 +332,10 @@ public class RMObjectBuilder {
 
 			// check required attributes
 			if (value == null && attribute.required()) {
-				log.info(attribute);
-				throw new AttributeMissingException("missing value for "
-						+ "required attribute \"" + name + "\" of type " + type
-						+ " while constructing " + rmClass + " with valueMap: " + valueMap);
+//				log.info(attribute);
+//				throw new AttributeMissingException("missing value for "
+//						+ "required attribute \"" + name + "\" of type " + type
+//						+ " while constructing " + rmClass + " with valueMap: " + valueMap);
 			}
 
 			// enum
@@ -349,7 +349,7 @@ public class RMObjectBuilder {
 
 			// in case of null, create a default value
 			else if (value == null) {
-				value = defaultValue(type);
+//				value = defaultValue(type);
 			}
 
 			// in case of string value, convert to right type if necessary
@@ -415,16 +415,16 @@ public class RMObjectBuilder {
       
 		try {
 			// OG added hack
-			if (rmClassName.equalsIgnoreCase("DVCOUNT")) {
-				log.debug("Fixing DVCOUNT...");
-				for (int i = 0; i < valueArray.length; i++) {
-					Object value = valueArray[i];
-					if (value != null && value.getClass().equals(Float.class))
-						valueArray[i] = Double.parseDouble(value.toString());
-					else if (value != null && value.getClass().equals(Long.class))
-						valueArray[i] = Integer.parseInt(value.toString());
-				}
-			}	
+//			if (rmClassName.equalsIgnoreCase("DVCOUNT")) {
+//				log.debug("Fixing DVCOUNT...");
+//				for (int i = 0; i < valueArray.length; i++) {
+//					Object value = valueArray[i];
+//					if (value != null && value.getClass().equals(Float.class))
+//						valueArray[i] = Double.parseDouble(value.toString());
+//					else if (value != null && value.getClass().equals(Long.class))
+//						valueArray[i] = Integer.parseInt(value.toString());
+//				}
+//			}	
 			ret = constructor.newInstance(valueArray);
 		} catch (Exception e) {
       
@@ -647,26 +647,26 @@ public class RMObjectBuilder {
 	}
 
 	// todo: isn't there any support from java api on this?
-	private Object defaultValue(Class type) {
-		if (type == boolean.class) {
-			return Boolean.FALSE;
-		} else if (type == double.class) {
-			return new Double(0);
-		} else if (type == float.class) {
-			return new Float(0);
-		} else if (type == int.class) {
-			return new Integer(0);
-		} else if (type == short.class) {
-			return new Short((short) 0);
-		} else if (type == long.class) {
-			return new Long(0);
-		} else if (type == char.class) {
-			return new Character((char) 0);
-		} else if (type == byte.class) {
-			return new Byte((byte) 0);
-		}
-		return null;
-	}
+//	private Object defaultValue(Class type) {
+//		if (type == boolean.class) {
+//			return Boolean.FALSE;
+//		} else if (type == double.class) {
+//			return new Double(0);
+//		} else if (type == float.class) {
+//			return new Float(0);
+//		} else if (type == int.class) {
+//			return new Integer(0);
+//		} else if (type == short.class) {
+//			return new Short((short) 0);
+//		} else if (type == long.class) {
+//			return new Long(0);
+//		} else if (type == char.class) {
+//			return new Character((char) 0);
+//		} else if (type == byte.class) {
+//			return new Byte((byte) 0);
+//		}
+//		return null;
+//	}
 
 	/*
 	 * Skipped types during matching: 1. Simple value types in DADL 2. Cluster

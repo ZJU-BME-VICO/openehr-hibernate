@@ -41,8 +41,8 @@ public abstract class DvAmount<T extends DvAmount> extends DvQuantified<T> {
     		@Attribute (name = "otherReferenceRanges") List<ReferenceRange<T>> otherReferenceRanges,
     		@Attribute (name = "normalRange") DvInterval<T> normalRange,
     		@Attribute (name= "normalStatus") CodePhrase normalStatus,
-    		@Attribute (name = "accuracy") double accuracy, 
-    		@Attribute (name = "accuracyPercent") boolean accuracyPercent,
+    		@Attribute (name = "accuracy") Double accuracy, 
+    		@Attribute (name = "accuracyPercent") Boolean accuracyPercent,
     		@Attribute (name= "magnitudeStatus") String magnitudeStatus) {
     	
         super(otherReferenceRanges, normalRange, normalStatus , magnitudeStatus);
@@ -57,7 +57,7 @@ public abstract class DvAmount<T extends DvAmount> extends DvQuantified<T> {
      * @param accuracy          0 if not recorded
      * @param accuracyIsPercent true if accuracy is percent
      */
-    protected DvAmount(double accuracy, boolean accuracyIsPercent) {
+    protected DvAmount(Double accuracy, Boolean accuracyIsPercent) {
         this(null, null, null, accuracy, accuracyIsPercent, null);
     }
     
@@ -78,7 +78,7 @@ public abstract class DvAmount<T extends DvAmount> extends DvQuantified<T> {
      *
      * @return accuracy
      */
-    public double getAccuracy() {
+    public Double getAccuracy() {
         return accuracy;
     }
 
@@ -89,7 +89,7 @@ public abstract class DvAmount<T extends DvAmount> extends DvQuantified<T> {
      *
      * @return true if accuracy percent value
      */
-    public boolean isAccuracyPercent() {
+    public Boolean isAccuracyPercent() {
         return accuracyPercent;
     }
     
@@ -121,8 +121,8 @@ public abstract class DvAmount<T extends DvAmount> extends DvQuantified<T> {
     public abstract Class getDiffType();    
     
 	/* fields */
-	private final double accuracy;
-    private final boolean accuracyPercent;
+    private final Double accuracy;
+    private final Boolean accuracyPercent;
 }
 /*
  *  ***** BEGIN LICENSE BLOCK *****

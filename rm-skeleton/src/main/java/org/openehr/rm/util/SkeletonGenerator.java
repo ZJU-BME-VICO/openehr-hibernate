@@ -322,7 +322,7 @@ public class SkeletonGenerator {
 			return dm;
 		} else if ("DV_COUNT".equals(rmTypeName)) {
 			if (valueMap.get(MAGNITUDE) == null) {
-				valueMap.put(MAGNITUDE, DEFAULT_COUNT);
+				valueMap.put(MAGNITUDE, null);
 			}
 		} else if ("DV_DURATION".equals(rmTypeName)) {
 			if (valueMap.get(VALUE) == null) {
@@ -869,7 +869,6 @@ public class SkeletonGenerator {
 	private static final String DEFAULT_DURATION = "PT1H";
 	private static final String DEFAULT_TEXT = "text value";
 	private static final String DEFAULT_CODED_TEXT = "coded text value";
-	private static final String DEFAULT_COUNT = "1";
 	private static final String DEFAULT_URI = "http://www.google.com/";
 	private static final String DEFAULT_ID = "1";
 	private static final String DEFAULT_ISSUER = "1";

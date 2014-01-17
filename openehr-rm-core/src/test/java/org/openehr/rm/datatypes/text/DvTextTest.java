@@ -43,14 +43,14 @@ public class DvTextTest extends TestCase {
     protected void tearDown() throws Exception {
     }
 
-    public void testValidValue() throws Exception {
-        assertTrue("good value", DvText.validValue("good value"));
-        assertFalse("null value", DvText.validValue(null));
-        assertFalse("value with \\r\\n ", DvText.validValue("bad value\r\n"));
-        assertFalse("value with \\n", DvText.validValue("bad value\n"));
-        assertFalse("value with \\r", DvText.validValue("bad value\r"));
-        assertFalse("empty value", DvText.validValue(""));
-    }
+//    public void testValidValue() throws Exception {
+//        assertTrue("good value", DvText.validValue("good value"));
+//        assertFalse("null value", DvText.validValue(null));
+//        assertFalse("value with \\r\\n ", DvText.validValue("bad value\r\n"));
+//        assertFalse("value with \\n", DvText.validValue("bad value\n"));
+//        assertFalse("value with \\r", DvText.validValue("bad value\r"));
+//        assertFalse("empty value", DvText.validValue(""));
+//    }
 
     public void testConstructor() throws Exception {
         DvText text;

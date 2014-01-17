@@ -51,11 +51,11 @@ public final class DvCount extends DvAmount<DvCount> {
 	public DvCount(
 			@Attribute(name = "otherReferenceRanges") List<ReferenceRange<DvCount>> otherReferenceRanges,
 			@Attribute(name = "normalRange") DvInterval<DvCount> normalRange, 
-			@Attribute (name= "normalStatus") CodePhrase normalStatus,
-			@Attribute(name = "accuracy") double accuracy, 
-			@Attribute(name = "accuracyPercent") boolean accuracyPercent,
-			@Attribute (name= "magnitudeStatus") String magnitudeStatus,
-			@Attribute(name = "magnitude", required = true)	int magnitude) {
+			@Attribute(name= "normalStatus") CodePhrase normalStatus,
+			@Attribute(name = "accuracy") Double accuracy, 
+			@Attribute(name = "accuracyPercent") Boolean accuracyPercent,
+			@Attribute(name= "magnitudeStatus") String magnitudeStatus,
+			@Attribute(name = "magnitude", required = true) Integer magnitude) {
 		super(otherReferenceRanges, normalRange, normalStatus, accuracy, 
 				accuracyPercent, magnitudeStatus);
 		this.magnitude = magnitude;
@@ -66,7 +66,7 @@ public final class DvCount extends DvAmount<DvCount> {
 	 *
 	 * @param magnitude
 	 */
-	public DvCount(int magnitude) {
+	public DvCount(Integer magnitude) {
 		this.magnitude = magnitude;
 	}
 
@@ -76,7 +76,7 @@ public final class DvCount extends DvAmount<DvCount> {
 	 * @return getMagnitude
 	 */
 	public Integer getMagnitude() {
-		return new Integer(this.magnitude);
+		return this.magnitude;
 	}
 
 	/**
@@ -195,14 +195,14 @@ public final class DvCount extends DvAmount<DvCount> {
 	DvCount() {
 	}
 
-	public void setMagnitude(int magnitude) {
+	public void setMagnitude(Integer magnitude) {
 		this.magnitude = magnitude;
 	}
 
 	// POJO end
 
 	/* fields */
-	private int magnitude;
+	private Integer magnitude = null;
 
 	@Override
 	public String getReferenceModelName() {

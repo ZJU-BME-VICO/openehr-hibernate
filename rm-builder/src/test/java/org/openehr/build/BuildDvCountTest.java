@@ -45,7 +45,7 @@ public class BuildDvCountTest extends BuildTestBase {
         assertEquals("otherReferenceRanges", otherReferenceRanges,
                 count.getOtherReferenceRanges());
         assertEquals("accuracy", 0.0, count.getAccuracy());
-        assertEquals("accuracyPercent", false, count.isAccuracyPercent());        
+        assertEquals("accuracyPercent", false, count.isAccuracyPercent().booleanValue());        
     }
     
     public void testBuildDvCountWithoutReferenceRanges() throws Exception {
@@ -56,7 +56,7 @@ public class BuildDvCountTest extends BuildTestBase {
         assertEquals("magnitude", 3, count.getMagnitude().intValue());
         assertEquals("referenceRanges", null, count.getOtherReferenceRanges());
         assertEquals("accuracy", 0.0, count.getAccuracy());
-        assertEquals("accuracyPercent", false, count.isAccuracyPercent());
+        assertEquals("accuracyPercent", false, count.isAccuracyPercent().booleanValue());
     }
     
     public void testBuildDvCountWithGoodStringValue() throws Exception {
