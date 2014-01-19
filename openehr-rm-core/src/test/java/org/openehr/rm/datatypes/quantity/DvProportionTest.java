@@ -18,18 +18,18 @@ import junit.framework.TestCase;
 public class DvProportionTest extends TestCase {
 	
 	public void testIsIntegeralWithFraction() {
-		DvProportion p = new DvProportion(1, 2, ProportionKind.FRACTION, 0);
+		DvProportion p = new DvProportion(1.0, 2.0, ProportionKind.FRACTION, 0);
 		assertTrue("fraction expected to be integral", p.isIntegral());
 	}
 	
 	public void testIsIntegeralWithPercent() {
-		DvProportion p = new DvProportion(1.2, 100, ProportionKind.PERCENT, 1);
+		DvProportion p = new DvProportion(1.2, 100.0, ProportionKind.PERCENT, 1);
 		assertFalse("percent expected not to be integral", p.isIntegral());
 	}
 	
 	public void testCreateFractionProportionWithNonZeroPrecision() {
 		try {
-			new DvProportion(1, 10, ProportionKind.FRACTION, 1);
+			new DvProportion(1.0, 10.0, ProportionKind.FRACTION, 1);
 			fail("should fail to create integral fraction with non-zero precision");
 		} catch(Exception e) {
 			assertTrue(e instanceof IllegalArgumentException);
@@ -38,7 +38,7 @@ public class DvProportionTest extends TestCase {
 	
 	public void testCreateProportionWithZeroPrecisionAndNonIntegral() {
 		try {
-			new DvProportion(1.3, 10, ProportionKind.RATIO, 0);
+			new DvProportion(1.3, 10.0, ProportionKind.RATIO, 0);
 			fail("should fail to create non-integral with zero precision");
 		} catch(Exception e) {
 			assertTrue(e instanceof IllegalArgumentException);
@@ -47,7 +47,7 @@ public class DvProportionTest extends TestCase {
 	
 	public void testCreateIntegralProportionWithNonIntegralNumer() {
 		try {
-			new DvProportion(1.3, 10, ProportionKind.FRACTION, 0);
+			new DvProportion(1.3, 10.0, ProportionKind.FRACTION, 0);
 			fail("should fail to create integral with non-integral num");
 		} catch(Exception e) {
 			assertTrue(e instanceof IllegalArgumentException);
@@ -56,7 +56,7 @@ public class DvProportionTest extends TestCase {
 	
 	public void testCreateUnitaryProportionWithBadDenominator() {
 		try {
-			new DvProportion(1.3, 2, ProportionKind.UNITARY, 1);
+			new DvProportion(1.3, 2.0, ProportionKind.UNITARY, 1);
 			fail("should fail to create unitary with bad denominator");
 		} catch(Exception e) {
 			assertTrue(e instanceof IllegalArgumentException);
@@ -64,7 +64,7 @@ public class DvProportionTest extends TestCase {
 	}
 	
 	public void testCreateUnitaryProportionWithRightDenominator() {
-		new DvProportion(1.3, 1, ProportionKind.UNITARY, 1);		
+		new DvProportion(1.3, 1.0, ProportionKind.UNITARY, 1);		
 	}
 	
 	public void testCreateIngegerProportionWithoutPricision() {
@@ -85,7 +85,7 @@ public class DvProportionTest extends TestCase {
 	
 	public void testCreatePercentProportionWithBadDenominator() {
 		try {
-			new DvProportion(1.25, 10, ProportionKind.PERCENT, 2);
+			new DvProportion(1.25, 10.0, ProportionKind.PERCENT, 2);
 			fail("should fail to create percent with bad denominator");
 		} catch(Exception e) {
 			assertTrue(e instanceof IllegalArgumentException);
@@ -93,7 +93,7 @@ public class DvProportionTest extends TestCase {
 	}
 	
 	public void testCreatePercentProportionWithRightDenominator() {
-		new DvProportion(1.25, 100, ProportionKind.PERCENT, 2);		
+		new DvProportion(1.25, 100.0, ProportionKind.PERCENT, 2);		
 	}
 	
 	public void testCreateUnitaryProportionUsingFactoryMethod() {
@@ -102,16 +102,16 @@ public class DvProportionTest extends TestCase {
 	}
 	
 	public void testParsingDvProportion() {
-		DvProportion dp = new DvProportion(25.3, 100, ProportionKind.PERCENT, 1);
+		DvProportion dp = new DvProportion(25.3, 100.0, ProportionKind.PERCENT, 1);
 		assertEquals(DvProportion.parseValue("DV_PROPORTION,25.3,100,2"), dp);
 	}
 	
 	public void testParsingDvProportion2() {
-		DvProportion dp = new DvProportion(21, 24, ProportionKind.FRACTION, 0);
+		DvProportion dp = new DvProportion(21.0, 24.0, ProportionKind.FRACTION, 0);
 		assertEquals(DvProportion.parseValue("DV_PROPORTION,21,24,3"), dp);
 	}
 	public void testParsingDvProportion3() {
-		DvProportion dp = new DvProportion(29, 24, ProportionKind.INTEGER_FRACTION, 0);
+		DvProportion dp = new DvProportion(29.0, 24.0, ProportionKind.INTEGER_FRACTION, 0);
 		assertEquals(DvProportion.parseValue("DV_PROPORTION,29,24,3"), dp);
 	}
 }

@@ -271,12 +271,6 @@ public class DvDateTime extends DvTemporal<DvDateTime> {
 		return isPartial;
 	}
 
-	@Override
-	public Number getMagnitude() {
-		//TODO
-		return null;
-	}
-
 	public DvDuration differenceOf(DvDateTime dt) {
 		return DvDuration.getDifference(this, dt);
 	}

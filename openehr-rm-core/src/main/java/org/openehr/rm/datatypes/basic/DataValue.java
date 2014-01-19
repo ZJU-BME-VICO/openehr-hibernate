@@ -112,8 +112,8 @@ public abstract class DataValue extends RMObject {
     	dataValueMap = new HashMap<String, DataValue>();
     	dataValueMap.put(ReferenceModelName.DV_COUNT.getName(), new DvCount(0));
     	dataValueMap.put(ReferenceModelName.DV_BOOLEAN.getName(), new DvBoolean(false));
-    	dataValueMap.put(ReferenceModelName.DV_QUANTITY.getName(), new DvQuantity(1));
-    	dataValueMap.put(ReferenceModelName.DV_PROPORTION.getName(), new DvProportion(1,1,ProportionKind.FRACTION, 0));
+    	dataValueMap.put(ReferenceModelName.DV_QUANTITY.getName(), new DvQuantity(1.0));
+    	dataValueMap.put(ReferenceModelName.DV_PROPORTION.getName(), new DvProportion(1.0, 1.0, ProportionKind.FRACTION, 0));
     	dataValueMap.put(ReferenceModelName.DV_TEXT.getName(), new DvText("text"));
     	dataValueMap.put(ReferenceModelName.DV_CODED_TEXT.getName(), new DvCodedText("text", new CodePhrase("tm", "cd")));
     	dataValueMap.put(ReferenceModelName.CODE_PHRASE.getName(), new CodePhrase("tm","cd"));

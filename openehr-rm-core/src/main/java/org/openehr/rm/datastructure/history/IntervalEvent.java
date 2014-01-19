@@ -63,7 +63,7 @@ public final class IntervalEvent<T extends ItemStructure> extends Event<T> {
             @Attribute(name = "state") ItemStructure state,
             @Attribute(name = "width", required = true) DvDuration width,
             @Attribute(name = "mathFunction", required = true) DvCodedText mathFunction,
-            @Attribute(name = "sampleCount") int sampleCount,
+            @Attribute(name = "sampleCount") Integer sampleCount,
             @Attribute(name = "terminologyService",  system=true) TerminologyService terminologyService) {
 		super(uid, archetypeNodeId, name, archetypeDetails, feederAudit, links, parent, 
 				time, data, state);
@@ -103,7 +103,7 @@ public final class IntervalEvent<T extends ItemStructure> extends Event<T> {
 	 * 
 	 * @return sampleCount.
 	 */
-	public int getSampleCount() {
+	public Integer getSampleCount() {
 		return sampleCount;
 	}
 
@@ -134,7 +134,7 @@ public final class IntervalEvent<T extends ItemStructure> extends Event<T> {
 		this.mathFunction = mathFunction;
 	}
 
-	void setSampleCount(int sampleCount) {
+	void setSampleCount(Integer sampleCount) {
 		this.sampleCount = sampleCount;
 	}
 
@@ -164,7 +164,7 @@ public final class IntervalEvent<T extends ItemStructure> extends Event<T> {
 	/* fields */
 	private DvDuration width;
 	private DvCodedText mathFunction;
-	private int sampleCount;	
+	private Integer sampleCount;	
 }
 
 /*

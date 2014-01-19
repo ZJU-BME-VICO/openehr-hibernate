@@ -50,7 +50,7 @@ public final class DvState extends DataValue {
      * @param terminal
      * @throws IllegalArgumentException if value null
      */
-    public DvState(DvCodedText value, boolean terminal) {
+    public DvState(DvCodedText value, Boolean terminal) {
         if (value == null) {
             throw new IllegalArgumentException("null value");
         }
@@ -77,7 +77,7 @@ public final class DvState extends DataValue {
      *
      * @return true if a terminal state
      */
-    public boolean isTerminal() {
+    public Boolean isTerminal() {
         return terminal;
     }
 
@@ -88,15 +88,22 @@ public final class DvState extends DataValue {
      * @return true if equals
      */
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!( o instanceof DvState )) return false;
+    	if (o == null) {
+			return false;
+		}
+        if (this == o) {
+        	return true;
+        }
+        if (!(o instanceof DvState)) {
+        	return false;
+        }
 
         final DvState state = (DvState) o;
 
         return new EqualsBuilder()
-                .append(value, state.value)
-                .append(terminal, state.terminal)
-                .isEquals();
+        				.append(value, state.value)
+        				.append(terminal, state.terminal)
+        				.isEquals();
     }
 
     /**
@@ -119,14 +126,14 @@ public final class DvState extends DataValue {
         this.value = value;
     }
 
-    void setTerminal(boolean terminal) {
+    void setTerminal(Boolean terminal) {
         this.terminal = terminal;
     }
     // POJO end
 
     /* fields */
     private DvCodedText value;
-    private boolean terminal;
+    private Boolean terminal;
 	@Override
 	public String getReferenceModelName() {
 		return "DV_STATE";

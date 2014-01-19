@@ -63,13 +63,13 @@ public class ItemTreeTest extends DataStructureTestBase {
     	
     	// lipid studies
     	totalCholesterol = new Element("at0002", new DvText("total cholesterol"),
-    			new DvQuantity("mmol/L", 6.1, measureServ));
+    			new DvQuantity("mmol/L", 6.1, null, measureServ));
     	
     	ldlCholesterol = new Element("at0003", new DvText("LDL cholesterol"),
-    			new DvQuantity("mmol/L", 0.9, measureServ));
+    			new DvQuantity("mmol/L", 0.9, null, measureServ));
     	
     	hdlCholesterol = new Element("at0004", new DvText("HDL cholesterol"),
-    			new DvQuantity("mmol/L", 5.2, measureServ));
+    			new DvQuantity("mmol/L", 5.2, null, measureServ));
     	
     	List<Locatable> items = new ArrayList<Locatable>();
     	items.add(totalCholesterol);

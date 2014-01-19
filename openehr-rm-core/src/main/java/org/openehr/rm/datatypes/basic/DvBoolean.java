@@ -14,8 +14,10 @@
  */
 package org.openehr.rm.datatypes.basic;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
 import org.openehr.rm.Attribute;
 import org.openehr.rm.FullConstructor;
+import org.openehr.rm.datastructure.itemstructure.representation.Element;
 
 /**
  * Items which are truly boolean data, such as true/false or yes/no
@@ -36,7 +38,7 @@ public final class DvBoolean extends DataValue {
      *
      * @param value
      */
-    public DvBoolean(boolean value) {
+    public DvBoolean(Boolean value) {
         this.value = value;
     }
 
@@ -45,9 +47,9 @@ public final class DvBoolean extends DataValue {
      *
      * @param value
      */
-    @FullConstructor public DvBoolean(@Attribute (name = "value",
-            required = true) String value) {
-        this(Boolean.TRUE.toString().equals(value));
+    @FullConstructor 
+    public DvBoolean(@Attribute (name = "value", required = true) String value) {
+        this(Boolean.parseBoolean(value));
     }
 
     /**
@@ -55,7 +57,7 @@ public final class DvBoolean extends DataValue {
      *
      * @return boolean value
      */
-    public boolean getValue() {
+    public Boolean getValue() {
         return value;
     }
 
@@ -72,8 +74,7 @@ public final class DvBoolean extends DataValue {
      * @return instance of Boolean
      */
     public static DvBoolean valueOf(String value) {
-        return Boolean.TRUE.toString().equals(value) ?
-                TRUE : FALSE;
+        return Boolean.parseBoolean(value) ? TRUE : FALSE;
     }
 
     /**
@@ -96,20 +97,20 @@ public final class DvBoolean extends DataValue {
      */
     @Override
     public boolean equals(Object o) {
+    	if (o == null) {
+			return false;
+		}
         if (this == o) {
             return true;
         }
-        if (!( o instanceof DvBoolean )) {
+        if (!(o instanceof DvBoolean)) {
             return false;
         }
-
-        final DvBoolean aBoolean = (DvBoolean) o;
-
-        if (value != aBoolean.value) {
-            return false;
-        }
-
-        return true;
+        DvBoolean obj = (DvBoolean) o;
+    	return new EqualsBuilder()
+    					.appendSuper(super.equals(obj))
+    					.append(value, obj.value)
+    					.isEquals();
     }
 
     /**
@@ -130,13 +131,13 @@ public final class DvBoolean extends DataValue {
     private DvBoolean() {
     }
 
-    public void setValue(boolean value) {
+    public void setValue(Boolean value) {
         this.value = value;
     }
     // POJO end
     
     /* fields */
-    private boolean value;
+    private Boolean value;
 
     /**
      * True value

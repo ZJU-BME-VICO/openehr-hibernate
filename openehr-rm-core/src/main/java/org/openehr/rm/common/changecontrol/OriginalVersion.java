@@ -122,7 +122,6 @@ public class OriginalVersion<T> extends Version<T> {
     /* fields */
     private Set<ObjectVersionID> otherInputVersionUids;
     private List<Attestation> attestations;
-    private boolean isMerged;
 
 }
 

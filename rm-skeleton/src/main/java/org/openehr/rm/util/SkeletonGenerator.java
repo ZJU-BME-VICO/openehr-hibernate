@@ -804,7 +804,7 @@ public class SkeletonGenerator {
 			magnitude = 0;
 		}
 
-		return new DvQuantity(item.getUnits(), magnitude, measurementService);
+		return new DvQuantity(item.getUnits(), magnitude, null, measurementService);
 	}
 
 	/*

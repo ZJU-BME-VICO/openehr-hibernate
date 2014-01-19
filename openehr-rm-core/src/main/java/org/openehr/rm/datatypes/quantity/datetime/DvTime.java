@@ -237,12 +237,6 @@ public class DvTime extends DvTemporal<DvTime> {
 	}
 
 	@Override
-	public Number getMagnitude() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public DvTime add(DvDuration q) {
 		if (!getDiffType().isInstance(q)) {
 			throw new IllegalArgumentException("invalid difference type");

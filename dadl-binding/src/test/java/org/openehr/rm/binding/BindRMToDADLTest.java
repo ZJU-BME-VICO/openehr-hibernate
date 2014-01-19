@@ -36,7 +36,7 @@ public class BindRMToDADLTest extends DADLBindingTestBase {
 	}
 	
 	public void testBindDvQuantity() throws Exception {
-		DvQuantity q = new DvQuantity("mmHg", 120.0, 1);
+		DvQuantity q = new DvQuantity("mmHg", 120.0, 1, null);
 		expected = readLines("typed_dv_quantity2.dadl");
 		actual = binding.toDADL(q);		
 		assertEquals(expected, actual);		

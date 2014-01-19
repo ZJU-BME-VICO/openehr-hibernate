@@ -16,6 +16,7 @@ package org.openehr.rm.datatypes.quantity;
 
 import java.util.List;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
 import org.openehr.rm.Attribute;
 import org.openehr.rm.datatypes.text.CodePhrase;
 
@@ -28,7 +29,7 @@ import org.openehr.rm.datatypes.text.CodePhrase;
  * @author Rong Chen
  * @version 1.0
  */
-public abstract class DvQuantified<T extends DvQuantified> extends DvOrdered<T> {
+public abstract class DvQuantified<T extends DvQuantified<?>> extends DvOrdered<T> {
 
     /**
      * Constructs a Quantified with referenceRanges and accuracy
@@ -59,13 +60,6 @@ public abstract class DvQuantified<T extends DvQuantified> extends DvOrdered<T> 
     }
 
     /**
-     * Numeric value of the quantity in canonical (single value) form
-     *
-     * @return getMagnitude
-     */
-    public abstract Number getMagnitude();
-
-    /**
      * Optional status of magnitude with values:
      * <ul>
      * <li> "=" : magnitude is a point value</li>
@@ -89,12 +83,19 @@ public abstract class DvQuantified<T extends DvQuantified> extends DvOrdered<T> 
      * @return true if equals
      */
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!( o instanceof DvQuantified )) return false;
-
-        final DvQuantified dvQuantified = (DvQuantified) o;
-
-        return getMagnitude().equals(dvQuantified.getMagnitude());
+    	if (o == null) {
+			return false;
+		}
+        if (this == o) {
+        	return true;
+        }        
+        if (!(o instanceof DvQuantified)) {
+        	return false;
+        }
+        DvQuantified<?> obj = (DvQuantified<?>) o;
+    	return new EqualsBuilder()
+    					.append(magnitudeStatus, obj.magnitudeStatus)
+    					.isEquals();
     }
 
     /**
@@ -103,13 +104,11 @@ public abstract class DvQuantified<T extends DvQuantified> extends DvOrdered<T> 
      * @return hash code
      */
     public int hashCode() {
-        return getMagnitude().hashCode();
+        return getMagnitudeStatus().hashCode();
     }
 
     /* fields */
     private final String magnitudeStatus;
-    
-    
     
 }
 

@@ -51,11 +51,11 @@ public class ParseDataValueTest extends TestCase {
 	
 	public void testParseDvQuantity() {
 		dv = DataValue.parseValue("DV_QUANTITY,1.5,mg");
-		assertEquals(dv, new DvQuantity("mg", 1.5, 1));
+		assertEquals(dv, new DvQuantity("mg", 1.5, 1, null));
 	}
 	
 	public void testDvQuantityRoundTrip() {
-		DvQuantity dq = new DvQuantity("mg", 1.5, 3);
+		DvQuantity dq = new DvQuantity("mg", 1.5, 3, null);
 		String s = dq.serialise();
 		assertEquals("DvQuantity round trip failed", dq, DataValue.parseValue(s));
 	}

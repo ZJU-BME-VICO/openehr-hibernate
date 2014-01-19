@@ -36,16 +36,16 @@ public class DvQuantityTest extends TestCase {
 
     // also test equals() from both Quantified and Measurable
     public void testEquals() throws Exception {
-        DvQuantity q1 = new DvQuantity("mg", 10, 2, ms);
-        DvQuantity q2 = new DvQuantity("mg", 10, 2, ms);
+        DvQuantity q1 = new DvQuantity("mg", 10.0, 2, ms);
+        DvQuantity q2 = new DvQuantity("mg", 10.0, 2, ms);
         assertTrue(q1 + " equals " + q2, q1.equals(q2));
 
-        q1 = new DvQuantity("mg", 10, ms);
-        q2 = new DvQuantity("mg", 10, ms);
+        q1 = new DvQuantity("mg", 10.0, null, ms);
+        q2 = new DvQuantity("mg", 10.0, null, ms);
         assertTrue(q1 + " equals " + q2, q1.equals(q2));
 
-        q1 = new DvQuantity(10);
-        q2 = new DvQuantity(10);
+        q1 = new DvQuantity(10.0);
+        q2 = new DvQuantity(10.0);
         assertTrue(q1 + " equals " + q2, q1.equals(q2));
 
         q1 = new DvQuantity(10.5);
@@ -53,41 +53,41 @@ public class DvQuantityTest extends TestCase {
         assertTrue(q1 + " equals " + q2, q1.equals(q2));
 
         // missing precision
-        q1 = new DvQuantity("mg", 10, 2, ms);
-        q2 = new DvQuantity("mg", 10, ms);
+        q1 = new DvQuantity("mg", 10.0, 2, ms);
+        q2 = new DvQuantity("mg", 10.0, null, ms);
         assertFalse(q1 + " not equals " + q2, q1.equals(q2));
 
         // missing units
-        q1 = new DvQuantity(10);
-        q2 = new DvQuantity("mg", 10, ms);
+        q1 = new DvQuantity(10.0);
+        q2 = new DvQuantity("mg", 10.0, null, ms);
         assertFalse(q1 + " not equals " + q2, q1.equals(q2));
 
         // diff precision
-        q1 = new DvQuantity("mg", 10, 2, ms);
-        q2 = new DvQuantity("mg", 10, 3, ms);
+        q1 = new DvQuantity("mg", 10.0, 2, ms);
+        q2 = new DvQuantity("mg", 10.0, 3, ms);
         assertFalse(q1 + " not equals " + q2, q1.equals(q2));
 
         // diff units
-        q1 = new DvQuantity("kg", 10, 2, ms);
-        q2 = new DvQuantity("mg", 10, 2, ms);
+        q1 = new DvQuantity("kg", 10.0, 2, ms);
+        q2 = new DvQuantity("mg", 10.0, 2, ms);
         assertFalse(q1 + " not equals " + q2, q1.equals(q2));
 
         // diff getMagnitude
-        q1 = new DvQuantity("mg", 12, 2, ms);
-        q2 = new DvQuantity("mg", 10, 2, ms);
+        q1 = new DvQuantity("mg", 12.0, 2, ms);
+        q2 = new DvQuantity("mg", 10.0, 2, ms);
         assertFalse(q1 + " not equals " + q2, q1.equals(q2));
     }
 
     public void testToString() throws Exception {
-        DvQuantity q = new DvQuantity("kg", 78, 2, ms);
+        DvQuantity q = new DvQuantity("kg", 78.0, 2, ms);
         String expected = "78.00,kg";
         assertEquals(expected, q.toString());
 
-        q = new DvQuantity("kg", 78, ms);
+        q = new DvQuantity("kg", 78.0, null, ms);
         expected = "78,kg";
         assertEquals(expected, q.toString());
 
-        q = new DvQuantity(78);
+        q = new DvQuantity(78.0);
         expected = "78";
         assertEquals(expected, q.toString());
 
@@ -99,35 +99,35 @@ public class DvQuantityTest extends TestCase {
         expected = "78";
         assertEquals(expected, q.toString());
 
-        q = new DvQuantity(78.5, 3, ms);
+        q = new DvQuantity("", 78.5, 3, ms);
         expected = "78.500";
         assertEquals(expected, q.toString());
     }
     
     public void testParseQuantityWithPrecision() throws Exception {
     	String value = "78.500,kg";
-    	DvQuantity expected = new DvQuantity("kg", 78.5, 3);
+    	DvQuantity expected = new DvQuantity("kg", 78.5, 3, null);
     	DvQuantity q = expected.parse(value);
     	assertEquals("failed to parse quantity with precision", expected, q);
     }
     
     public void testParseQuantityWithoutPrecision() throws Exception {
     	String value = "78,kg";
-    	DvQuantity expected = new DvQuantity("kg", 78, 0);
+    	DvQuantity expected = new DvQuantity("kg", 78.0, 0, null);
     	DvQuantity q = expected.parse(value);
     	assertEquals("failed to parse quantity with precision", expected, q);
     }
     
     public void testDataValueParseQuantityWithoutPrecision() throws Exception {
     	String value = "78,kg";
-    	DvQuantity expected = new DvQuantity("kg", 78, 0);
+    	DvQuantity expected = new DvQuantity("kg", 78.0, 0, null);
     	DataValue q = DataValue.parseValue("DV_QUANTITY," + value);
     	assertEquals("failed to parse quantity with precision", expected, q);
     }
     
     public void testCreateWithUnlimitedPrecision() {
     	try { 
-    		new DvQuantity("mg", 12, -1, ms);
+    		new DvQuantity("mg", 12.0, -1, ms);
     	} catch(Exception e) {
     		fail("failed to create DvQuantity with unlimited precision");
     	}

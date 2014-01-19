@@ -14,9 +14,11 @@
  */
 package org.openehr.rm.datatypes.quantity;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.openehr.rm.Attribute;
 import org.openehr.rm.FullConstructor;
+import org.openehr.rm.datatypes.basic.DvBoolean;
 import org.openehr.rm.datatypes.basic.ReferenceModelName;
 import org.openehr.rm.datatypes.text.CodePhrase;
 
@@ -156,17 +158,20 @@ public final class DvCount extends DvAmount<DvCount> {
 	 * @return true if equals
 	 */
 	public boolean equals(Object o) {
-		if (this == o)
+		if (o == null) {
+			return false;
+		}
+		if (this == o) {
 			return true;
-		if (!(o instanceof DvCount))
+		}
+		if (!(o instanceof DvCount)) {
 			return false;
-
-		final DvCount dvCount = (DvCount) o;
-
-		if (magnitude != dvCount.magnitude)
-			return false;
-
-		return true;
+		}
+		DvCount obj = (DvCount) o;
+    	return new EqualsBuilder()
+    					.appendSuper(super.equals(obj))
+    					.append(magnitude, obj.magnitude)
+    					.isEquals();
 	}
 
 	/**

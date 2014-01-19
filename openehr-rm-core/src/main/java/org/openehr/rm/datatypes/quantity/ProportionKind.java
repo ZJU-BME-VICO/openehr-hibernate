@@ -58,7 +58,7 @@ public enum ProportionKind {
 	 */
 	@FullConstructor
 	private ProportionKind(
-			@Attribute(name = "value", required=true) int value) {
+			@Attribute(name = "value", required = true) Integer value) {
 		this.value = value;
 	}
 	
@@ -67,7 +67,7 @@ public enum ProportionKind {
 	 * 
 	 * @return int value
 	 */
-	public int getValue() {
+	public Integer getValue() {
 		return value;
 	}
 	
@@ -107,7 +107,7 @@ public enum ProportionKind {
 	}
 	
 	/* field */
-	private int value;
+	private Integer value;
 }
 /*
  *  ***** BEGIN LICENSE BLOCK *****

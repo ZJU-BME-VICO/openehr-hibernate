@@ -108,15 +108,22 @@ public final class DvParsable extends DvEncapsulated {
      * @return true if equals
      */
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!( o instanceof DvParsable )) return false;
+    	if (o == null) {
+			return false;
+		}
+        if (this == o) {
+        	return true;
+        }
+        if (!(o instanceof DvParsable)) {
+        	return false;
+        }
 
-        final DvParsable parsable = (DvParsable) o;
+        final DvParsable obj = (DvParsable) o;
 
         return new EqualsBuilder()
-                .append(value, parsable.value)
-                .append(formalism, parsable.formalism)
-                .isEquals();
+        				.append(value, obj.value)
+        				.append(formalism, obj.formalism)
+        				.isEquals();
     }
 
     /**

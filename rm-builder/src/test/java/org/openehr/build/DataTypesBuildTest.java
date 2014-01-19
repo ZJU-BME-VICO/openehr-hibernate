@@ -45,7 +45,7 @@ public class DataTypesBuildTest extends BuildTestBase {
         RMObject obj = builder.construct(type, values);
         assertTrue(obj instanceof DvBoolean);
         DvBoolean booleanObj = (DvBoolean) obj;
-        assertEquals("value", true, booleanObj.getValue());
+        assertEquals("value", true, booleanObj.getValue().booleanValue());
 
         // false value
         values.clear();
@@ -53,7 +53,7 @@ public class DataTypesBuildTest extends BuildTestBase {
         obj = builder.construct(type, values);
         assertTrue(obj instanceof DvBoolean);
         booleanObj = (DvBoolean) obj;
-        assertEquals("value", false, booleanObj.getValue());
+        assertEquals("value", false, booleanObj.getValue().booleanValue());
     }
 
     public void testBuildDvState() throws Exception {
@@ -67,7 +67,7 @@ public class DataTypesBuildTest extends BuildTestBase {
         assertTrue(obj instanceof DvState);
         DvState state = (DvState) obj;
         assertEquals("value", codedText, state.getValue());
-        assertEquals("terminal", true, state.isTerminal());
+        assertEquals("terminal", true, state.isTerminal().booleanValue());
 
         // non-terminal
         values = new HashMap<String, Object>();
@@ -76,7 +76,7 @@ public class DataTypesBuildTest extends BuildTestBase {
         assertTrue(obj instanceof DvState);
         state = (DvState) obj;
         assertEquals("value", codedText, state.getValue());
-        assertEquals("terminal", false, state.isTerminal());
+        assertEquals("terminal", false, state.isTerminal().booleanValue());
     }
 
     // test classes from datatypes.text package
@@ -155,7 +155,7 @@ public class DataTypesBuildTest extends BuildTestBase {
         RMObject obj = builder.construct(type, values);
         assertTrue(obj instanceof DvOrdinal);
         DvOrdinal ordinal = (DvOrdinal) obj;
-        assertEquals("value", 1, ordinal.getValue());
+        assertEquals("value", 1, ordinal.getValue().intValue());
         assertEquals("symbol", symbol, ordinal.getSymbol());
     }
 

@@ -38,7 +38,7 @@ public final class Interval<T extends Comparable> extends RMObject {
      * @throws IllegalArgumentException if lower > upper
      */
     public Interval(T lower, T upper,
-                    boolean lowerInclusive, boolean upperInclusive) {
+                    Boolean lowerInclusive, Boolean upperInclusive) {
         if (lower != null && upper != null
                 && upper.compareTo(lower) < 0) {
             throw new IllegalArgumentException("lower > upper");
@@ -141,17 +141,22 @@ public final class Interval<T extends Comparable> extends RMObject {
      * @return true if equals
      */
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!( o instanceof Interval )) return false;
-
-        final Interval interval = (Interval) o;
-
+    	if (o == null) {
+			return false;
+		}
+        if (this == o) {
+        	return true;
+        }
+        if (!(o instanceof Interval)) {
+        	return false;
+        }
+        final Interval obj = (Interval) o;
         return new EqualsBuilder()
-                .append(lower, interval.lower)
-                .append(upper, interval.upper)
-                .append(lowerIncluded, interval.lowerIncluded)
-                .append(upperIncluded, interval.upperIncluded)
-                .isEquals();
+        				.append(lower, obj.lower)
+        				.append(upper, obj.upper)
+        				.append(lowerIncluded, obj.lowerIncluded)
+        				.append(upperIncluded, obj.upperIncluded)
+        				.isEquals();
     }
 
     /**
@@ -196,11 +201,11 @@ public final class Interval<T extends Comparable> extends RMObject {
         this.upper = upper;
     }
 
-    public void setLowerIncluded(boolean lowerInclusive) {
+    public void setLowerIncluded(Boolean lowerInclusive) {
         this.lowerIncluded = lowerInclusive;
     }
 
-    public void setUpperIncluded(boolean upperInclusive) {
+    public void setUpperIncluded(Boolean upperInclusive) {
         this.upperIncluded = upperInclusive;
     }
     // POJO end
@@ -208,8 +213,8 @@ public final class Interval<T extends Comparable> extends RMObject {
     /* fields */
     private T lower;
     private T upper;
-    private boolean lowerIncluded;
-    private boolean upperIncluded;
+    private Boolean lowerIncluded;
+    private Boolean upperIncluded;
 }
 
 /*
