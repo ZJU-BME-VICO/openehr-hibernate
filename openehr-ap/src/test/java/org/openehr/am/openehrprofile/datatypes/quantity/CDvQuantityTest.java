@@ -38,7 +38,7 @@ public class CDvQuantityTest extends TestCase {
 		List<CDvQuantityItem> list = null;
 		CodePhrase property = null;
 		MeasurementService ms = SimpleMeasurementService.getInstance();
-		DvQuantity assumed = new DvQuantity("kg", 90.0, ms);
+		DvQuantity assumed = new DvQuantity("kg", 90.0, null, ms);
 		
 		CDvQuantity constraint = new CDvQuantity(path, occurrences, nodeId,
 				parent, list, property, null, assumed);
@@ -53,7 +53,7 @@ public class CDvQuantityTest extends TestCase {
 		List<CDvQuantityItem> list = null;
 		CodePhrase property = null;
 		MeasurementService ms = SimpleMeasurementService.getInstance();
-		DvQuantity defaultValue = new DvQuantity("kg", 90.0, ms);
+		DvQuantity defaultValue = new DvQuantity("kg", 90.0, null, ms);
 		
 		CDvQuantity constraint = new CDvQuantity(path, occurrences, nodeId,
 				parent, list, property, defaultValue, null);
@@ -113,7 +113,7 @@ public class CDvQuantityTest extends TestCase {
 		list1.add(item1);
 		CDvQuantity cdq = new CDvQuantity("/path", required, list1, null);
 		
-		DvQuantity dq = new DvQuantity("mg", 0.9, measureService);		
+		DvQuantity dq = new DvQuantity("mg", 0.9, null, measureService);		
 		
 		assertTrue("expected valid value expected", cdq.validValue(dq));				
 	}
@@ -127,7 +127,7 @@ public class CDvQuantityTest extends TestCase {
 		list1.add(item1);
 		CDvQuantity cdq = new CDvQuantity("/path", required, list1, null);
 		
-		DvQuantity dq = new DvQuantity("mg", 1.5, measureService);		
+		DvQuantity dq = new DvQuantity("mg", 1.5, null, measureService);		
 		
 		assertFalse("expected value out of range", cdq.validValue(dq));
 		
@@ -143,7 +143,7 @@ public class CDvQuantityTest extends TestCase {
 		list1.add(item1);
 		CDvQuantity cdq = new CDvQuantity("/path", required, list1, null);
 		
-		DvQuantity dq = new DvQuantity("kg", 0.9, measureService);		
+		DvQuantity dq = new DvQuantity("kg", 0.9, null, measureService);		
 		
 		assertFalse("expected invalid units", cdq.validValue(dq));	
 	}	

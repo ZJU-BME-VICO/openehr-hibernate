@@ -63,11 +63,11 @@ public class DvProportion extends DvAmount<DvProportion> {
     		@Attribute (name = "otherReferenceRanges") List<ReferenceRange<DvProportion>> otherReferenceRanges,
     		@Attribute (name = "normalRange") DvInterval<DvProportion> normalRange,
     		@Attribute (name= "normalStatus") CodePhrase normalStatus,
-    		@Attribute (name = "accuracy") double accuracy, 
-    		@Attribute (name = "accuracyPercent") boolean accuracyPercent,
+    		@Attribute (name = "accuracy") Double accuracy, 
+    		@Attribute (name = "accuracyPercent") Boolean accuracyPercent,
     		@Attribute (name= "magnitudeStatus") String magnitudeStatus,
-    		@Attribute (name = "numerator", required = true) double numerator,
-    		@Attribute (name = "denominator", required = true) double denominator,
+    		@Attribute (name = "numerator", required = true) Double numerator,
+    		@Attribute (name = "denominator", required = true) Double denominator,
     		@Attribute (name = "type", required = true) ProportionKind type,
     		@Attribute (name = "precision") Integer precision) {
     	
@@ -116,9 +116,9 @@ public class DvProportion extends DvAmount<DvProportion> {
     /**
      * Creates a simple DvProportion
      */
-    public DvProportion(double numerator, double denominator, 
+    public DvProportion(Double numerator, Double denominator, 
     		ProportionKind type, Integer precision) {
-    	this(null, null, null, 0.0, false, null, numerator, denominator, type, 
+    	this(null, null, null, null, null, null, numerator, denominator, type, 
     			precision);
     }
     
@@ -129,7 +129,7 @@ public class DvProportion extends DvAmount<DvProportion> {
      * @param precision
      * @return
      */
-    public static DvProportion createUnitaryProportion(double numerator, 
+    public static DvProportion createUnitaryProportion(Double numerator, 
     		Integer precision) {
     	return new DvProportion(numerator, 1.0, ProportionKind.UNITARY, precision);
     }
@@ -137,14 +137,14 @@ public class DvProportion extends DvAmount<DvProportion> {
     /**
 	 * @return Returns the denominator.
 	 */
-	public double getDenominator() {
+	public Double getDenominator() {
 		return denominator;
 	}
 
 	/**
 	 * @return Returns the numerator.
 	 */
-	public double getNumerator() {
+	public Double getNumerator() {
 		return numerator;
 	}
 
@@ -194,11 +194,6 @@ public class DvProportion extends DvAmount<DvProportion> {
 		return null;
 	}
 	@Override
-	@Transient
-	public Number getMagnitude() {
-		return new Double(numerator / denominator);
-	}
-	@Override
 	public boolean isStrictlyComparableTo(DvOrdered ordered) {
 		// TODO Auto-generated method stub
 		return false;
@@ -213,13 +208,11 @@ public class DvProportion extends DvAmount<DvProportion> {
 	return result.compareTo(resultB);
 	}
 	
-	
-	
-	public void setNumerator(double numerator) {
+	public void setNumerator(Double numerator) {
 		this.numerator = numerator;
 	}
 
-	public void setDenominator(double denominator) {
+	public void setDenominator(Double denominator) {
 		this.denominator = denominator;
 	}
 
@@ -237,40 +230,40 @@ public class DvProportion extends DvAmount<DvProportion> {
     }
 
     public DvProportion parse(String value) {
-	int iNumerator = value.indexOf(",");
-	if(iNumerator < 0 || iNumerator == value.length()) {
-	    throw new IllegalArgumentException("failed to parse proportion, wrong format [" + value + "]");
-	}
-	String numeratorStr = value.substring(0, iNumerator);
-	int iDenominator = value.indexOf(",", iNumerator+1);
-	if(iDenominator < 0 || iDenominator == value.length()) {
-	    throw new IllegalArgumentException("failed to parse proportion, wrong format [" + value + "]");
-	}
-	String denominatorStr = value.substring(iNumerator+1, iDenominator);
-
-	String propTypeStr = value.substring(iDenominator+1);
-	Integer propTypeInt = null; 
-	try {
-	    propTypeInt = Integer.parseInt(propTypeStr);
-	} catch(NumberFormatException nfe) {
-	    throw new IllegalArgumentException("failed to parse proportion type ["+propTypeStr+"]", nfe);
-	}
-	ProportionKind propType = ProportionKind.valueOf(propTypeInt);
-
-	//Precision is calculated from numerator
-	int precision = 0;
-	int i = numeratorStr.indexOf(DvQuantity.DECIMAL_SEPARATOR);
-	if(i >= 0) {
-	    precision = numeratorStr.length() - i - 1;
-	}
-	try {
-	    double numerator = Double.parseDouble(numeratorStr);
-	    double denominator = Double.parseDouble(denominatorStr);
-	    return new DvProportion(numerator, denominator, propType, precision);
-	} catch(NumberFormatException nfe) {
-	    throw new IllegalArgumentException("failed to parse quantity[" 
-		    + numeratorStr + "/" + denominatorStr+ "]", nfe);
-	}
+		int iNumerator = value.indexOf(",");
+		if(iNumerator < 0 || iNumerator == value.length()) {
+		    throw new IllegalArgumentException("failed to parse proportion, wrong format [" + value + "]");
+		}
+		String numeratorStr = value.substring(0, iNumerator);
+		int iDenominator = value.indexOf(",", iNumerator+1);
+		if(iDenominator < 0 || iDenominator == value.length()) {
+		    throw new IllegalArgumentException("failed to parse proportion, wrong format [" + value + "]");
+		}
+		String denominatorStr = value.substring(iNumerator+1, iDenominator);
+	
+		String propTypeStr = value.substring(iDenominator+1);
+		Integer propTypeInt = null; 
+		try {
+		    propTypeInt = Integer.parseInt(propTypeStr);
+		} catch(NumberFormatException nfe) {
+		    throw new IllegalArgumentException("failed to parse proportion type ["+propTypeStr+"]", nfe);
+		}
+		ProportionKind propType = ProportionKind.valueOf(propTypeInt);
+	
+		//Precision is calculated from numerator
+		int precision = 0;
+		int i = numeratorStr.indexOf(DvQuantity.DECIMAL_SEPARATOR);
+		if(i >= 0) {
+		    precision = numeratorStr.length() - i - 1;
+		}
+		try {
+		    double numerator = Double.parseDouble(numeratorStr);
+		    double denominator = Double.parseDouble(denominatorStr);
+		    return new DvProportion(numerator, denominator, propType, precision);
+		} catch(NumberFormatException nfe) {
+		    throw new IllegalArgumentException("failed to parse quantity[" 
+			    + numeratorStr + "/" + denominatorStr+ "]", nfe);
+		}
     }
 
     /**
@@ -279,19 +272,19 @@ public class DvProportion extends DvAmount<DvProportion> {
      * @return string presentation
      */
     public String toString() {
-	DecimalFormat format = new DecimalFormat();
-	format.setMinimumFractionDigits(precision);
-	format.setMaximumFractionDigits(precision);
-	DecimalFormatSymbols dfs = format.getDecimalFormatSymbols();
-	dfs.setDecimalSeparator(DvQuantity.DECIMAL_SEPARATOR);
-	format.setDecimalFormatSymbols(dfs);
-	format.setGroupingUsed(false);
-	return format.format(numerator) + "," + format.format(denominator) + "," + type;
+		DecimalFormat format = new DecimalFormat();
+		format.setMinimumFractionDigits(precision);
+		format.setMaximumFractionDigits(precision);
+		DecimalFormatSymbols dfs = format.getDecimalFormatSymbols();
+		dfs.setDecimalSeparator(DvQuantity.DECIMAL_SEPARATOR);
+		format.setDecimalFormatSymbols(dfs);
+		format.setGroupingUsed(false);
+		return format.format(numerator) + "," + format.format(denominator) + "," + type;
     }
     
 	/* fields */
-	private double numerator;
-	private double denominator;
+	private Double numerator;
+	private Double denominator;
 	private ProportionKind type;
 	private Integer precision;
 	

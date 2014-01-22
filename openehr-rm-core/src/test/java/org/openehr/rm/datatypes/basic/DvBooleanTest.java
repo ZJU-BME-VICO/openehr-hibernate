@@ -49,8 +49,8 @@ public class DvBooleanTest extends TestCase {
     }
 
     public void testValue() throws Exception {
-        assertEquals(true, DvBoolean.TRUE.getValue());
-        assertEquals(false, DvBoolean.FALSE.getValue());
+        assertEquals(true, DvBoolean.TRUE.getValue().booleanValue());
+        assertEquals(false, DvBoolean.FALSE.getValue().booleanValue());
     }
 
 }

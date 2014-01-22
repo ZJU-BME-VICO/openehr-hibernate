@@ -217,12 +217,6 @@ public class DvDate extends DvTemporal<DvDate> {
 
 	@Transient
 	@Override
-	public Double getMagnitude() {
-		// TODO
-		return null;
-	}
-
-	@Override
 	public boolean isStrictlyComparableTo(DvOrdered ordered) {
 		// TODO Auto-generated method stub
 		return false;

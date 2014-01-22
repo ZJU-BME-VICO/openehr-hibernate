@@ -32,7 +32,7 @@ public class DvProportionHibernateTest extends AbstractHibernateTest {
 	@Test
 	public void testSaveLoad() {
 
-		DvProportion p = new DvProportion(1, 2, ProportionKind.FRACTION, 0);
+		DvProportion p = new DvProportion(1.0, 2.0, ProportionKind.FRACTION, 0);
 
 		Session session = sessionFactory.getCurrentSession();
 		session.save(p);

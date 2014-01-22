@@ -61,11 +61,11 @@ public final class DvOrdinal extends DvOrdered<DvOrdinal> {
      * @throws IllegalArgumentException
      */
     @FullConstructor
-            public DvOrdinal(
-            @Attribute (name = "otherReferenceRanges") List<ReferenceRange<DvOrdinal>> otherReferenceRanges,
-            @Attribute (name = "normalRange") DvInterval<DvOrdinal> normalRange,
-            @Attribute (name = "value", required = true) int value,
-            @Attribute (name = "symbol", required = true) DvCodedText symbol) {
+    public DvOrdinal(
+    		@Attribute(name = "otherReferenceRanges") List<ReferenceRange<DvOrdinal>> otherReferenceRanges,
+    		@Attribute(name = "normalRange") DvInterval<DvOrdinal> normalRange,
+    		@Attribute(name = "value", required = true) Integer value,
+    		@Attribute(name = "symbol", required = true) DvCodedText symbol) {
         super(otherReferenceRanges, normalRange);
         if (symbol == null) {
             throw new IllegalArgumentException("null symbol");
@@ -97,7 +97,7 @@ public final class DvOrdinal extends DvOrdered<DvOrdinal> {
      * @param symbol
      * @throws IllegalArgumentException
      */
-    public DvOrdinal(int value, DvCodedText symbol) {
+    public DvOrdinal(Integer value, DvCodedText symbol) {
         this(null, null, value, symbol);
     }
 
@@ -108,8 +108,8 @@ public final class DvOrdinal extends DvOrdered<DvOrdinal> {
      * @param symbol
      * @throws IllegalArgumentException
      */
-    public DvOrdinal(int value, String dvCodedTextvalue, String dvCodedTextTerminology, String dvCodedTextCode) {
-	this(null, null, value, new DvCodedText(dvCodedTextvalue, dvCodedTextTerminology, dvCodedTextCode));
+    public DvOrdinal(Integer value, String dvCodedTextvalue, String dvCodedTextTerminology, String dvCodedTextCode) {
+    	this(null, null, value, new DvCodedText(dvCodedTextvalue, dvCodedTextTerminology, dvCodedTextCode));
     }
 
     /**
@@ -118,7 +118,7 @@ public final class DvOrdinal extends DvOrdered<DvOrdinal> {
      * @return string presentation
      */
     public String toString() {
-	return value + "|" + symbol.toString();
+    	return value + "|" + symbol.toString();
     }
 
     /**
@@ -140,7 +140,7 @@ public final class DvOrdinal extends DvOrdered<DvOrdinal> {
      *
      * @return value
      */
-    public int getValue() {
+    public Integer getValue() {
         return value;
     }
 
@@ -174,15 +174,22 @@ public final class DvOrdinal extends DvOrdered<DvOrdinal> {
      * @return true if equals
      */
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!( o instanceof DvOrdinal )) return false;
+    	if (o == null) {
+			return false;
+		}
+        if (this == o) {
+        	return true;
+        }
+        if (!(o instanceof DvOrdinal)) {
+        	return false;
+        }
 
-        final DvOrdinal ord = (DvOrdinal) o;
+        final DvOrdinal obj = (DvOrdinal) o;
 
         return new EqualsBuilder()
-                .append(value, ord.value)
-                .append(symbol, ord.symbol)
-                .isEquals();
+        				.append(value, obj.value)
+        				.append(symbol, obj.symbol)
+        				.isEquals();
     }
 
     /**
@@ -219,24 +226,24 @@ public final class DvOrdinal extends DvOrdered<DvOrdinal> {
 
     @Transient
     public String getTerminologyId(){
-	return getSymbol().getTerminologyId();
+    	return getSymbol().getTerminologyId();
     }
 
     @Transient
     public String getCode(){
-	return getSymbol().getCode();
+    	return getSymbol().getCode();
     }
     
     @Transient
     public String getSymbolValue(){
-	return getSymbol().getValue();
+    	return getSymbol().getValue();
     }
     
     // POJO start
     private DvOrdinal() {
     }
 
-    public  void setValue(int value) {
+    public  void setValue(Integer value) {
         this.value = value;
     }
 
@@ -244,48 +251,46 @@ public final class DvOrdinal extends DvOrdered<DvOrdinal> {
         this.symbol = symbol;
     }
 
-    private void setLimitsIndex(int limitsIndex) {
+    private void setLimitsIndex(Integer limitsIndex) {
         this.limitsIndex = limitsIndex;
     }
     // POJO end
 
     /* fields */
-    private int value;
+    private Integer value;
     private DvCodedText symbol;
-    private int limitsIndex;
+    private Integer limitsIndex;
     
     @Column(name = "RM_limitsIndex")
-	public int getLimitsIndex() {
+	public Integer getLimitsIndex() {
 		return limitsIndex;
 	}
 
     @Transient
     @Override
     public String getReferenceModelName() {
-	return "DV_ORDINAL";
+    	return "DV_ORDINAL";
     }
-
-
 
     @Override
     public String serialise() {
-	return getReferenceModelName() + "," + toString();
+    	return getReferenceModelName() + "," + toString();
     }
 
     @Override
     public DataValue parse(String value) {
-	int i = value.indexOf("|");
-	if (i<0){
-	    throw new IllegalArgumentException("failed to parse DvOrdinal '"+value+"', wrong number of tokens.");
-	}
-	int ordinalValue = 0;
-	try{
-	    ordinalValue = Integer.parseInt(value.substring(0,i));
-	}catch(NumberFormatException e){
-	    throw new IllegalArgumentException("failed to parse DvOrdinal '"+value+"', invalid integer value.");
-	}
-	String str = ReferenceModelName.DV_CODED_TEXT.getName() + "," +  value.substring(i+1);
-	return new DvOrdinal(ordinalValue, (DvCodedText)DataValue.parseValue(str));
+    	int i = value.indexOf("|");
+    	if (i<0){
+    		throw new IllegalArgumentException("failed to parse DvOrdinal '"+value+"', wrong number of tokens.");
+    	}
+    	int ordinalValue = 0;
+    	try{
+    		ordinalValue = Integer.parseInt(value.substring(0,i));
+    	}catch(NumberFormatException e){
+    		throw new IllegalArgumentException("failed to parse DvOrdinal '"+value+"', invalid integer value.");
+    	}
+    	String str = ReferenceModelName.DV_CODED_TEXT.getName() + "," +  value.substring(i+1);
+    	return new DvOrdinal(ordinalValue, (DvCodedText)DataValue.parseValue(str));
     }
 }
 

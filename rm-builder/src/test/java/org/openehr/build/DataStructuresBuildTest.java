@@ -97,7 +97,7 @@ public class DataStructuresBuildTest extends BuildTestBase {
         DvText name = new DvText("test item list", lang, charset, ts);
         List<Element> items = new ArrayList<Element>();
         Element element = new Element("at0002", new DvText("element"),
-        		new DvQuantity("mmHg", 120.0, ms));
+        		new DvQuantity("mmHg", 120.0, null, ms));
         items.add(element);
 
         values.put("archetypeNodeId", archetypeNodeId);

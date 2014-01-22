@@ -115,17 +115,24 @@ public class DvIdentifier extends DataValue {
      * @return true if equals
      */
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!( o instanceof DvIdentifier )) return false;
+    	if (o == null) {
+			return false;
+		}
+        if (this == o) {
+        	return true;
+        }
+        if (!(o instanceof DvIdentifier)) {
+        	return false;
+        }
 
-        final DvIdentifier dvid = (DvIdentifier) o;
+        final DvIdentifier obj = (DvIdentifier) o;
 
         return new EqualsBuilder()
-                .append(issuer, dvid.issuer)
-                .append(assigner, dvid.assigner)
-                .append(id, dvid.id)
-                .append(type, dvid.type)
-                .isEquals();
+        				.append(issuer, obj.issuer)
+        				.append(assigner, obj.assigner)
+        				.append(id, obj.id)
+        				.append(type, obj.type)
+        				.isEquals();
     }
 
     /**

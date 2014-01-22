@@ -14,9 +14,11 @@
  */
 package org.openehr.rm.datatypes.quantity;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.openehr.rm.Attribute;
 import org.openehr.rm.FullConstructor;
+import org.openehr.rm.datatypes.basic.DvBoolean;
 import org.openehr.rm.datatypes.basic.ReferenceModelName;
 import org.openehr.rm.datatypes.text.CodePhrase;
 
@@ -60,11 +62,11 @@ public final class DvCount extends DvAmount<DvCount> {
 	public DvCount(
 			@Attribute(name = "otherReferenceRanges") List<ReferenceRange<DvCount>> otherReferenceRanges,
 			@Attribute(name = "normalRange") DvInterval<DvCount> normalRange, 
-			@Attribute (name= "normalStatus") CodePhrase normalStatus,
-			@Attribute(name = "accuracy") double accuracy, 
-			@Attribute(name = "accuracyPercent") boolean accuracyPercent,
-			@Attribute (name= "magnitudeStatus") String magnitudeStatus,
-			@Attribute(name = "magnitude", required = true)	int magnitude) {
+			@Attribute(name= "normalStatus") CodePhrase normalStatus,
+			@Attribute(name = "accuracy") Double accuracy, 
+			@Attribute(name = "accuracyPercent") Boolean accuracyPercent,
+			@Attribute(name= "magnitudeStatus") String magnitudeStatus,
+			@Attribute(name = "magnitude", required = true) Integer magnitude) {
 		super(otherReferenceRanges, normalRange, normalStatus, accuracy, 
 				accuracyPercent, magnitudeStatus);
 		this.magnitude = magnitude;
@@ -75,7 +77,7 @@ public final class DvCount extends DvAmount<DvCount> {
 	 *
 	 * @param magnitude
 	 */
-	public DvCount(int magnitude) {
+	public DvCount(Integer magnitude) {
 		this.magnitude = magnitude;
 	}
 
@@ -85,7 +87,7 @@ public final class DvCount extends DvAmount<DvCount> {
 	 * @return getMagnitude
 	 */
 	public Integer getMagnitude() {
-		return new Integer(this.magnitude);
+		return this.magnitude;
 	}
 
 	/**
@@ -166,17 +168,20 @@ public final class DvCount extends DvAmount<DvCount> {
 	 * @return true if equals
 	 */
 	public boolean equals(Object o) {
-		if (this == o)
+		if (o == null) {
+			return false;
+		}
+		if (this == o) {
 			return true;
-		if (!(o instanceof DvCount))
+		}
+		if (!(o instanceof DvCount)) {
 			return false;
-
-		final DvCount dvCount = (DvCount) o;
-
-		if (magnitude != dvCount.magnitude)
-			return false;
-
-		return true;
+		}
+		DvCount obj = (DvCount) o;
+    	return new EqualsBuilder()
+    					.appendSuper(super.equals(obj))
+    					.append(magnitude, obj.magnitude)
+    					.isEquals();
 	}
 
 	/**
@@ -205,14 +210,14 @@ public final class DvCount extends DvAmount<DvCount> {
 	DvCount() {
 	}
 
-	public void setMagnitude(int magnitude) {
+	public void setMagnitude(Integer magnitude) {
 		this.magnitude = magnitude;
 	}
 
 	// POJO end
 
 	/* fields */
-	private int magnitude;
+	private Integer magnitude = null;
 
     @Transient
 	@Override

@@ -50,7 +50,7 @@ public class ItemTableHibernateTest extends DataStructureHibernateTestBase {
     	Element eyes = new Element("at0001", new DvText("eye(s)"),
     			new DvText("right"));
     	Element acuity = new Element("at0002", new DvText("visual acuity"),
-    			new DvProportion(6, 6, ProportionKind.RATIO, 0));
+    			new DvProportion(6.0, 6.0, ProportionKind.RATIO, 0));
     	List<Locatable> items = new ArrayList<Locatable>();
     	items.add(eyes);
     	items.add(acuity);
@@ -60,7 +60,7 @@ public class ItemTableHibernateTest extends DataStructureHibernateTestBase {
     	eyes = new Element("at0004", new DvText("eye(s)"),
      			new DvText("left"));
      	acuity = new Element("at0005", new DvText("visual acuity"),
-     			new DvProportion(6, 18, ProportionKind.RATIO, 0));
+     			new DvProportion(6.0, 18.0, ProportionKind.RATIO, 0));
      	items = new ArrayList<Locatable>();
      	items.add(eyes);
      	items.add(acuity);
@@ -70,7 +70,7 @@ public class ItemTableHibernateTest extends DataStructureHibernateTestBase {
      	eyes = new Element("at0007", new DvText("eye(s)"),
      			new DvText("both"));
      	acuity = new Element("at0008", new DvText("visual acuity"),
-     			new DvProportion(6, 6, ProportionKind.RATIO, 0));
+     			new DvProportion(6.0, 6.0, ProportionKind.RATIO, 0));
      	items = new ArrayList<Locatable>();
      	items.add(eyes);
      	items.add(acuity);

@@ -62,7 +62,7 @@ public class FindMatchingRMClassTest extends TestCase {
 	
 	public void testMatchElement() {
 		DvText name = new DvText("name");
-		DvQuantity value = new DvQuantity("mmHg", 120.0, ms);
+		DvQuantity value = new DvQuantity("mmHg", 120.0, null, ms);
 		valueMap.put("archetypeNodeId", "at0001");
 		valueMap.put("name", name);
 		valueMap.put("value", value);
@@ -71,7 +71,7 @@ public class FindMatchingRMClassTest extends TestCase {
 	
 	public void testWithUnderscoreSeparatedAttributeName() {
 		DvText name = new DvText("name");
-		DvQuantity value = new DvQuantity("mmHg", 120.0, ms);
+		DvQuantity value = new DvQuantity("mmHg", 120.0, null, ms);
 		valueMap.put("archetype_node_id", "at0001");
 		valueMap.put("name", name);
 		valueMap.put("value", value);
@@ -80,8 +80,8 @@ public class FindMatchingRMClassTest extends TestCase {
 	
 	public void testMatchItemList() {
 		DvText name = new DvText("BP measurement");
-		DvQuantity systolicValue = new DvQuantity("mmHg", 120.0, ms);
-		DvQuantity diastolicValue = new DvQuantity("mmHg", 80.0, ms);
+		DvQuantity systolicValue = new DvQuantity("mmHg", 120.0, null, ms);
+		DvQuantity diastolicValue = new DvQuantity("mmHg", 80.0, null, ms);
 		Element systolicElement = new Element("at0001", 
 				new DvText("systolic"), systolicValue);
 		Element diastolicElement = new Element("at0002", 
@@ -96,7 +96,7 @@ public class FindMatchingRMClassTest extends TestCase {
 	}
 	
 	public void testMatchPointEvent() {
-		DvQuantity systolicValue = new DvQuantity("mmHg", 120.0, ms);
+		DvQuantity systolicValue = new DvQuantity("mmHg", 120.0, null, ms);
 		Element systolicElement = new Element("at0001", 
 				new DvText("systolic"), systolicValue);
 		List<Locatable> items = new ArrayList<Locatable>();
@@ -110,7 +110,7 @@ public class FindMatchingRMClassTest extends TestCase {
 	}
 	
 	public void testMatchingHistory() {
-		DvQuantity systolicValue = new DvQuantity("mmHg", 120.0, ms);
+		DvQuantity systolicValue = new DvQuantity("mmHg", 120.0, null, ms);
 		Element systolicElement = new Element("at0001", 
 				new DvText("systolic"), systolicValue);
 		List<Locatable> items = new ArrayList<Locatable>();
@@ -129,7 +129,7 @@ public class FindMatchingRMClassTest extends TestCase {
 	}
 	
 	public void testMatchObservation() {
-		DvQuantity systolicValue = new DvQuantity("mmHg", 120.0, ms);
+		DvQuantity systolicValue = new DvQuantity("mmHg", 120.0, null, ms);
 		Element systolicElement = new Element("at0001", 
 				new DvText("systolic"), systolicValue);
 		List<Locatable> items = new ArrayList<Locatable>();

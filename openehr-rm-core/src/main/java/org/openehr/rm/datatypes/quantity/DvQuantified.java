@@ -16,13 +16,13 @@ package org.openehr.rm.datatypes.quantity;
 
 import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
 import org.openehr.rm.Attribute;
 import org.openehr.rm.datatypes.text.CodePhrase;
 
@@ -37,7 +37,7 @@ import org.openehr.rm.datatypes.text.CodePhrase;
  */
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class DvQuantified<T extends DvQuantified> extends DvOrdered<T> {
+public abstract class DvQuantified<T extends DvQuantified<?>> extends DvOrdered<T> {
 
     protected DvQuantified() {
 		super();
@@ -73,14 +73,6 @@ public abstract class DvQuantified<T extends DvQuantified> extends DvOrdered<T> 
     }
 
     /**
-     * Numeric value of the quantity in canonical (single value) form
-     *
-     * @return getMagnitude
-     */
-    @Transient
-    public abstract Number getMagnitude();
-
-    /**
      * Optional status of magnitude with values:
      * <ul>
      * <li> "=" : magnitude is a point value</li>
@@ -104,12 +96,19 @@ public abstract class DvQuantified<T extends DvQuantified> extends DvOrdered<T> 
      * @return true if equals
      */
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!( o instanceof DvQuantified )) return false;
-
-        final DvQuantified dvQuantified = (DvQuantified) o;
-
-        return getMagnitude().equals(dvQuantified.getMagnitude());
+    	if (o == null) {
+			return false;
+		}
+        if (this == o) {
+        	return true;
+        }        
+        if (!(o instanceof DvQuantified)) {
+        	return false;
+        }
+        DvQuantified<?> obj = (DvQuantified<?>) o;
+    	return new EqualsBuilder()
+    					.append(magnitudeStatus, obj.magnitudeStatus)
+    					.isEquals();
     }
 
     /**
@@ -118,7 +117,7 @@ public abstract class DvQuantified<T extends DvQuantified> extends DvOrdered<T> 
      * @return hash code
      */
     public int hashCode() {
-        return getMagnitude().hashCode();
+        return getMagnitudeStatus().hashCode();
     }
 
     /* fields */
@@ -127,8 +126,6 @@ public abstract class DvQuantified<T extends DvQuantified> extends DvOrdered<T> 
 	public void setMagnitudeStatus(String magnitudeStatus) {
 		this.magnitudeStatus = magnitudeStatus;
 	}
-    
-    
     
 }
 

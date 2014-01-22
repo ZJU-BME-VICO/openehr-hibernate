@@ -35,7 +35,7 @@ public class DvQuantityHibernateTest extends AbstractHibernateTest {
 	@Test
 	public void testSaveLoad() {
 
-        DvQuantity p = new DvQuantity("mg", 10, 2, ms);
+        DvQuantity p = new DvQuantity("mg", 10.0, 2, ms);
 
 		Session session = sessionFactory.getCurrentSession();
 		session.save(p);

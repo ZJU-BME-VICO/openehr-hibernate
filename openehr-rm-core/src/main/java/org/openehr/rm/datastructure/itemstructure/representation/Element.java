@@ -182,18 +182,19 @@ public final class Element extends Item {
      * @param o
      * @return true if equals
      */
-    public boolean equals(Object obj) {
-    	if (obj == null) { return false; }
-    	   if (obj == this) { return true; }
-    	   if (obj.getClass() != getClass()) {
-    	     return false;
-    	   }
-    	   Element element = (Element) obj;
-    	   return new EqualsBuilder()
-    	                 .appendSuper(super.equals(obj))
-    	                 .append(value, element.value)
-    	                 .append(nullFlavour, element.nullFlavour)
-    	                 .isEquals();
+    public boolean equals(Object o) {
+    	if (o == this) {
+    		return true; 
+    	}
+    	if (o.getClass() != getClass()) {
+    		return false;
+    	}
+    	Element obj = (Element) o;
+    	return new EqualsBuilder()
+    					.appendSuper(super.equals(obj))
+    					.append(value, obj.value)
+    					.append(nullFlavour, obj.nullFlavour)
+    					.isEquals();
     }
 
     /**

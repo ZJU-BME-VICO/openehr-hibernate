@@ -152,7 +152,7 @@ public class PathBasedValueSettingTest extends TestCase {
 		list.set("/items[at0002]/value", ordinal);
 		
 		DvOrdinal actual = (DvOrdinal) ((Element) list.getItems().get(0)).getValue();
-		assertEquals("failed to set ordinal.value on list", 2, actual.getValue());
+		assertEquals("failed to set ordinal.value on list", 2, actual.getValue().intValue());
 		assertEquals("failed to set ordinal.symbol.value on list", "nope", 
 				actual.getSymbol().getValue());
 	}

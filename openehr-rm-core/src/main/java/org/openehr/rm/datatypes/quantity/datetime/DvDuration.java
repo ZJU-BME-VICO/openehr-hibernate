@@ -237,24 +237,12 @@ public final class DvDuration extends DvAmount<DvDuration> {
 	 * @return quantity
 	 */
 	public DvQuantity toQuantity() {
-		return new DvQuantity("s", toDouble(), null);
-	}
-
-	/**
-	 * numeric value of the duration as seconds
-	 * 
-	 * @return getMagnitude
-	 */
-    @Transient
-	@Override
-    public Number getMagnitude() {
-		return new Double(toDouble());
+		return new DvQuantity("s", toDouble(), null, null);
 	}
 
 	// convert dvduration to seconds
-	private double toDouble() {
-		return Math
-				.abs(period.toDurationFrom(new Instant()).getMillis() / 10E2);
+	private Double toDouble() {
+		return Math.abs(period.toDurationFrom(new Instant()).getMillis() / 10E2);
 	}
 
 	/**

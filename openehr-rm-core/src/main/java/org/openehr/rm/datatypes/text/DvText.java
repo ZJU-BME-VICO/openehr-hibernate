@@ -77,9 +77,9 @@ public class DvText extends DataValue {
             @Attribute(name = "language") CodePhrase language,
             @Attribute(name = "encoding") CodePhrase charset,
             @Attribute(name = "terminologyService", system = true) TerminologyService terminologyService) {
-        if (!validValue(value)) {
-            throw new IllegalArgumentException("invalid value: " + value);
-        }
+//        if (!validValue(value)) {
+//            throw new IllegalArgumentException("invalid value: " + value);
+//        }
         if (mappings != null && mappings.isEmpty()) {
             throw new IllegalArgumentException("empty mapping");
         }
@@ -135,11 +135,11 @@ public class DvText extends DataValue {
         this(value, null, null, null, null, null, null);
     }
 
-    static boolean validValue(String value) {
+//    static boolean validValue(String value) {
 //        return StringUtils.isNotEmpty(value)
 //                && StringUtils.containsNone(value, "\n\r");
-        return StringUtils.containsNone(value, "\n\r");
-    }
+//        return StringUtils.containsNone(value, "\n\r");
+//    }
 
     public DvText parse(String value) {
     	return new DvText(value);
