@@ -50,6 +50,10 @@ public abstract class DvTemporal<T extends DvTemporal> extends
 
 		super(otherReferenceRanges, normalRange, normalStatus, accuracy,
 				magnitudeStatus);
+		
+		if (value == null || value.isEmpty()) {
+			return;
+		}
 
 		this.dateTime = parseStringValue(value);
 		this.value = value;
