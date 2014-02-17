@@ -48,7 +48,7 @@ public class SimpleValuesTest extends ParserTestBase {
 		
 		assertDurationValue(values.get(3), "PT10M");
 		
-		assertStringValue(values.get(4), "a string\\ value");
+		assertStringValue(values.get(4), "a \\\"s\\\"tring\\ value");
 		
 		assertCharacterValue(values.get(5), 'a');
 		
