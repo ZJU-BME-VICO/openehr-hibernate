@@ -165,7 +165,7 @@ public abstract class Event <T extends ItemStructure> extends Locatable {
  
         } else {
             //TODO: throw or not throw?
-            throw new IllegalArgumentException("parent object existing");
+//            throw new IllegalArgumentException("parent object existing");
         }
     }
 
