@@ -143,7 +143,7 @@ public class DvQuantity extends DvAmount<DvQuantity> {
      * @return getMagnitude
      */
     public Double getMagnitude() {
-        return new Double(magnitude);
+        return (magnitude == null ? null : new Double(magnitude));
     }
 
     /**
