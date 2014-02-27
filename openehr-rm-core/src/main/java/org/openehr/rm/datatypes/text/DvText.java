@@ -35,6 +35,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -159,6 +160,7 @@ public class DvText extends DataValue {
      *
      * @return string value
      */
+	@Lob
     public String getValue() {
         return value;
     }
