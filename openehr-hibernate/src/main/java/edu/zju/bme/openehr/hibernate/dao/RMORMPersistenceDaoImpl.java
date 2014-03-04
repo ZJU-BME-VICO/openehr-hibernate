@@ -3,13 +3,10 @@ package edu.zju.bme.openehr.hibernate.dao;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.lang.reflect.Array;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.UUID;
 
 import javax.annotation.Resource;
@@ -28,8 +25,6 @@ import org.openehr.rm.support.identification.UIDBasedID;
 import org.springframework.stereotype.Component;
 
 import se.acode.openehr.parser.ADLParser;
-import edu.zju.bme.openehr.hibernate.model.CoarseNodePathIndex;
-import edu.zju.bme.snippet.java.Reflector;
 
 @Component("RMORMPersistenceDao")
 public class RMORMPersistenceDaoImpl implements RMORMPersistenceDao {
@@ -75,16 +70,6 @@ public class RMORMPersistenceDaoImpl implements RMORMPersistenceDao {
 					}					
 					
 					s.save(loc);
-					
-					Query q = s.createQuery("delete from CoarseNodePathIndex as c where c.referenceId = :referenceId");
-					q.setParameter("referenceId", loc.getMappingId());
-					q.executeUpdate();
-					
-					Archetype archetype = archetypes.get(loc.getArchetypeNodeId());
-					Set<String> pathSet = archetype.getPathNodeMap().keySet();
-					for (String path : pathSet) {
-						persistNodePOJOFields(path, loc, loc.getMappingId());
-					}
 				}
 			}
 			
@@ -301,41 +286,6 @@ public class RMORMPersistenceDaoImpl implements RMORMPersistenceDao {
 			}
 		}
 
-	}
-	
-	protected void persistNodePOJOFields(String nodePath, Locatable loc, int id) 
-			throws IllegalArgumentException, IllegalAccessException {
-		
-		Object obj = loc.itemAtPath(nodePath);
-		if (obj == null) {
-			return;
-		}
-		
-		Session s = sessionFactory.getCurrentSession();
-		
-		Iterable<Field> fields = Reflector.INSTANCE.getFieldsUpTo(obj.getClass(), null);
-		for (Field field : fields) {
-			field.setAccessible(true);
-			String fieldPath = nodePath + "/" + field.getName();
-			CoarseNodePathIndex coarseNodePathIndex = new CoarseNodePathIndex();
-			coarseNodePathIndex.setReferenceId(id);
-			coarseNodePathIndex.setPath(fieldPath);
-			if (field.getType() == String.class || 
-					field.getType() == Integer.class || 
-					field.getType() == Double.class || 
-					field.getType() == Date.class || 
-					field.getType() == Boolean.class) {
-				if (field.get(obj) == null) {
-					coarseNodePathIndex.setValueString(null);
-				} else {
-					coarseNodePathIndex.setValueString(field.get(obj).toString());
-				}		
-			} else {
-				continue;
-			}
-			s.save(coarseNodePathIndex);			
-		}
-		
 	}
 
 	protected void generateReturnDADL(Object obj, List<String> dadlResults)
