@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -120,6 +121,52 @@ public class RMORMPersistenceDaoImpl implements RMORMPersistenceDao {
 	}
     
     @Override
+    public List<String> select(String aql) {
+
+		logger.info("select");
+
+		logger.info(aql);
+
+		try {
+
+			long startTime = System.currentTimeMillis();
+
+			Session s = sessionFactory.getCurrentSession();
+			
+			Query query = s.createQuery(aql);
+			
+			@SuppressWarnings("rawtypes")
+			List results = query.list();
+			
+			long endTime = System.currentTimeMillis();
+			logger.info("aql execute time (ms) : " + (endTime - startTime));
+
+			startTime = System.currentTimeMillis();
+
+			List<String> dadlResults = new ArrayList<String>();
+			for (Object arr : results) {
+				if (arr.getClass().isArray()) {
+					for (int i = 0; i < Array.getLength(arr); i++) {
+						generateReturnDADL(Array.get(arr, i), dadlResults);
+					}
+				} else {
+					generateReturnDADL(arr, dadlResults);
+				}
+			}
+
+			endTime = System.currentTimeMillis();
+			logger.info("generate dadl time (ms) : " + (endTime - startTime));
+
+			return dadlResults;
+			
+		} catch (Exception e) {
+			logger.error(e);
+			return null;
+		}
+    	
+    }
+    
+    @Override
     public List<String> selectPersonByObjectUids(List<String> objectUids) {
 
 		logger.info("selectPersonByObjectUids");
@@ -155,128 +202,6 @@ public class RMORMPersistenceDaoImpl implements RMORMPersistenceDao {
 		}
     	
     }
-//    
-//    @Override
-//    public List<CoarseNodePathEntity> selectCoarseNodePathByIds(List<Integer> ids) {
-//
-//		logger.info("selectCoarseNodePathByIds");
-//
-//		try {
-//			
-//			String queryString = "from CoarseNodePathEntity as c where c.id in :id";
-//
-//			Session s = sessionFactory.getCurrentSession();
-//			
-//			Query query = s.createQuery(queryString);
-//			query.setParameterList("id", ids);
-//			
-//			@SuppressWarnings("unchecked")
-//			List<CoarseNodePathEntity> listCoarseNodePath = query.list();		
-//			
-//			return listCoarseNodePath;
-//			
-//		} catch (Exception e) {
-//			logger.error(e);
-//			return null;
-//		}
-//    	
-//    }
-    
-//    @Override
-//    public List<CoarseNodePathEntity> selectCoarseNodePathByPathValues(Map<String, String> pathValues) {
-//
-//		logger.info("selectCoarseNodePathByPathValues");
-//
-//		try {
-//			
-//			String queryString = "from CoarseNodePathIndex as c where ";
-//
-//			Session s = sessionFactory.getCurrentSession();
-//			
-//			for (int i = 0; i < pathValues.size(); i++) {				
-//				String conditionString ="(c.path = :path" + i + " and c.valueString = :value" + i + ")";
-//				queryString += conditionString;
-//				if (i < pathValues.size() - 1) {
-//					queryString += " or ";						
-//				}			
-//			}
-//
-//			Query query = s.createQuery(queryString);
-//			int i = 0;
-//			for (String key : pathValues.keySet()) {
-//				String value  = pathValues.get(key);				
-//				query.setParameter("path" + i, key);
-//				query.setParameter("value" + i, value);			
-//				i++;
-//			}
-//			
-//			@SuppressWarnings("unchecked")
-//			List<CoarseNodePathIndex> listCoarseNodePathIndex = query.list();
-//			
-//			List<Integer> coarseNodePathEntityIds = new ArrayList<>();
-//			for (CoarseNodePathIndex coarseNodePathIndex : listCoarseNodePathIndex) {
-//				if (coarseNodePathEntityIds.contains(coarseNodePathIndex.getReferenceId())) {
-//					continue;
-//				}
-//				coarseNodePathEntityIds.add(coarseNodePathIndex.getReferenceId());
-//			}
-//
-//			List<CoarseNodePathEntity> listCoarseNodePathEntity = selectCoarseNodePathByIds(coarseNodePathEntityIds);
-//			return listCoarseNodePathEntity;
-//			
-//		} catch (Exception e) {
-//			logger.error(e);
-//			return null;
-//		}
-//    	
-//    }
-
-//    @Override
-//	public List<CoarseNodePathEntity> selectCoarseNodePathByPathValues(List<String> paths, List<String> values) {
-//
-//		logger.info("selectCoarseNodePathByPathValues");
-//
-//		try {
-//			
-//			String queryString = "from CoarseNodePathIndex as c where ";
-//
-//			Session s = sessionFactory.getCurrentSession();
-//			
-//			for (int i = 0; i < paths.size(); i++) {				
-//				String conditionString ="(c.path = :path" + i + " and c.valueString = :value" + i + ")";
-//				queryString += conditionString;
-//				if (i < paths.size() - 1) {
-//					queryString += " or ";						
-//				}			
-//			}
-//
-//			Query query = s.createQuery(queryString);
-//			for (int i = 0; i < paths.size(); i++) {			
-//				query.setParameter("path" + i, paths.get(i));
-//				query.setParameter("value" + i, values.get(i));	
-//				
-//			}
-//			
-//			@SuppressWarnings("unchecked")
-//			List<CoarseNodePathIndex> listCoarseNodePathIndex = query.list();
-//			
-//			List<Integer> coarseNodePathEntityIds = new ArrayList<>();
-//			for (CoarseNodePathIndex coarseNodePathIndex : listCoarseNodePathIndex) {
-//				if (coarseNodePathEntityIds.contains(coarseNodePathIndex.getReferenceId())) {
-//					continue;
-//				}
-//				coarseNodePathEntityIds.add(coarseNodePathIndex.getReferenceId());
-//			}
-//
-//			List<CoarseNodePathEntity> listCoarseNodePathEntity = selectCoarseNodePathByIds(coarseNodePathEntityIds);
-//			return listCoarseNodePathEntity;
-//			
-//		} catch (Exception e) {
-//			logger.error(e);
-//			return null;
-//		}
-//    	
-//    }
 
 	protected void passParameters(Query q, Map<String, Object> parameters) {
 

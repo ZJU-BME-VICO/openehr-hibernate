@@ -28,9 +28,16 @@ public class RMORMPersistenceImpl implements RMORMPersistence {
 	}
 
 	@Override
-	public int delete(String adl) {
+	public int delete(String aql) {
 		
-		return persistenceDao.delete(adl);
+		return persistenceDao.delete(aql);
+
+	}
+
+	@Override
+	public List<String> select(String aql) {
+		
+		return persistenceDao.select(aql);
 
 	}
 
@@ -40,19 +47,5 @@ public class RMORMPersistenceImpl implements RMORMPersistence {
 		return persistenceDao.selectPersonByObjectUids(objectUids);
 
 	}
-//
-////	@Override
-////	public List<CoarseNodePathEntity> selectCoarseNodePathByPathValues(Map<String, String> pathValues) {
-////		
-////		return nodePathPersistenceDao.selectCoarseNodePathByPathValues(pathValues);
-////
-////	}
-//
-//	@Override
-//	public List<CoarseNodePathEntity> selectCoarseNodePathByPathValues(List<String> paths, List<String> values) {
-//		
-//		return nodePathPersistenceDao.selectCoarseNodePathByPathValues(paths, values);
-//
-//	}
 
 }

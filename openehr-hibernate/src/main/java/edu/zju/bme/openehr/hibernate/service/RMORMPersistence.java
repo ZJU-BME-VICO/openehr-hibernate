@@ -11,16 +11,12 @@ public interface RMORMPersistence {
 	int insert(List<String> dadls, List<String> adls);
 
 	@WebMethod
-	int delete(String adl);
+	int delete(String aql);
+
+	@WebMethod
+	List<String> select(String aql);
 
 	@WebMethod
 	List<String> selectPersonByObjectUids(List<String> objectUids);
-//
-////	@WebMethod
-////	List<CoarseNodePathEntity> selectCoarseNodePathByPathValues(
-////			@XmlJavaTypeAdapter(PathValueMapAdapter.class) Map<String, String> pathValues);
-//
-//	@WebMethod
-//	List<CoarseNodePathEntity> selectCoarseNodePathByPathValues(List<String> paths, List<String> values);
 
 }
